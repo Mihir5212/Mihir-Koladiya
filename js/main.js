@@ -78,6 +78,9 @@ const ICONS = {
   idcard:     '<path d="M16 10h2"/><path d="M16 14h2"/><path d="M6.17 15a3 3 0 0 1 5.66 0"/><circle cx="9" cy="11" r="2"/><rect x="2" y="5" width="20" height="14" rx="2"/>',
   languages:  '<path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/>',
   plus:       '<path d="M5 12h14"/><path d="M12 5v14"/>',
+  copy:       '<rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>',
+  arrowUp:    '<path d="m5 12 7-7 7 7"/><path d="M12 19V5"/>',
+  quote:      '<path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/>',
   home:       '<path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .71-1.53l7-6a2 2 0 0 1 2.58 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
 };
 
@@ -221,7 +224,7 @@ function initQuickActions() {
           ${icon(a.icon)}<span>${sanitize(a.label)}</span>
         </a>`).join('')}
     </div>
-    <button class="qa__fab" type="button" aria-label="Open quick actions" aria-expanded="false" aria-controls="qa-panel">${icon('plus')}</button>
+    <button class="qa__fab" type="button" data-tip="Quick actions" aria-label="Open quick actions" aria-expanded="false" aria-controls="qa-panel">${icon('plus')}</button>
   `;
   document.body.appendChild(wrap);
 
@@ -320,6 +323,7 @@ function projectCardHTML(p) {
   return `
     <a href="project-detail.html?id=${p.id}" class="project-card reveal" aria-label="View project: ${sanitize(p.title)}">
       <div class="project-card__cover" aria-hidden="true">
+        ${coverArt(p.category, p.id)}
         <span class="project-card__cover-icon">${icon(categoryIcon(p.category))}</span>
         <span class="project-card__cover-year">${sanitize(p.year)}</span>
       </div>
@@ -351,11 +355,15 @@ function pubCardHTML(p) {
       <div class="pub-card__body">
         ${venue ? `<div class="pub-card__venue">${sanitize(venue)}</div>` : ''}
         <h3 class="pub-card__title">${sanitize(p.title)}</h3>
-        <div class="pub-card__meta">${highlightAuthor(sanitize(p.authors))}</div>
+        <div class="pub-card__authors">
+          ${avatarStackHTML(p.authors)}
+          <div class="pub-card__meta">${highlightAuthor(sanitize(p.authors))}</div>
+        </div>
         <div class="pub-card__footer">
           <span class="status-badge ${getStatusClass(p.status)}">${sanitize(p.status)}</span>
           ${doi}
           ${link}
+          <button type="button" class="pub-card__cite" data-copy="${attr(citationOf(p))}" data-copy-label="Citation">${icon('quote')} Cite</button>
         </div>
       </div>
     </article>
@@ -405,6 +413,7 @@ function insightCardHTML(item) {
     return `
       <article class="insight-card insight-card--article reveal" aria-label="Article: ${sanitize(item.title)}">
         <div class="insight-card__preview${articleImage ? '' : ' is-fallback'}">
+          ${coverArt(item.category, Number(item.id) + 20)}
           ${articleImage ? `<img src="${articleImage}" alt="${articleImageAlt}" loading="lazy" onerror="this.parentNode.classList.add('is-fallback');this.remove();">` : ''}
           <div class="insight-card__preview-fallback" aria-hidden="true"><span>${icon(categoryIcon(item.category))}</span></div>
         </div>
@@ -490,6 +499,7 @@ function renderHome() {
   renderHero();
   renderStats();
   renderGlance();
+  renderBento();
   renderFeaturedProjects();
   renderResearchAreas();
   renderPubsPreview();
@@ -617,6 +627,7 @@ function renderAbout() {
   renderSkills();
   renderCertifications();
   renderWorkshopsAndAwards();
+  renderReferences();
   renderResearchInterests();
   renderProfileLinks();
 }
@@ -707,7 +718,7 @@ function renderExperience() {
   const container = el('#experience-timeline');
   if (!container) return;
   container.innerHTML = DATA.EXPERIENCE.map(e => `
-    <div class="timeline-item reveal">
+    <div class="timeline-item reveal" data-type="${attr(e.type || '')}">
       <div class="timeline-item__period">${sanitize(e.period)}</div>
       <div class="timeline-item__title">${sanitize(e.role)}</div>
       <div class="timeline-item__org">${sanitize(e.org)}</div>
@@ -717,6 +728,7 @@ function renderExperience() {
       </div>
     </div>
   `).join('');
+  initExperienceTabs(container);
 }
 
 function renderSkills() {
@@ -820,7 +832,7 @@ function renderProjectCards(grid, cat) {
     : DATA.PROJECTS.filter(p => p.category === cat);
   grid.innerHTML = filtered.length
     ? filtered.map(p => projectCardHTML(p)).join('')
-    : '<p style="color:var(--gray);grid-column:1/-1;text-align:center;padding:48px 0">No projects in this category.</p>';
+    : emptyStateHTML('projects');
   setTimeout(initReveal, 60);
 }
 
@@ -917,7 +929,7 @@ function renderInsights() {
     const items = articleItems.filter(i => activeCat === 'All' || i.category === activeCat);
     grid.innerHTML = items.length
       ? items.map(i => insightCardHTML(i)).join('')
-      : `<p style="color:var(--gray);grid-column:1/-1;text-align:center;padding:32px 0">No articles in this selection.</p>`;
+      : emptyStateHTML('articles');
     setTimeout(initReveal, 60);
   }
 
@@ -958,7 +970,7 @@ function renderShowcase() {
 
     grid.innerHTML = items.length
       ? items.map(i => insightCardHTML(i)).join('')
-      : `<p style="color:var(--gray);grid-column:1/-1;text-align:center;padding:32px 0">No showcase items in this selection.</p>`;
+      : emptyStateHTML('showcase items');
     setTimeout(initReveal, 60);
   }
 
@@ -1038,6 +1050,7 @@ function renderGalleryItems(grid, items) {
         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
       />
       <div class="gallery-item__placeholder">
+        ${coverArt(item.category, idx + 1)}
         ${icon('image')}
         <span>${sanitize(item.caption)}</span>
       </div>
@@ -1072,6 +1085,7 @@ function renderContactInfo() {
           <div class="contact-info-label">Email</div>
           <div class="contact-info-value"><a href="mailto:${sanitize(C.email)}">${sanitize(C.email)}</a></div>
         </div>
+        <button type="button" class="copy-btn" data-copy="${attr(C.email)}" data-copy-label="Email" data-tip="Copy email" aria-label="Copy email address">${icon('copy')}</button>
       </div>
       <div class="contact-info-item">
         <div class="contact-info-icon">${icon('phone')}</div>
@@ -1079,6 +1093,7 @@ function renderContactInfo() {
           <div class="contact-info-label">Phone</div>
           <div class="contact-info-value"><a href="tel:${sanitize(telHref)}">${sanitize(C.phone)}</a></div>
         </div>
+        <button type="button" class="copy-btn" data-copy="${attr(C.phone)}" data-copy-label="Phone number" data-tip="Copy number" aria-label="Copy phone number">${icon('copy')}</button>
       </div>
       <div class="contact-info-item">
         <div class="contact-info-icon">${icon('pin')}</div>
@@ -1200,6 +1215,423 @@ function initContactForm() {
 }
 
 /* ═══════════════════════════════════════════
+   SMALL HELPERS — attributes, initials, toasts, copy
+   ═══════════════════════════════════════════ */
+
+function attr(str) {
+  return sanitize(str).replace(/"/g, '&quot;');
+}
+
+function initialsOf(name) {
+  const parts = (name || '').replace(/^(Prof\.|Dr\.|Mr\.|Ms\.|Mrs\.)\s+/i, '').split(/\s+/).filter(Boolean);
+  if (!parts.length) return '?';
+  return ((parts[0][0] || '') + (parts.length > 1 ? parts[parts.length - 1][0] : '')).toUpperCase();
+}
+
+function toneOf(name) {
+  let h = 0;
+  for (const ch of name || '') h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  return h % 4;
+}
+
+function toast(message, kind = 'success') {
+  let stack = el('.toast-stack');
+  if (!stack) {
+    stack = document.createElement('div');
+    stack.className = 'toast-stack';
+    stack.setAttribute('role', 'status');
+    stack.setAttribute('aria-live', 'polite');
+    document.body.appendChild(stack);
+  }
+  const t = document.createElement('div');
+  t.className = `toast toast--${kind}`;
+  t.innerHTML = `<span class="toast__icon">${icon(kind === 'success' ? 'check' : 'alert')}</span><span>${sanitize(message)}</span>`;
+  stack.appendChild(t);
+  requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add('is-in')));
+  setTimeout(() => {
+    t.classList.remove('is-in');
+    setTimeout(() => t.remove(), 450);
+  }, 2600);
+}
+
+async function copyText(text, label = 'Text') {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+      document.body.appendChild(ta);
+      ta.select();
+      const ok = document.execCommand('copy');
+      ta.remove();
+      if (!ok) throw new Error('copy failed');
+    }
+    toast(`${label} copied to clipboard`);
+  } catch {
+    toast('Could not copy — please select and copy it manually', 'error');
+  }
+}
+
+document.addEventListener('click', e => {
+  const btn = e.target.closest('[data-copy]');
+  if (!btn) return;
+  e.preventDefault();
+  copyText(btn.dataset.copy, btn.dataset.copyLabel || 'Text');
+});
+
+function avatarStackHTML(authors) {
+  const me = (DATA.PROFILE && DATA.PROFILE.name) || '';
+  const list = (authors || '').split(',').map(a => a.trim()).filter(Boolean);
+  const avatars = list.slice(0, 4).map(a => a === me
+    ? `<span class="avatar avatar--me" data-tip="${attr(a)}">${initialsOf(a)}<img src="${attr(DATA.PROFILE.photo)}" alt="" loading="lazy" onerror="this.remove()"></span>`
+    : `<span class="avatar avatar--t${toneOf(a)}" data-tip="${attr(a)}">${initialsOf(a)}</span>`).join('');
+  const more = list.length > 4 ? `<span class="avatar avatar--more">+${list.length - 4}</span>` : '';
+  return `<div class="avatars">${avatars}${more}</div>`;
+}
+
+function citationOf(p) {
+  const venue = p.journal || p.conference || '';
+  return `${p.authors} (${p.year}). ${p.title}. ${venue}.${p.doi ? ` https://doi.org/${p.doi}` : ''}`;
+}
+
+function emptyStateHTML(what) {
+  return `
+    <div class="empty-state">
+      <span class="empty-state__icon">${icon('folder')}</span>
+      <h3 class="empty-state__title">Nothing here yet</h3>
+      <p class="empty-state__text">No ${sanitize(what)} match this filter — try another one.</p>
+      <button type="button" class="btn btn-soft empty-state__reset">Show everything</button>
+    </div>`;
+}
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.empty-state__reset')) return;
+  els('.filter-bar').forEach(bar => {
+    const all = els('.filter-btn', bar).find(b => /^all\b/i.test(b.textContent.trim()));
+    if (all && !all.classList.contains('active')) all.click();
+  });
+});
+
+/* ═══════════════════════════════════════════
+   COVER ART — soft line illustrations per category
+   (hotspot contours, roads, networks, pavement layers)
+   ═══════════════════════════════════════════ */
+
+let coverArtCount = 0;
+const n1 = v => v.toFixed(1);
+
+function seededRandom(seed) {
+  let s = ((Math.abs(Number(seed)) || 1) * 7919) % 233280;
+  return () => (s = (s * 9301 + 49297) % 233280) / 233280;
+}
+
+function coverArt(category, seed = 1) {
+  const c = (category || '').toLowerCase();
+  const rnd = seededRandom(seed);
+  const id = `cover-art-${++coverArtCount}`;
+  let art;
+  if (/road safety|field/.test(c)) art = artRoad(rnd);
+  else if (/pavement|book|reference/.test(c)) art = artLayers(rnd);
+  else if (/traffic|transport|mobility|sustain|conference|workshop/.test(c)) art = artNetwork(rnd);
+  else art = artContours(rnd, id);
+  return `<svg class="cover-art" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">${art}</svg>`;
+}
+
+function artContours(rnd, id) {
+  const centers = [[80 + rnd() * 70, 55 + rnd() * 40], [260 + rnd() * 70, 110 + rnd() * 40]];
+  let s = `<defs><radialGradient id="${id}"><stop offset="0" stop-color="currentColor" stop-opacity=".30"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></radialGradient></defs>`;
+  s += `<path d="M-10 ${n1(160 + rnd() * 25)} C 110 ${n1(120 + rnd() * 30)}, 250 ${n1(70 + rnd() * 40)}, 410 ${n1(30 + rnd() * 30)}" fill="none" stroke="rgba(31,34,40,.09)" stroke-width="10" stroke-linecap="round"/>`;
+  centers.forEach(([cx, cy], k) => {
+    s += `<circle cx="${n1(cx)}" cy="${n1(cy)}" r="${k ? 74 : 60}" fill="url(#${id})"/>`;
+    for (let i = 1; i <= 5; i++) {
+      const rx = i * (k ? 21 : 17);
+      const ry = rx * (0.55 + rnd() * 0.18);
+      const rot = Math.round(rnd() * 50 - 25);
+      s += `<ellipse cx="${n1(cx)}" cy="${n1(cy)}" rx="${n1(rx)}" ry="${n1(ry)}" transform="rotate(${rot} ${n1(cx)} ${n1(cy)})" fill="none" stroke="currentColor" stroke-opacity="${(0.36 - i * 0.055).toFixed(2)}" stroke-width="1.2"/>`;
+    }
+  });
+  for (let i = 0; i < 28; i++) {
+    const [cx, cy] = centers[i % 2];
+    const a = rnd() * Math.PI * 2;
+    const d = Math.pow(rnd(), 0.7) * 58;
+    s += `<circle cx="${n1(cx + Math.cos(a) * d * 1.35)}" cy="${n1(cy + Math.sin(a) * d * 0.75)}" r="${n1(1.6 + rnd() * 1.7)}" fill="currentColor" fill-opacity="${(0.3 + rnd() * 0.45).toFixed(2)}"/>`;
+  }
+  return s;
+}
+
+function artRoad(rnd) {
+  const vx = 200 + (rnd() * 70 - 35);
+  const vy = 14;
+  const cy = 118 + rnd() * 24;
+  let s = `<path d="M-10 ${n1(cy)} L 410 ${n1(cy - 18)}" stroke="rgba(31,34,40,.06)" stroke-width="22"/>`;
+  s += `<path d="M${n1(vx - 5)} ${vy} L 60 214 L 340 214 L ${n1(vx + 5)} ${vy} Z" fill="rgba(31,34,40,.06)"/>`;
+  s += `<path d="M${n1(vx - 5)} ${vy} L 60 214 M${n1(vx + 5)} ${vy} L 340 214" stroke="rgba(31,34,40,.22)" stroke-width="2" fill="none"/>`;
+  s += `<path d="M${n1(vx)} ${vy} L 200 214" stroke="currentColor" stroke-opacity=".55" stroke-width="3" stroke-dasharray="12 12" fill="none"/>`;
+  for (let i = 0; i < 4; i++) {
+    const t = 0.3 + rnd() * 0.6;
+    const x = vx + (200 - vx) * t + (rnd() * 2 - 1) * 110 * t;
+    const y = vy + (214 - vy) * t;
+    s += `<circle cx="${n1(x)}" cy="${n1(y)}" r="${n1(10 + 6 * t)}" fill="currentColor" fill-opacity=".12"/>`;
+    s += `<circle cx="${n1(x)}" cy="${n1(y)}" r="${n1(3 + 2 * t)}" fill="currentColor" fill-opacity=".7"/>`;
+  }
+  return s;
+}
+
+function artNetwork(rnd) {
+  const nodes = Array.from({ length: 7 }, (_, i) => [20 + i * 60 + rnd() * 24 - 12, 40 + rnd() * 120]);
+  let s = '';
+  for (let i = 0; i < nodes.length - 1; i++) {
+    const [x1, y1] = nodes[i];
+    const [x2, y2] = nodes[i + 1];
+    const mx = (x1 + x2) / 2;
+    s += `<path d="M${n1(x1)} ${n1(y1)} C ${n1(mx)} ${n1(y1)}, ${n1(mx)} ${n1(y2)}, ${n1(x2)} ${n1(y2)}" fill="none" stroke="currentColor" stroke-opacity=".35" stroke-width="2"/>`;
+    if (i % 2 === 0 && i + 2 < nodes.length) {
+      const [x3, y3] = nodes[i + 2];
+      s += `<path d="M${n1(x1)} ${n1(y1)} L ${n1(x3)} ${n1(y3)}" fill="none" stroke="rgba(31,34,40,.12)" stroke-width="1.5" stroke-dasharray="4 6"/>`;
+    }
+  }
+  nodes.forEach(([x, y], i) => {
+    s += `<circle cx="${n1(x)}" cy="${n1(y)}" r="${i % 3 === 0 ? 7 : 5}" fill="#FDFCFA" stroke="currentColor" stroke-opacity=".7" stroke-width="2"/>`;
+  });
+  return s;
+}
+
+function artLayers(rnd) {
+  const bands = [[112, 18, 0.30], [130, 24, 0.18], [154, 26, 0.11], [180, 30, 0.06]];
+  let s = '';
+  bands.forEach(([y, h, o]) => { s += `<rect x="-10" y="${y}" width="420" height="${h}" fill="currentColor" fill-opacity="${o}"/>`; });
+  for (let i = 0; i < 46; i++) {
+    s += `<circle cx="${n1(rnd() * 400)}" cy="${n1(132 + rnd() * 70)}" r="${n1(1.2 + rnd() * 2.2)}" fill="rgba(31,34,40,.18)"/>`;
+  }
+  s += `<path d="M360 112 V 210 M352 112 H 368 M352 154 H 368" stroke="currentColor" stroke-opacity=".5" stroke-width="1.5" fill="none"/>`;
+  s += `<path d="M40 112 Q 120 96 200 104 T 400 100" fill="none" stroke="currentColor" stroke-opacity=".35" stroke-width="2"/>`;
+  return s;
+}
+
+/* ═══════════════════════════════════════════
+   HOME — RESEARCH SNAPSHOT (bento dashboard)
+   ═══════════════════════════════════════════ */
+
+function renderBento() {
+  const host = el('#bento');
+  if (!host) return;
+  const P = DATA.PUBLICATIONS;
+  const all = [...P.journal, ...P.conference];
+
+  // Publications ring
+  const segs = [
+    { label: 'Published',         value: all.filter(p => /published/i.test(p.status)).length, cls: 'is-published' },
+    { label: 'Presented',         value: all.filter(p => /presented/i.test(p.status)).length, cls: 'is-presented' },
+    { label: 'Under publication', value: P.inProgress.length,                                  cls: 'is-under' },
+  ];
+  const total = segs.reduce((n, sg) => n + sg.value, 0);
+  const R = 62, C = 2 * Math.PI * R, GAP = 20;
+  let offset = 0;
+  const arcs = segs.filter(sg => sg.value).map(sg => {
+    const len = (sg.value / (total || 1)) * C;
+    const arc = `<circle class="donut__seg ${sg.cls}" cx="80" cy="80" r="${R}" style="--len:${Math.max(len - GAP, 1).toFixed(2)};stroke-dashoffset:${(-offset).toFixed(2)}"/>`;
+    offset += len;
+    return arc;
+  }).join('');
+
+  // Career journey (education + current role)
+  const shortInst = s => s.replace('The Maharaja Sayajirao University of Baroda', 'MSU Baroda').replace('Engineering College', 'Engg. College');
+  const edu = DATA.EDUCATION.filter(e => !/secondary|10th/i.test(e.degree)).slice().reverse();
+  const job = (DATA.EXPERIENCE || [])[0];
+  const steps = [
+    ...edu.map(e => ({ title: e.degree.split('–')[0].trim(), sub: shortInst(e.institution), when: e.period })),
+    job && { title: job.role.split('–')[0].trim(), sub: /SVNIT/.test(job.org) ? 'SVNIT Surat' : job.org.split(',')[0], when: job.period.replace(/\s*–\s*Present/i, ' – now'), current: true },
+  ].filter(Boolean);
+
+  // Conference venues
+  const venues = [];
+  [...P.journal, ...P.conference, ...P.inProgress].forEach(p => {
+    const v = p.journal || p.conference || '';
+    const parts = v.split(',').map(x => x.trim());
+    const place = parts.length > 1 ? parts[parts.length - 1] : v;
+    const event = parts.length > 1 ? parts.slice(0, -1).join(', ').replace(/^\d+(st|nd|rd|th)\s+/i, '') : '';
+    const found = venues.find(x => x.place === place);
+    if (found) found.count += 1;
+    else venues.push({ place, event, year: p.year, count: 1 });
+  });
+
+  // Toolkit
+  const S = DATA.SKILLS || {};
+  const tools = [...(S['GIS & Spatial'] || []).slice(0, 2), ...(S['Software & Programming'] || [])].slice(0, 10);
+
+  const head = title => `<div class="bento__head"><span class="bento__title">${title}</span><span class="bento__more" aria-hidden="true">•••</span></div>`;
+  host.innerHTML = `
+    <article class="bento__tile bento__pubs reveal">
+      ${head('Publications pipeline')}
+      <div class="bento__pubs-body">
+        <div class="donut" role="img" aria-label="${attr(`${total} papers: ${segs.map(sg => `${sg.value} ${sg.label.toLowerCase()}`).join(', ')}`)}">
+          <svg viewBox="0 0 160 160" aria-hidden="true"><circle class="donut__track" cx="80" cy="80" r="${R}"/><g transform="rotate(-90 80 80)">${arcs}</g></svg>
+          <div class="donut__center"><strong>${total}</strong><span>papers</span></div>
+        </div>
+        <div class="legend">
+          ${segs.map(sg => `
+            <div class="legend__row">
+              <div class="legend__top"><span class="legend__dot ${sg.cls}"></span><span class="legend__label">${sg.label}</span><span class="legend__value">${sg.value}</span></div>
+              <div class="legend__bar"><i class="${sg.cls}" style="--w:${((sg.value / (total || 1)) * 100).toFixed(1)}%"></i></div>
+            </div>`).join('')}
+        </div>
+      </div>
+      <a class="btn-ghost bento__link" href="publications.html">See all publications</a>
+    </article>
+
+    <article class="bento__tile bento__journey reveal reveal-delay-1">
+      ${head('Career journey')}
+      <ol class="stepper" style="--steps:${steps.length}">
+        ${steps.map((st, i) => `
+          <li class="stepper__step${st.current ? ' is-current' : ' is-done'}">
+            <span class="stepper__dot">${st.current ? icon('briefcase') : i + 1}</span>
+            <strong>${sanitize(st.title)}</strong>
+            <small>${sanitize(st.sub)}</small>
+            <em>${sanitize(st.when)}</em>
+          </li>`).join('')}
+      </ol>
+    </article>
+
+    <article class="bento__tile bento__venues reveal reveal-delay-2">
+      ${head('Conference venues')}
+      <ul class="venues">
+        ${venues.map(v => `
+          <li class="venue">
+            <span class="venue__icon">${icon('cap')}</span>
+            <div class="venue__text"><strong>${sanitize(v.place)}</strong><small>${sanitize(v.event)} · ${sanitize(v.year)}</small></div>
+            <span class="venue__count">${v.count} ${v.count === 1 ? 'paper' : 'papers'}</span>
+          </li>`).join('')}
+      </ul>
+    </article>
+
+    <article class="bento__tile bento__tools reveal reveal-delay-3">
+      ${head('Toolkit')}
+      <div class="toolkit">${tools.map(t => `<span class="toolkit__chip">${sanitize(t)}</span>`).join('')}</div>
+    </article>
+  `;
+}
+
+/* ═══════════════════════════════════════════
+   ABOUT — EXPERIENCE TABS + REFERENCES
+   ═══════════════════════════════════════════ */
+
+function initExperienceTabs(container) {
+  const types = [...new Set(DATA.EXPERIENCE.map(e => e.type).filter(Boolean))];
+  if (types.length < 2 || !container.parentNode) return;
+  const label = t => (t === 'Internship' ? 'Internships' : t);
+  const bar = document.createElement('div');
+  bar.className = 'filter-bar filter-bar--tabs';
+  bar.setAttribute('role', 'group');
+  bar.setAttribute('aria-label', 'Filter experience by type');
+  bar.innerHTML = ['All', ...types].map(t => `
+    <button type="button" class="filter-btn${t === 'All' ? ' active' : ''}" data-type="${attr(t)}" aria-pressed="${t === 'All'}">
+      ${sanitize(label(t))}
+    </button>`).join('');
+  container.parentNode.insertBefore(bar, container);
+
+  bar.addEventListener('click', e => {
+    const btn = e.target.closest('.filter-btn');
+    if (!btn) return;
+    els('.filter-btn', bar).forEach(b => {
+      b.classList.toggle('active', b === btn);
+      b.setAttribute('aria-pressed', String(b === btn));
+    });
+    els('.timeline-item', container).forEach(item => {
+      const show = btn.dataset.type === 'All' || item.dataset.type === btn.dataset.type;
+      item.hidden = !show;
+      if (show) { item.classList.remove('visible'); void item.offsetWidth; item.classList.add('visible'); }
+    });
+  });
+}
+
+function renderReferences() {
+  const grid = el('#references');
+  if (!grid || !DATA.REFERENCES) return;
+  grid.innerHTML = DATA.REFERENCES.map((r, i) => `
+    <article class="ref-card reveal reveal-delay-${i + 1}">
+      <div class="ref-card__head">
+        <span class="ref-card__avatar avatar--t${toneOf(r.name)}" aria-hidden="true">${initialsOf(r.name)}</span>
+        <div class="ref-card__who">
+          <h3 class="ref-card__name">${sanitize(r.name)}</h3>
+          <div class="ref-card__role">${sanitize(r.title)} · ${sanitize(r.org)}</div>
+        </div>
+        <span class="ref-card__more" aria-hidden="true">•••</span>
+      </div>
+      <div class="ref-card__relation">${icon('award')}<span>${sanitize(r.relation)}</span></div>
+      <p class="ref-card__note">${icon('mail')} Contact details available on request</p>
+    </article>
+  `).join('');
+}
+
+/* ═══════════════════════════════════════════
+   MOTION — tilt, scroll progress, back to top, page fades
+   ═══════════════════════════════════════════ */
+
+const prefersReducedMotion = () => window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function initTilt(selector, max = 6) {
+  if (prefersReducedMotion() || (window.matchMedia && window.matchMedia('(hover: none)').matches)) return;
+  els(selector).forEach(card => {
+    card.addEventListener('mouseenter', () => card.classList.add('is-tilting'));
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = `perspective(900px) rotateX(${(-py * max).toFixed(2)}deg) rotateY(${(px * max).toFixed(2)}deg)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.classList.remove('is-tilting');
+      card.style.transform = '';
+    });
+  });
+}
+
+function initScrollUI() {
+  const top = document.createElement('button');
+  top.type = 'button';
+  top.className = 'to-top';
+  top.setAttribute('aria-label', 'Back to top');
+  top.dataset.tip = 'Back to top';
+  top.innerHTML = icon('arrowUp');
+  document.body.appendChild(top);
+  top.addEventListener('click', () => window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? 'auto' : 'smooth' }));
+
+  const fab = el('.qa__fab');
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = max > 0 ? Math.min(1, window.scrollY / max) : 0;
+    if (fab) fab.style.setProperty('--progress', (progress * 100).toFixed(1));
+    top.classList.toggle('is-visible', window.scrollY > window.innerHeight * 0.9);
+  };
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+}
+
+function initPageTransitions() {
+  if (prefersReducedMotion()) return;
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href]');
+    if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (a.target === '_blank' || a.hasAttribute('download')) return;
+    const url = new URL(a.getAttribute('href'), window.location.href);
+    if (url.origin !== window.location.origin) return;
+    if (!/(\.html|\/)$/.test(url.pathname)) return;
+    if (url.pathname === window.location.pathname && url.search === window.location.search) return;
+    e.preventDefault();
+    document.body.classList.add('is-leaving');
+    setTimeout(() => { window.location.href = url.href; }, 170);
+  });
+  // Coming back with the browser's back button restores the page from cache — make sure it's visible
+  window.addEventListener('pageshow', () => document.body.classList.remove('is-leaving'));
+}
+
+/* ═══════════════════════════════════════════
    PAGE ROUTER
    ═══════════════════════════════════════════ */
 
@@ -1225,6 +1657,9 @@ document.addEventListener('DOMContentLoaded', () => {
   route();
   initQuickActions();
   initDock();
+  initScrollUI();
+  initTilt('.profile-card');
+  initPageTransitions();
   // Delay reveal init to allow dynamic content to render first
   setTimeout(initReveal, 100);
 });

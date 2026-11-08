@@ -717,6 +717,14 @@ The study received an Appreciation Letter from the Gujarat Road Safety Authority
   ],
 
   // ─────────────────────────────────────────
+  // REFERENCES (from CV — contact details shared on request only)
+  // ─────────────────────────────────────────
+  REFERENCES: [
+    { name: "Prof. Shriniwas S. Arkatkar", title: "Professor", org: "SVNIT, Surat, Gujarat, India", relation: "Project Principal Investigator" },
+    { name: "Dr. Pankaj S. Prajapati", title: "Associate Professor", org: "The M.S. University of Baroda, Vadodara, Gujarat, India", relation: "Dissertation Supervisor / Research Guide" },
+  ],
+
+  // ─────────────────────────────────────────
   // CONTACT
   // ─────────────────────────────────────────
   CONTACT: {

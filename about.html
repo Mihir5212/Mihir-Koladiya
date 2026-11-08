@@ -6,9 +6,17 @@
   <meta name="theme-color" content="#F2EFE9" />
   <meta name="description" content="About Mihir Koladiya — transportation engineer, road safety researcher, GIS analyst. Education, experience, skills, and certifications." />
   <title>About — Mihir Koladiya</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Mihir Koladiya" />
+  <meta property="og:title" content="About — Mihir Koladiya" />
+  <meta property="og:description" content="About Mihir Koladiya — transportation engineer, road safety researcher, GIS analyst. Education, experience, skills, and certifications." />
+  <meta property="og:url" content="https://mihir5212.github.io/Mihir-Koladiya/about.html" />
+  <meta property="og:image" content="https://mihir5212.github.io/Mihir-Koladiya/assets/images/profile.jpg" />
+  <meta name="twitter:card" content="summary" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%231F5BFF'/><text x='16' y='20.5' text-anchor='middle' font-family='Arial,sans-serif' font-size='12' font-weight='700' fill='white'>MK</text></svg>" />
 </head>
 <body>
@@ -110,8 +118,8 @@
 
             <!-- Social links row -->
             <div class="about-photo-card__socials">
-              <a href="https://linkedin.com/in/mihir-koladiya" target="_blank" rel="noopener" class="about-photo-card__social-link" title="LinkedIn" aria-label="LinkedIn"><span data-icon="linkedin"></span></a>
-              <a href="mailto:koladiyamihir5212@gmail.com" class="about-photo-card__social-link" title="Email" aria-label="Email"><span data-icon="mail"></span></a>
+              <a href="https://linkedin.com/in/mihir-koladiya" target="_blank" rel="noopener" class="about-photo-card__social-link" data-tip="LinkedIn" aria-label="LinkedIn"><span data-icon="linkedin"></span></a>
+              <a href="mailto:koladiyamihir5212@gmail.com" class="about-photo-card__social-link" data-tip="Email" aria-label="Email"><span data-icon="mail"></span></a>
             </div>
 
           </div>
@@ -218,8 +226,20 @@
     </div>
   </section>
 
+  <!-- ── REFERENCES (rendered from data.js) ── -->
+  <section class="section" aria-label="References">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">Academic References</span>
+        <h2 class="section-title">References</h2>
+        <p class="section-subtitle">Supervisors who can speak to my research and project work. Contact details are shared on request.</p>
+      </div>
+      <div class="refs-grid" id="references"></div>
+    </div>
+  </section>
+
   <!-- ── MISSION / CAREER OBJECTIVE ── -->
-  <section class="section" aria-label="Career objective">
+  <section class="section section--alt" aria-label="Career objective">
     <div class="container">
       <div class="section-header reveal">
         <span class="section-label">Career Objective</span>
@@ -242,7 +262,7 @@
   </section>
 
   <!-- ── EXTERNAL PROFILES ── -->
-  <section class="section section--alt" aria-label="External profiles">
+  <section class="section" aria-label="External profiles">
     <div class="container">
       <div class="section-header reveal">
         <span class="section-label">Professional Presence</span>
