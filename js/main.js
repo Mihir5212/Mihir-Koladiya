@@ -375,7 +375,8 @@ function renderResearchAreas() {
 function renderPubsPreview() {
   const container = el('#pubs-preview');
   if (!container) return;
-  const pubs = DATA.PUBLICATIONS.journal.slice(0, 2);
+  const P = DATA.PUBLICATIONS;
+  const pubs = (P.journal.length ? P.journal : P.conference).slice(0, 2);
   container.innerHTML = `<div class="pub-cards">${pubs.map(p => pubCardHTML(p)).join('')}</div>`;
 }
 
@@ -397,8 +398,33 @@ function renderAbout() {
   renderExperience();
   renderSkills();
   renderCertifications();
+  renderWorkshopsAndAwards();
   renderResearchInterests();
   renderProfileLinks();
+}
+
+function renderWorkshopsAndAwards() {
+  const ws = el('#workshops-timeline');
+  if (ws && DATA.WORKSHOPS) {
+    ws.innerHTML = DATA.WORKSHOPS.map(w => `
+      <div class="timeline-item reveal">
+        <div class="timeline-item__period">${sanitize(w.date)}</div>
+        <div class="timeline-item__title">${sanitize(w.title)}</div>
+        <div class="timeline-item__org">${sanitize(w.org)} &middot; ${sanitize(w.mode)}</div>
+      </div>
+    `).join('');
+  }
+  const aw = el('#awards-timeline');
+  if (aw && DATA.AWARDS) {
+    aw.innerHTML = DATA.AWARDS.map(a => `
+      <div class="timeline-item reveal">
+        <div class="timeline-item__period">${sanitize(a.date)}</div>
+        <div class="timeline-item__title">${sanitize(a.title)}</div>
+        <div class="timeline-item__org">${sanitize(a.org)}</div>
+        <div class="timeline-item__tags"><span class="tag">${sanitize(a.outcome)}</span></div>
+      </div>
+    `).join('');
+  }
 }
 
 function renderAboutBio() {
@@ -416,8 +442,9 @@ function renderAboutQuickFacts() {
   const p = DATA.PROFILE;
   const items = [
     { label: 'Location',       value: p.location,                   accent: false },
-    { label: 'Degree',         value: 'M.Tech, SVNIT Surat',        accent: false },
-    { label: 'Specialization', value: 'Transportation Eng.',         accent: false },
+    { label: 'Current Role',   value: 'Project Engineer, SVNIT Surat', accent: false },
+    { label: 'Degree',         value: 'M.E., MSU Baroda',           accent: false },
+    { label: 'Specialization', value: 'Highway & Transportation Eng.', accent: false },
     { label: 'CGPA',           value: '8.8 / 10',                   accent: false },
     { label: 'Experience',     value: '4+ Years',                   accent: false },
     { label: 'Status',         value: 'Open to Opportunities',      accent: true  },
@@ -479,12 +506,12 @@ function renderCertifications() {
   container.innerHTML = DATA.CERTIFICATIONS.map(c => `
     <div class="cert-card reveal">
       <div class="cert-card__photo">
-        <img
+        ${c.photo ? `<img
           src="${sanitize(c.photo)}"
           alt="${sanitize(c.title)} Certificate"
           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-        />
-        <div class="cert-card__photo-placeholder" style="display:none">
+        />` : ''}
+        <div class="cert-card__photo-placeholder" style="display:${c.photo ? 'none' : 'flex'}">
           <span style="font-size:2rem">📜</span>
           <span>Certificate Photo</span>
         </div>
@@ -522,7 +549,7 @@ function renderProfileLinks() {
     { name: 'Google Scholar',  url: L.googleScholar, icon: '🎓' },
     { name: 'ORCID',           url: L.orcid,         icon: '🔬' },
     { name: 'GitHub',          url: L.github,        icon: '💻' },
-  ];
+  ].filter(l => l.url);
   container.innerHTML = links.map(l => `
     <a href="${sanitize(l.url)}" target="_blank" rel="noopener" class="profile-link">
       <span class="profile-link__icon">${l.icon}</span>${sanitize(l.name)}
@@ -834,7 +861,7 @@ function renderContactProfileLinks() {
     { name: 'ResearchGate',   url: L.researchgate,  icon: '📚' },
     { name: 'Google Scholar', url: L.googleScholar, icon: '🎓' },
     { name: 'ORCID',          url: L.orcid,         icon: '🔬' },
-  ];
+  ].filter(l => l.url);
   linksEl.innerHTML = links.map(l => `
     <a href="${sanitize(l.url)}" target="_blank" rel="noopener" class="contact-link">
       ${l.icon} ${sanitize(l.name)} ↗
