@@ -1343,7 +1343,7 @@ function coverArt(category, seed = 1) {
 function artContours(rnd, id) {
   const centers = [[80 + rnd() * 70, 55 + rnd() * 40], [260 + rnd() * 70, 110 + rnd() * 40]];
   let s = `<defs><radialGradient id="${id}"><stop offset="0" stop-color="currentColor" stop-opacity=".30"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></radialGradient></defs>`;
-  s += `<path d="M-10 ${n1(160 + rnd() * 25)} C 110 ${n1(120 + rnd() * 30)}, 250 ${n1(70 + rnd() * 40)}, 410 ${n1(30 + rnd() * 30)}" fill="none" stroke="rgba(31,34,40,.09)" stroke-width="10" stroke-linecap="round"/>`;
+  s += `<path d="M-10 ${n1(160 + rnd() * 25)} C 110 ${n1(120 + rnd() * 30)}, 250 ${n1(70 + rnd() * 40)}, 410 ${n1(30 + rnd() * 30)}" fill="none" stroke="rgba(16,27,45,.09)" stroke-width="10" stroke-linecap="round"/>`;
   centers.forEach(([cx, cy], k) => {
     s += `<circle cx="${n1(cx)}" cy="${n1(cy)}" r="${k ? 74 : 60}" fill="url(#${id})"/>`;
     for (let i = 1; i <= 5; i++) {
@@ -1366,9 +1366,9 @@ function artRoad(rnd) {
   const vx = 200 + (rnd() * 70 - 35);
   const vy = 14;
   const cy = 118 + rnd() * 24;
-  let s = `<path d="M-10 ${n1(cy)} L 410 ${n1(cy - 18)}" stroke="rgba(31,34,40,.06)" stroke-width="22"/>`;
-  s += `<path d="M${n1(vx - 5)} ${vy} L 60 214 L 340 214 L ${n1(vx + 5)} ${vy} Z" fill="rgba(31,34,40,.06)"/>`;
-  s += `<path d="M${n1(vx - 5)} ${vy} L 60 214 M${n1(vx + 5)} ${vy} L 340 214" stroke="rgba(31,34,40,.22)" stroke-width="2" fill="none"/>`;
+  let s = `<path d="M-10 ${n1(cy)} L 410 ${n1(cy - 18)}" stroke="rgba(16,27,45,.06)" stroke-width="22"/>`;
+  s += `<path d="M${n1(vx - 5)} ${vy} L 60 214 L 340 214 L ${n1(vx + 5)} ${vy} Z" fill="rgba(16,27,45,.06)"/>`;
+  s += `<path d="M${n1(vx - 5)} ${vy} L 60 214 M${n1(vx + 5)} ${vy} L 340 214" stroke="rgba(16,27,45,.22)" stroke-width="2" fill="none"/>`;
   s += `<path d="M${n1(vx)} ${vy} L 200 214" stroke="currentColor" stroke-opacity=".55" stroke-width="3" stroke-dasharray="12 12" fill="none"/>`;
   for (let i = 0; i < 4; i++) {
     const t = 0.3 + rnd() * 0.6;
@@ -1390,11 +1390,11 @@ function artNetwork(rnd) {
     s += `<path d="M${n1(x1)} ${n1(y1)} C ${n1(mx)} ${n1(y1)}, ${n1(mx)} ${n1(y2)}, ${n1(x2)} ${n1(y2)}" fill="none" stroke="currentColor" stroke-opacity=".35" stroke-width="2"/>`;
     if (i % 2 === 0 && i + 2 < nodes.length) {
       const [x3, y3] = nodes[i + 2];
-      s += `<path d="M${n1(x1)} ${n1(y1)} L ${n1(x3)} ${n1(y3)}" fill="none" stroke="rgba(31,34,40,.12)" stroke-width="1.5" stroke-dasharray="4 6"/>`;
+      s += `<path d="M${n1(x1)} ${n1(y1)} L ${n1(x3)} ${n1(y3)}" fill="none" stroke="rgba(16,27,45,.12)" stroke-width="1.5" stroke-dasharray="4 6"/>`;
     }
   }
   nodes.forEach(([x, y], i) => {
-    s += `<circle cx="${n1(x)}" cy="${n1(y)}" r="${i % 3 === 0 ? 7 : 5}" fill="#FDFCFA" stroke="currentColor" stroke-opacity=".7" stroke-width="2"/>`;
+    s += `<circle cx="${n1(x)}" cy="${n1(y)}" r="${i % 3 === 0 ? 7 : 5}" fill="#FFFFFF" stroke="currentColor" stroke-opacity=".7" stroke-width="2"/>`;
   });
   return s;
 }
@@ -1404,7 +1404,7 @@ function artLayers(rnd) {
   let s = '';
   bands.forEach(([y, h, o]) => { s += `<rect x="-10" y="${y}" width="420" height="${h}" fill="currentColor" fill-opacity="${o}"/>`; });
   for (let i = 0; i < 46; i++) {
-    s += `<circle cx="${n1(rnd() * 400)}" cy="${n1(132 + rnd() * 70)}" r="${n1(1.2 + rnd() * 2.2)}" fill="rgba(31,34,40,.18)"/>`;
+    s += `<circle cx="${n1(rnd() * 400)}" cy="${n1(132 + rnd() * 70)}" r="${n1(1.2 + rnd() * 2.2)}" fill="rgba(16,27,45,.18)"/>`;
   }
   s += `<path d="M360 112 V 210 M352 112 H 368 M352 154 H 368" stroke="currentColor" stroke-opacity=".5" stroke-width="1.5" fill="none"/>`;
   s += `<path d="M40 112 Q 120 96 200 104 T 400 100" fill="none" stroke="currentColor" stroke-opacity=".35" stroke-width="2"/>`;
