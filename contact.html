@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Contact Mihir Koladiya — transportation engineer open to research collaborations, consultancy, and PhD opportunities." />
+  <title>Contact — Mihir Koladiya</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23191923'/><text x='16' y='22' text-anchor='middle' font-family='serif' font-size='18' font-weight='bold' fill='%23DD421D'>M</text></svg>" />
+</head>
+<body>
+
+  <!-- ── NAVBAR ── -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__logo">MK<span>.</span></a>
+      <div class="navbar__links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="publications.html">Publications</a>
+        <a href="insights.html">Insights</a>
+        <a href="showcase.html">Showcase</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="contact.html" class="nav-cta">Contact</a>
+      </div>
+      <button class="navbar__toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── PAGE HERO ── -->
+  <div class="page-hero" role="banner">
+    <div class="page-hero__bg-text" aria-hidden="true">Contact</div>
+    <div class="page-hero__inner">
+      <div class="page-hero__eyebrow">
+        <div class="page-hero__eyebrow-line"></div>
+        <span class="page-hero__label">Get in Touch</span>
+      </div>
+      <h1 class="page-hero__title">Let's Connect</h1>
+      <p class="page-hero__desc">Open to research collaborations, consultancy inquiries, PhD opportunities, and professional discussions in transportation engineering.</p>
+    </div>
+  </div>
+
+  <!-- ── CONTACT MAIN ── -->
+  <section class="section" aria-label="Contact information and form">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- Left: Info + Links -->
+        <div>
+          <div class="section-header reveal">
+            <span class="section-label">Direct Contact</span>
+            <h2 class="section-title">Reach out directly</h2>
+            <div class="divider"></div>
+          </div>
+
+          <div class="contact-info-block" id="contact-info"></div>
+
+          <!-- Availability note -->
+          <div class="reveal" style="margin-top:32px;padding:20px 24px;background:rgba(243,182,31,0.08);border:1px solid rgba(243,182,31,0.25);border-radius:var(--radius-lg)">
+            <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#7a5500;margin-bottom:6px">Response Time</div>
+            <div style="font-size:0.88rem;color:var(--dark);line-height:1.6">I typically respond to all enquiries within <strong>24–48 hours</strong> on business days.</div>
+          </div>
+
+          <!-- External profile links -->
+          <div class="reveal" style="margin-top:40px">
+            <div class="section-label" style="margin-bottom:16px">Research Profiles</div>
+            <div class="contact-links" id="contact-profile-links"></div>
+          </div>
+        </div>
+
+        <!-- Right: Form -->
+        <div class="reveal reveal-delay-2">
+          <div class="section-header">
+            <span class="section-label">Send a Message</span>
+            <h2 class="section-title">Write to me</h2>
+            <div class="divider"></div>
+          </div>
+
+          <div id="form-feedback" class="form-feedback" role="alert" aria-live="polite"></div>
+
+          <form class="contact-form" id="contact-form" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="form-name">Full Name <span style="color:var(--accent)">*</span></label>
+                <input
+                  class="form-input"
+                  type="text"
+                  id="form-name"
+                  name="name"
+                  placeholder="Your full name"
+                  autocomplete="name"
+                  required
+                />
+                <span class="form-error" id="err-name" role="alert"></span>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="form-email">Email Address <span style="color:var(--accent)">*</span></label>
+                <input
+                  class="form-input"
+                  type="email"
+                  id="form-email"
+                  name="email"
+                  placeholder="your@email.com"
+                  autocomplete="email"
+                  required
+                />
+                <span class="form-error" id="err-email" role="alert"></span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="form-subject">Subject <span style="color:var(--accent)">*</span></label>
+              <input
+                class="form-input"
+                type="text"
+                id="form-subject"
+                name="subject"
+                placeholder="e.g. Research collaboration, Consultancy enquiry, PhD opportunity"
+                required
+              />
+              <span class="form-error" id="err-subject" role="alert"></span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="form-organisation">Organisation / Institution</label>
+              <input
+                class="form-input"
+                type="text"
+                id="form-organisation"
+                name="organisation"
+                placeholder="University, company, or research group (optional)"
+                autocomplete="organization"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="form-message">Message <span style="color:var(--accent)">*</span></label>
+              <textarea
+                class="form-textarea"
+                id="form-message"
+                name="message"
+                placeholder="Please describe your enquiry in detail — project context, collaboration ideas, or questions about my research."
+                required
+                rows="6"
+              ></textarea>
+              <span class="form-error" id="err-message" role="alert"></span>
+            </div>
+            <div>
+              <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:15px 28px">
+                Send Message
+              </button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── OPPORTUNITY TYPES ── -->
+  <section class="section section--alt" aria-label="Opportunity types">
+    <div class="container">
+      <div class="section-header reveal section-header--center">
+        <span class="section-label">Open To</span>
+        <h2 class="section-title">Types of Engagement</h2>
+        <div class="divider divider--center"></div>
+        <p class="section-subtitle">Here are the kinds of opportunities and collaborations I am actively interested in.</p>
+      </div>
+      <div class="research-grid">
+        <div class="research-card reveal">
+          <span class="research-card__icon">🎓</span>
+          <div class="research-card__title">PhD / Research Positions</div>
+          <div class="research-card__desc">Seeking doctoral research opportunities in transportation safety, GIS, or related fields at institutions with strong engineering research programs.</div>
+        </div>
+        <div class="research-card reveal reveal-delay-1">
+          <span class="research-card__icon">🔬</span>
+          <div class="research-card__title">Research Collaboration</div>
+          <div class="research-card__desc">Open to co-authorship and joint research in road crash analysis, spatial statistics, or transportation data science with academic or industry partners.</div>
+        </div>
+        <div class="research-card reveal reveal-delay-2">
+          <span class="research-card__icon">🏗</span>
+          <div class="research-card__title">Engineering Consultancy</div>
+          <div class="research-card__desc">Available for technical consultancy in highway design, road safety audits, GIS-based infrastructure assessment, and traffic engineering projects.</div>
+        </div>
+        <div class="research-card reveal reveal-delay-3">
+          <span class="research-card__icon">📊</span>
+          <div class="research-card__title">Data Analysis Projects</div>
+          <div class="research-card__desc">Specialised in transportation crash data analysis, spatial statistics, and GIS-integrated reporting for government agencies and research bodies.</div>
+        </div>
+        <div class="research-card reveal">
+          <span class="research-card__icon">🎤</span>
+          <div class="research-card__title">Conferences &amp; Talks</div>
+          <div class="research-card__desc">Available to present research findings at national and international transportation engineering conferences, workshops, and seminars.</div>
+        </div>
+        <div class="research-card reveal reveal-delay-1">
+          <span class="research-card__icon">📝</span>
+          <div class="research-card__title">Peer Review</div>
+          <div class="research-card__desc">Willing to contribute peer review for journals in transportation safety, accident analysis, and GIS-based engineering research.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand-name">MK<span>.</span></div>
+          <p class="footer__brand-desc">
+            Highway &amp; Transportation Engineer focused on road safety research, GIS-based crash analysis, and evidence-based transport planning.
+          </p>
+        </div>
+        <div>
+          <div class="footer__heading">Navigation</div>
+          <nav class="footer__links" aria-label="Footer navigation">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="projects.html">Projects</a>
+            <a href="publications.html">Publications</a>
+            <a href="insights.html">Insights</a>
+        <a href="showcase.html">Showcase</a>
+<a href="gallery.html">Gallery</a>
+            <a href="contact.html">Contact</a>
+          </nav>
+        </div>
+        <div>
+          <div class="footer__heading">Research Profiles</div>
+          <div class="footer__links">
+            <a href="https://linkedin.com/in/mihirkoladiya" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://researchgate.net/profile/Mihir_Koladiya" target="_blank" rel="noopener">ResearchGate</a>
+            <a href="https://scholar.google.com/citations?user=XXXXXXXX" target="_blank" rel="noopener">Google Scholar</a>
+            <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener">ORCID</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>&copy; 2024 Mihir Koladiya. All rights reserved.</span>
+        <div class="footer__social">
+          <a href="https://linkedin.com/in/mihirkoladiya" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/mihirkoladiya" target="_blank" rel="noopener">GitHub</a>
+          <a href="mailto:mihir.koladiya@example.com">Email</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
