@@ -3,19 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#F2EFE9" />
   <meta name="description" content="Publications by Mihir Koladiya — journal papers, conference papers, and peer review contributions in transportation safety and GIS." />
   <title>Publications — Mihir Koladiya</title>
   <link rel="stylesheet" href="css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23191923'/><text x='16' y='22' text-anchor='middle' font-family='serif' font-size='18' font-weight='bold' fill='%23DD421D'>M</text></svg>" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%231F5BFF'/><text x='16' y='20.5' text-anchor='middle' font-family='Arial,sans-serif' font-size='12' font-weight='700' fill='white'>MK</text></svg>" />
 </head>
 <body>
 
   <!-- ── NAVBAR ── -->
   <nav class="navbar" role="navigation" aria-label="Main navigation">
     <div class="navbar__inner">
-      <a href="index.html" class="navbar__logo">MK<span>.</span></a>
+      <a href="index.html" class="navbar__logo" aria-label="Mihir Koladiya — Home"><span class="navbar__mark" aria-hidden="true">MK</span><span class="navbar__wordmark">Mihir Koladiya<small>Highway &amp; Transportation Engineer</small></span></a>
       <div class="navbar__links" id="nav-links">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
@@ -41,7 +42,7 @@
         <span class="page-hero__label">Research Output</span>
       </div>
       <h1 class="page-hero__title">Publications</h1>
-      <p class="page-hero__desc">Peer-reviewed journal papers, conference contributions, and ongoing research in transportation safety, GIS, and highway engineering.</p>
+      <p class="page-hero__desc">Peer-reviewed conference papers, work under publication, and review contributions in road safety, travel behaviour, and sustainable mobility.</p>
     </div>
   </div>
 
@@ -49,25 +50,8 @@
   <section class="section" aria-label="Publications listing">
     <div class="container">
 
-      <!-- Publication counts summary -->
-      <div class="reveal" style="display:flex;gap:24px;flex-wrap:wrap;margin-bottom:56px">
-        <div style="background:var(--light);border:1px solid var(--gray-lt);border-radius:var(--radius-lg);padding:20px 28px;flex:1;min-width:140px;text-align:center">
-          <div style="font-family:var(--font-display);font-size:2.2rem;color:var(--accent);line-height:1;margin-bottom:6px">2</div>
-          <div style="font-size:0.8rem;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:0.06em">Journal Papers</div>
-        </div>
-        <div style="background:var(--light);border:1px solid var(--gray-lt);border-radius:var(--radius-lg);padding:20px 28px;flex:1;min-width:140px;text-align:center">
-          <div style="font-family:var(--font-display);font-size:2.2rem;color:var(--accent);line-height:1;margin-bottom:6px">2</div>
-          <div style="font-size:0.8rem;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:0.06em">Conference Papers</div>
-        </div>
-        <div style="background:var(--light);border:1px solid var(--gray-lt);border-radius:var(--radius-lg);padding:20px 28px;flex:1;min-width:140px;text-align:center">
-          <div style="font-family:var(--font-display);font-size:2.2rem;color:var(--accent);line-height:1;margin-bottom:6px">1</div>
-          <div style="font-size:0.8rem;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:0.06em">Under Review</div>
-        </div>
-        <div style="background:var(--light);border:1px solid var(--gray-lt);border-radius:var(--radius-lg);padding:20px 28px;flex:1;min-width:140px;text-align:center">
-          <div style="font-family:var(--font-display);font-size:2.2rem;color:var(--gold);line-height:1;margin-bottom:6px">1</div>
-          <div style="font-size:0.8rem;color:var(--gray);font-weight:600;text-transform:uppercase;letter-spacing:0.06em">Peer Reviews</div>
-        </div>
-      </div>
+      <!-- Publication counts summary (rendered from data.js) -->
+      <div class="pub-stats reveal" id="pub-stats"></div>
 
       <!-- Journal Papers -->
       <div class="pub-section reveal" id="pub-journal"></div>
@@ -104,7 +88,7 @@
     <div class="container">
       <div class="footer__grid">
         <div>
-          <div class="footer__brand-name">MK<span>.</span></div>
+          <div class="footer__brand-name"><span class="navbar__mark" aria-hidden="true">MK</span>Mihir Koladiya</div>
           <p class="footer__brand-desc">
             Highway &amp; Transportation Engineer focused on road safety research, GIS-based crash analysis, and evidence-based transport planning.
           </p>

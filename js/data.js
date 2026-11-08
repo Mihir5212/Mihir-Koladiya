@@ -32,10 +32,10 @@ Languages: Gujarati (native), Hindi and English (full professional proficiency).
   // HIGHLIGHTS / STATS
   // ─────────────────────────────────────────
   HIGHLIGHTS: [
-    { value: 4,  suffix: "+", label: "Years Experience",     icon: "⚙" },
-    { value: 3,  suffix: "",  label: "Published Papers",     icon: "📄" },
-    { value: 4,  suffix: "",  label: "Papers Under Process", icon: "📝" },
-    { value: 4,  suffix: "",  label: "Conferences",          icon: "🎤" },
+    { value: 4,  suffix: "+", label: "Years Experience",     icon: "briefcase" },
+    { value: 3,  suffix: "",  label: "Published Papers",     icon: "file" },
+    { value: 4,  suffix: "",  label: "Papers Under Process", icon: "pen" },
+    { value: 4,  suffix: "",  label: "Conferences",          icon: "mic" },
   ],
 
   // ─────────────────────────────────────────
@@ -232,32 +232,32 @@ Languages: Gujarati (native), Hindi and English (full professional proficiency).
   // ─────────────────────────────────────────
   RESEARCH_AREAS: [
     {
-      icon: "🛑",
+      icon: "alert",
       title: "Crash Data Analytics",
       desc: "Crash frequency and severity analysis, contributing-factor identification, blackspot diagnosis, safety trend interpretation, and crash-risk assessment.",
     },
     {
-      icon: "🗺",
+      icon: "layers",
       title: "GIS-Based Hotspot Mapping",
       desc: "Crash mapping, KDE-based heatmaps, spatial clustering, road inventory analysis, and corridor-level safety interpretation.",
     },
     {
-      icon: "🤖",
+      icon: "cpu",
       title: "AI/ML for Road Safety",
       desc: "Classification, regression, feature importance analysis, and predictive crash modelling with Random Forest, XGBoost, and ANN.",
     },
     {
-      icon: "📊",
+      icon: "chart",
       title: "Statistical Crash-Risk Modelling",
       desc: "Poisson, Negative Binomial, Zero-Inflated, and Hurdle models, Geographically Weighted Regression, and model comparison.",
     },
     {
-      icon: "🌱",
+      icon: "leaf",
       title: "Transport Planning & Mobility",
       desc: "Mode choice, accessibility, travel behaviour, sustainable and low-carbon mobility planning, and policy-oriented interpretation.",
     },
     {
-      icon: "🛣",
+      icon: "route",
       title: "Road Safety Audit & Highway Design",
       desc: "Road safety audits, roadway geometry and intersection review, signage and marking evaluation, and IRC-guided countermeasure planning.",
     },

@@ -3,19 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#F2EFE9" />
   <meta name="description" content="Mihir Koladiya — Highway & Transportation Engineer. Road safety researcher, GIS analyst, and transportation engineering professional based in Surat, Gujarat." />
   <title>Mihir Koladiya — Highway & Transportation Engineer</title>
   <link rel="stylesheet" href="css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23191923'/><text x='16' y='22' text-anchor='middle' font-family='serif' font-size='18' font-weight='bold' fill='%23DD421D'>M</text></svg>" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%231F5BFF'/><text x='16' y='20.5' text-anchor='middle' font-family='Arial,sans-serif' font-size='12' font-weight='700' fill='white'>MK</text></svg>" />
 </head>
 <body>
 
   <!-- ── NAVBAR ── -->
   <nav class="navbar" role="navigation" aria-label="Main navigation">
     <div class="navbar__inner">
-      <a href="index.html" class="navbar__logo">MK<span>.</span></a>
+      <a href="index.html" class="navbar__logo" aria-label="Mihir Koladiya — Home"><span class="navbar__mark" aria-hidden="true">MK</span><span class="navbar__wordmark">Mihir Koladiya<small>Highway &amp; Transportation Engineer</small></span></a>
       <div class="navbar__links" id="nav-links">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
@@ -34,24 +35,53 @@
 
   <!-- ── HERO ── -->
   <section class="hero" aria-label="Introduction">
-    <div class="hero__bg" aria-hidden="true"></div>
-    <div class="hero__grid-overlay" aria-hidden="true"></div>
     <div class="hero__inner">
       <div class="hero__content">
-        <div class="hero__eyebrow" aria-hidden="true">
-          <div class="hero__eyebrow-line"></div>
-          <span class="hero__eyebrow-text">Transportation Engineering · Road Safety · GIS</span>
+        <div class="hero__badge" id="hero-badge">
+          <span class="hero__badge-dot" aria-hidden="true"></span>
+          <span>Highway Safety &amp; Risk Analytics</span>
         </div>
         <h1 class="hero__name" id="hero-name">Mihir Koladiya</h1>
-        <div class="hero__title" id="hero-title" role="doc-subtitle">Highway &amp; Transportation Engineer</div>
-        <p class="hero__tagline" id="hero-tagline"></p>
+        <p class="hero__title" id="hero-title">Highway &amp; Transportation Engineer</p>
+        <p class="hero__lead">
+          I turn crash data into safer roads — combining field audits, GIS hotspot mapping and AI/ML modelling to find where and why crashes happen, and what to fix first.
+        </p>
+        <div class="hero__chips" id="hero-chips" aria-label="Areas of focus"></div>
         <div class="hero__actions">
-          <a href="projects.html" class="btn btn-primary">View Projects</a>
-          <a href="publications.html" class="btn btn-outline">Publications</a>
-          <a href="assets/docs/Mihir_Koladiya_CV.pdf" download class="btn btn-ghost">Download CV</a>
+          <a href="projects.html" class="btn btn-primary">View Projects <span data-icon="arrow"></span></a>
+          <a href="assets/docs/Mihir_Koladiya_CV.pdf" download class="btn btn-soft"><span data-icon="download"></span> Download CV</a>
+        </div>
+        <div class="hero__meta" id="hero-meta"></div>
+      </div>
+
+      <div class="hero__visual">
+        <div class="profile-card">
+          <div class="profile-card__photo">
+            <img
+              src="assets/images/profile.jpg"
+              alt="Portrait of Mihir Koladiya"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+            />
+            <div class="profile-card__fallback"><span data-icon="user"></span></div>
+          </div>
+          <div class="profile-card__body">
+            <div>
+              <div class="profile-card__name">Mihir Koladiya</div>
+              <div class="profile-card__role">Project Engineer · SVNIT Surat</div>
+            </div>
+            <span class="profile-card__more" aria-hidden="true">•••</span>
+          </div>
+          <p class="profile-card__quote">Data-driven tools for safer roads.</p>
+        </div>
+        <div class="hero__float hero__float--chip">
+          <span class="hero__float-icon" data-icon="cap"></span>
+          <div><strong>M.E. · 8.8 CGPA</strong><span>MSU Baroda</span></div>
+        </div>
+        <div class="hero__float hero__float--note">
+          <span class="hero__float-icon" data-icon="file"></span>
+          <div><strong>3 papers published</strong><span>+4 under publication</span></div>
         </div>
       </div>
-      <div class="hero__card" id="hero-card" aria-label="Quick profile"></div>
     </div>
   </section>
 
@@ -62,38 +92,28 @@
     </div>
   </div>
 
-  <!-- ── ABOUT SNAPSHOT ── -->
-  <section class="about-summary section" aria-label="Professional summary">
-    <div class="about-summary__inner">
-      <div class="about-summary__image-wrap reveal">
-        <div class="about-summary__gold-block" aria-hidden="true"></div>
-        <div class="about-summary__image-box">
-          <img
-            src="assets/images/profile.jpg"
-            alt="Mihir Koladiya — Highway & Transportation Engineer"
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-          />
-          <div class="about-summary__image-placeholder" style="display:none">
-            <span style="font-size:3rem">👤</span>
-            <span style="text-align:center;font-size:0.85rem;color:var(--gray)">Profile Photo<br><small>Add: assets/images/profile.jpg</small></span>
+  <!-- ── INTRO + AT A GLANCE ── -->
+  <section class="section" aria-label="Professional summary">
+    <div class="container">
+      <div class="intro__grid">
+        <div class="reveal">
+          <span class="section-label">Engineering Profile</span>
+          <h2 class="section-title">Bridging highway engineering and <em>spatial research</em></h2>
+          <p class="intro__lead">
+            A transportation engineer with a dual focus on field practice and academic research — road safety, crash hotspot identification, and geospatial analysis of infrastructure risk.
+          </p>
+          <p class="intro__body">
+            With an M.E. in Highway &amp; Transportation Engineering from MSU Baroda, and currently a Project Engineer at SVNIT Surat, I apply QGIS, ArcGIS, Python, and AI/ML methods to analyse crash patterns, identify blackspots, and support data-driven highway safety decisions.
+          </p>
+          <div class="intro__actions">
+            <a href="about.html" class="btn btn-primary">Full Profile</a>
+            <a href="contact.html" class="btn btn-outline">Get in Touch</a>
           </div>
         </div>
-        <div class="about-summary__accent-block" aria-hidden="true"></div>
-      </div>
-      <div class="about-summary__text reveal reveal-delay-2">
-        <span class="section-label">Engineering Profile</span>
-        <h2 class="section-title">Bridging highway engineering and spatial research</h2>
-        <div class="divider"></div>
-        <p style="color:var(--gray);line-height:1.85;margin-bottom:20px;font-size:0.97rem">
-          A transportation engineer with a dual focus in field practice and academic research. My work centres on road safety, crash hotspot identification, and geospatial analysis of transport infrastructure risk — with the goal of informing evidence-based engineering decisions.
-        </p>
-        <p style="color:var(--gray);line-height:1.85;margin-bottom:36px;font-size:0.97rem">
-          With an M.E. in Highway &amp; Transportation Engineering from MSU Baroda, and currently a Project Engineer at SVNIT Surat, I apply QGIS, ArcGIS, Python, and AI/ML methods to analyse crash patterns, identify blackspots, and support data-driven highway safety decisions.
-        </p>
-        <div style="display:flex;gap:14px;flex-wrap:wrap">
-          <a href="about.html" class="btn btn-primary">Full Profile</a>
-          <a href="contact.html" class="btn btn-outline">Get in Touch</a>
-        </div>
+        <aside class="glance reveal reveal-delay-2" aria-label="At a glance">
+          <div class="glance__title">At a glance</div>
+          <div id="glance-list"></div>
+        </aside>
       </div>
     </div>
   </section>
@@ -105,10 +125,10 @@
         <span class="section-label">Selected Work</span>
         <h2 class="section-title">Featured Projects</h2>
         <div class="divider"></div>
-        <p class="section-subtitle">A selection of engineering and research projects spanning road safety, GIS analysis, pavement evaluation, and traffic studies.</p>
+        <p class="section-subtitle">Research and field projects in road safety, crash analytics, and GIS-based blackspot investigation.</p>
       </div>
       <div class="projects-grid" id="featured-projects"></div>
-      <div style="margin-top:48px;text-align:center">
+      <div class="section-actions">
         <a href="projects.html" class="btn btn-outline">View All Projects</a>
       </div>
     </div>
@@ -134,10 +154,10 @@
         <span class="section-label">Research Output</span>
         <h2 class="section-title">Recent Publications</h2>
         <div class="divider"></div>
-        <p class="section-subtitle">Peer-reviewed journal papers and conference contributions in transportation safety and GIS analytics.</p>
+        <p class="section-subtitle">Peer-reviewed conference papers on road safety, travel behaviour, and sustainable mobility.</p>
       </div>
       <div id="pubs-preview"></div>
-      <div style="margin-top:36px">
+      <div class="section-actions section-actions--start">
         <a href="publications.html" class="btn btn-primary">All Publications</a>
       </div>
     </div>
@@ -153,7 +173,7 @@
         <p class="section-subtitle">In-depth articles on road safety methodologies, GIS practice, and transportation engineering.</p>
       </div>
       <div class="insights-grid" id="insights-preview"></div>
-      <div style="margin-top:48px;text-align:center">
+      <div class="section-actions">
         <a href="insights.html" class="btn btn-outline">All Insights</a>
         <a href="showcase.html" class="btn btn-ghost">View Showcase</a>
       </div>
@@ -180,7 +200,7 @@
     <div class="container">
       <div class="footer__grid">
         <div>
-          <div class="footer__brand-name">MK<span>.</span></div>
+          <div class="footer__brand-name"><span class="navbar__mark" aria-hidden="true">MK</span>Mihir Koladiya</div>
           <p class="footer__brand-desc">
             Highway &amp; Transportation Engineer focused on road safety research, GIS-based crash analysis, and evidence-based transport planning in India.
           </p>

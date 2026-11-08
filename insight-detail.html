@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#F2EFE9" />
   <meta name="description" content="Insight — Mihir Koladiya" />
   <title>Insight — Mihir Koladiya</title>
   <link rel="stylesheet" href="css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23191923'/><text x='16' y='22' text-anchor='middle' font-family='serif' font-size='18' font-weight='bold' fill='%23DD421D'>M</text></svg>" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%231F5BFF'/><text x='16' y='20.5' text-anchor='middle' font-family='Arial,sans-serif' font-size='12' font-weight='700' fill='white'>MK</text></svg>" />
   <style>
     /* ── Reading progress bar ── */
     .reading-progress {
@@ -20,45 +21,44 @@
 
     /* ── ARTICLE HERO ── */
     .insight-hero {
-      background: var(--dark); padding: 72px 0 64px;
+      background: linear-gradient(180deg, var(--navy-900), var(--navy-950)); padding: 72px 0 64px;
       position: relative; overflow: hidden;
     }
     .insight-hero::before {
       content: ''; position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse 55% 80% at 85% 50%, rgba(243,182,31,0.07) 0%, transparent 65%),
-        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(221,66,29,0.08) 0%, transparent 55%);
+      background: radial-gradient(50% 90% at 92% 8%, rgba(31,91,255,0.17) 0%, transparent 62%),
+        radial-gradient(45% 85% at 0% 100%, rgba(34,67,111,0.62) 0%, transparent 70%);
     }
     .insight-hero__inner {
       position: relative; z-index: 1;
-      max-width: 900px; margin: 0 auto; padding: 0 36px;
+      max-width: 900px; margin: 0 auto; padding: 0 var(--gutter);
     }
     .insight-hero__back {
       display: inline-flex; align-items: center; gap: 8px;
       font-size: 0.82rem; font-weight: 600;
-      color: rgba(255,255,255,0.5); margin-bottom: 28px;
+      color: var(--on-dark-3); margin-bottom: 28px;
       transition: color var(--transition);
     }
     .insight-hero__back::before { content: '←'; }
     .insight-hero__back:hover { color: var(--white); }
     .insight-hero__meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 22px; }
     .insight-hero__date, .insight-hero__read {
-      font-family: var(--font-mono); font-size: 0.72rem; color: rgba(255,255,255,0.42); letter-spacing: 0.08em;
+      font-family: var(--font-mono); font-size: 0.72rem; color: var(--on-dark-3); letter-spacing: 0.08em;
     }
     .insight-hero__title {
       font-family: var(--font-display);
       font-size: clamp(1.8rem, 4vw, 3rem);
-      color: var(--white); line-height: 1.1; margin-bottom: 22px; letter-spacing: -0.02em;
+      color: var(--white); line-height: 1.1; margin-bottom: 22px; font-weight: 800; letter-spacing: -0.04em;
     }
     .insight-hero__excerpt {
-      font-size: 1.05rem; color: rgba(255,255,255,0.58);
+      font-size: 1.05rem; color: var(--on-dark-3);
       line-height: 1.8; font-weight: 300; font-style: italic;
       border-left: 3px solid var(--accent); padding-left: 20px;
     }
 
     /* ── ARTICLE LAYOUT ── */
     .article-layout {
-      max-width: 900px; margin: 0 auto; padding: 72px 36px;
+      max-width: 900px; margin: 0 auto; padding: 72px var(--gutter);
       display: grid; grid-template-columns: 1fr 260px; gap: 56px; align-items: start;
     }
     .article-body h2 {
@@ -103,7 +103,7 @@
       text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
     }
     .article-graphic-card__value {
-      font-family: var(--font-display); font-size: clamp(1.2rem, 2.2vw, 1.7rem);
+      font-family: var(--font-display); font-weight: 800; font-size: clamp(1.2rem, 2.2vw, 1.7rem);
       color: var(--dark); line-height: 1.1; margin-bottom: 8px;
     }
     .article-graphic-card__note {
@@ -143,27 +143,26 @@
        VIEWER HERO (Report / PPT)
     ═══════════════════════════════════════ */
     .viewer-hero {
-      background: var(--dark); padding: 56px 0 48px;
+      background: linear-gradient(180deg, var(--navy-900), var(--navy-950)); padding: 56px 0 48px;
       position: relative; overflow: hidden;
     }
     .viewer-hero::before {
       content: ''; position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse 60% 90% at 90% 50%, rgba(221,66,29,0.1) 0%, transparent 65%),
-        radial-gradient(ellipse 35% 60% at 8% 85%, rgba(243,182,31,0.06) 0%, transparent 55%);
+      background: radial-gradient(50% 90% at 92% 8%, rgba(31,91,255,0.17) 0%, transparent 62%),
+        radial-gradient(45% 85% at 0% 100%, rgba(34,67,111,0.62) 0%, transparent 70%);
     }
     .viewer-hero__inner {
       position: relative; z-index: 1;
-      max-width: var(--max-w); margin: 0 auto; padding: 0 36px;
+      max-width: var(--max-w); margin: 0 auto; padding: 0 var(--gutter);
     }
     .viewer-hero__inner--presentation {
       max-width: var(--max-w);
-      padding: 0 36px;
+      padding: 0 var(--gutter);
     }
     .viewer-hero__back {
       display: inline-flex; align-items: center; gap: 8px;
       font-size: 0.82rem; font-weight: 600;
-      color: rgba(255,255,255,0.5); margin-bottom: 24px; transition: color var(--transition);
+      color: var(--on-dark-3); margin-bottom: 24px; transition: color var(--transition);
     }
     .viewer-hero__back::before { content: '←'; }
     .viewer-hero__back:hover { color: var(--white); }
@@ -177,22 +176,22 @@
     .viewer-hero__title {
       font-family: var(--font-display);
       font-size: clamp(1.6rem, 3.5vw, 2.6rem);
-      color: var(--white); line-height: 1.1; margin-bottom: 14px; letter-spacing: -0.02em; max-width: 800px;
+      color: var(--white); line-height: 1.1; margin-bottom: 14px; font-weight: 800; letter-spacing: -0.04em; max-width: 800px;
     }
     .viewer-hero__sub {
-      font-size: 0.95rem; color: rgba(255,255,255,0.55); line-height: 1.7; font-weight: 300; max-width: 640px;
+      font-size: 0.95rem; color: var(--on-dark-3); line-height: 1.7; font-weight: 300; max-width: 640px;
     }
 
     /* ═══════════════════════════════════════
        VIEWER LAYOUT
     ═══════════════════════════════════════ */
     .viewer-layout {
-      max-width: var(--max-w); margin: 0 auto; padding: 48px 36px 80px;
+      max-width: var(--max-w); margin: 0 auto; padding: 48px var(--gutter) 80px;
       display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 40px; align-items: start;
     }
     .viewer-layout--presentation {
       max-width: var(--max-w);
-      padding: 48px 36px 80px;
+      padding: 48px var(--gutter) 80px;
       grid-template-columns: minmax(0, 1fr) 300px;
       gap: 40px;
       align-items: start;
@@ -285,11 +284,11 @@
     .viewer-toolbar__dot { width: 10px; height: 10px; border-radius: 50%; }
     .viewer-toolbar__label {
       font-family: var(--font-mono); font-size: 0.72rem;
-      color: rgba(255,255,255,0.5); letter-spacing: 0.1em; margin-left: 8px;
+      color: var(--on-dark-3); letter-spacing: 0.1em; margin-left: 8px;
     }
     .viewer-toolbar__counter {
       font-family: var(--font-mono); font-size: 0.75rem;
-      color: rgba(255,255,255,0.55); font-weight: 600;
+      color: var(--on-dark-3); font-weight: 600;
     }
 
     /* Stage */
@@ -365,7 +364,7 @@
       position: absolute; top: 10px; right: 10px;
       width: 32px; height: 32px; border-radius: 6px;
       background: rgba(10,10,16,0.7); border: 1px solid rgba(255,255,255,0.1);
-      color: rgba(255,255,255,0.65); font-size: 0.8rem;
+      color: var(--on-dark-2); font-size: 0.8rem;
       display: flex; align-items: center; justify-content: center;
       cursor: pointer; z-index: 10;
       opacity: 0; transition: opacity var(--transition), background var(--transition);
@@ -390,7 +389,7 @@
     .viewer-label-bar--presentation .viewer-label-bar__hint {
       color: rgba(255,255,255,0.34);
     }
-    .viewer-label-bar__text { font-size: 0.8rem; color: rgba(255,255,255,0.6); font-weight: 500; }
+    .viewer-label-bar__text { font-size: 0.8rem; color: var(--on-dark-2); font-weight: 500; }
     .viewer-label-bar__hint { font-family: var(--font-mono); font-size: 0.65rem; color: rgba(255,255,255,0.25); letter-spacing: 0.06em; }
 
     /* Thumbnail strip */
@@ -419,7 +418,7 @@
       position: relative;
     }
     .viewer-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .viewer-thumb.active { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(221,66,29,0.2); }
+    .viewer-thumb.active { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(31,91,255,0.2); }
     .viewer-thumb:hover:not(.active) { border-color: var(--gray-mid); }
     .viewer-thumb--presentation {
       width: 124px;
@@ -439,8 +438,8 @@
       pointer-events: none;
     }
     .viewer-thumb--presentation.active {
-      border-color: rgba(221,66,29,0.8);
-      box-shadow: 0 0 0 2px rgba(221,66,29,0.2), 0 14px 28px rgba(0,0,0,0.24);
+      border-color: rgba(31,91,255,0.8);
+      box-shadow: 0 0 0 2px rgba(31,91,255,0.2), 0 14px 28px rgba(0,0,0,0.24);
       transform: translateY(-2px);
     }
     .viewer-thumb--presentation:hover:not(.active) {
@@ -512,11 +511,11 @@
       border-radius: 999px;
       background: rgba(255,255,255,0.08);
       border: 1px solid rgba(255,255,255,0.12);
-      color: rgba(255,255,255,0.62);
+      color: var(--on-dark-2);
       font-size: 1.15rem; cursor: pointer; line-height: 1; transition: all var(--transition);
       z-index: 3;
     }
-    .fs-overlay__close:hover { color: white; background: rgba(221,66,29,0.85); border-color: rgba(221,66,29,0.85); }
+    .fs-overlay__close:hover { color: white; background: rgba(31,91,255,0.85); border-color: rgba(31,91,255,0.85); }
     .fs-nav {
       width: 54px; height: 54px; border-radius: 50%;
       background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14);
@@ -536,18 +535,18 @@
     .fs-nav--right { right: 20px; }
 
     /* ── Not found ── */
-    .not-found { text-align: center; padding: 120px 36px; }
+    .not-found { text-align: center; padding: 120px var(--gutter); }
     .not-found h1 { font-family: var(--font-display); font-size: 2.5rem; color: var(--dark); margin-bottom: 16px; }
     .not-found p { color: var(--gray); margin-bottom: 32px; }
 
     /* ── Responsive ── */
     @media (max-width: 1000px) {
       .viewer-layout,
-      .viewer-layout--presentation { grid-template-columns: 1fr; gap: 32px; padding: 36px 22px 60px; }
+      .viewer-layout--presentation { grid-template-columns: minmax(0, 1fr); gap: 32px; padding: var(--gutter) 22px 60px; }
       .viewer-sidebar { position: static; }
       .viewer-stage--presentation { min-height: 0; }
       .article-graphic-grid { grid-template-columns: 1fr; }
-      .article-layout { grid-template-columns: 1fr; gap: 36px; padding: 48px 22px; }
+      .article-layout { grid-template-columns: minmax(0, 1fr); gap: 36px; padding: 48px 22px; }
       .article-sidebar { position: static; }
       .fs-overlay {
         padding: 18px;
@@ -577,6 +576,25 @@
         align-items: flex-start;
       }
     }
+  
+    /* ── Soft System overrides ── */
+    .insight-hero, .viewer-hero { background: transparent; }
+    .insight-hero::before, .viewer-hero::before { display: none; }
+    .insight-hero__back, .viewer-hero__back {
+      color: var(--muted); padding: 8px 16px 8px 12px; border-radius: 999px;
+      background: var(--surface); box-shadow: var(--raise-sm); border: 1px solid rgba(255,255,255,0.72);
+    }
+    .insight-hero__back:hover, .viewer-hero__back:hover { color: var(--blue-700); }
+    .insight-hero__title, .viewer-hero__title { color: var(--charcoal); font-weight: 600; letter-spacing: -0.035em; }
+
+    .insight-hero__date, .insight-hero__read { color: var(--muted); }
+    .insight-hero__excerpt { color: var(--muted); border-left-color: var(--blue-600); }
+    .viewer-type-pill { background: var(--surface); border: 1px solid rgba(255,255,255,0.72); box-shadow: var(--raise-sm); color: var(--charcoal); }
+    .viewer-hero__sub { color: var(--muted); font-weight: 400; }
+    .article-card { background: var(--surface); border: 1px solid rgba(255,255,255,0.72); border-radius: 24px; box-shadow: var(--raise); }
+    .article-graphic-card { background: var(--surface); border: 1px solid rgba(255,255,255,0.72); border-radius: 22px; box-shadow: var(--raise-sm); }
+    .viewer-card { background: var(--surface); border: 1px solid rgba(255,255,255,0.72); border-radius: 24px; box-shadow: var(--raise); }
+    .viewer-highlight-item::before { color: var(--blue-600); }
   </style>
 </head>
 <body>
@@ -586,7 +604,7 @@
   <!-- NAVBAR -->
   <nav class="navbar" role="navigation" aria-label="Main navigation">
     <div class="navbar__inner">
-      <a href="index.html" class="navbar__logo">MK<span>.</span></a>
+      <a href="index.html" class="navbar__logo" aria-label="Mihir Koladiya — Home"><span class="navbar__mark" aria-hidden="true">MK</span><span class="navbar__wordmark">Mihir Koladiya<small>Highway &amp; Transportation Engineer</small></span></a>
       <div class="navbar__links" id="nav-links">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
@@ -625,7 +643,7 @@
     <div class="container">
       <div class="footer__grid">
         <div>
-          <div class="footer__brand-name">MK<span>.</span></div>
+          <div class="footer__brand-name"><span class="navbar__mark" aria-hidden="true">MK</span>Mihir Koladiya</div>
           <p class="footer__brand-desc">Highway &amp; Transportation Engineer focused on road safety research, GIS-based crash analysis, and evidence-based transport planning.</p>
         </div>
         <div>
@@ -801,9 +819,9 @@
             </div>
             ${related.length ? `<div class="article-card"><div class="article-card__heading">More Insights</div>${relatedHTML}</div>` : ''}
             <div class="article-card" style="background:var(--dark);border-color:var(--dark)">
-              <div style="font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:10px">Research Enquiries</div>
-              <p style="font-size:0.83rem;color:rgba(255,255,255,0.6);line-height:1.7;margin-bottom:14px">Interested in the methods discussed? Let's connect.</p>
-              <a href="contact.html" class="btn btn-white" style="width:100%;justify-content:center">Get in Touch</a>
+              <div style="font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold-300);margin-bottom:10px">Research Enquiries</div>
+              <p style="font-size:0.83rem;color:var(--on-dark-2);line-height:1.7;margin-bottom:14px">Interested in the methods discussed? Let's connect.</p>
+              <a href="contact.html" class="btn btn-gold" style="width:100%;justify-content:center">Get in Touch</a>
             </div>
           </aside>
         </div>`;
@@ -825,7 +843,7 @@
        VIEWER (PDF-only showcase)
     ════════════════════════════════════════ */
     const totalUnits = insight.pageCount || insight.slideCount || 1;
-    const typeLabel = isReport ? '📄 Technical Report' : isPPT ? '📊 Presentation' : isPoster ? '🖼 Poster' : isNote ? '📝 Notes' : isBook ? '📚 Book' : '📁 Document';
+    const typeLabel = isReport ? 'Technical Report' : isPPT ? 'Presentation' : isPoster ? 'Poster' : isNote ? 'Notes' : isBook ? 'Book' : 'Document';
 
     content.innerHTML = `
       <!-- VIEWER HERO -->
@@ -835,7 +853,7 @@
           <div class="viewer-hero__meta">
             <span class="tag tag--accent">${esc(insight.category)}</span>
             <span class="viewer-type-pill">${typeLabel}</span>
-            <span style="font-family:var(--font-mono);font-size:0.72rem;color:rgba(255,255,255,0.4)">${esc(insight.date)}</span>
+            <span style="font-family:var(--font-mono);font-size:0.72rem;color:var(--muted)">${esc(insight.date)}</span>
           </div>
           <h1 class="viewer-hero__title">${esc(insight.title)}</h1>
         </div>
