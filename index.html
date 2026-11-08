@@ -58,36 +58,31 @@
         <div class="hero__actions">
           <a href="projects.html" class="btn btn-primary">View Projects <span data-icon="arrow"></span></a>
           <a href="assets/docs/Mihir_Koladiya_CV.pdf" download class="btn btn-soft"><span data-icon="download"></span> Download CV</a>
+          <div class="hero__social" id="hero-social"></div>
         </div>
-        <div class="hero__meta" id="hero-meta"></div>
       </div>
 
       <div class="hero__visual">
-        <div class="profile-card">
-          <div class="profile-card__photo">
+        <div class="portrait-dial">
+          <svg class="portrait-dial__arc" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="dial-gradient" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0" stop-color="#9DBBFF" />
+                <stop offset="0.55" stop-color="#3B72FF" />
+                <stop offset="1" stop-color="#1F5BFF" />
+              </linearGradient>
+            </defs>
+            <path class="portrait-dial__value" d="M21.19 78.81 A40.75 40.75 0 1 1 78.81 78.81" pathLength="100" stroke="url(#dial-gradient)" />
+          </svg>
+          <span class="portrait-dial__knob" aria-hidden="true"></span>
+          <div class="portrait-dial__photo">
             <img
               src="assets/images/profile.jpg"
               alt="Portrait of Mihir Koladiya"
               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
             />
-            <div class="profile-card__fallback"><span data-icon="user"></span></div>
+            <div class="portrait-dial__fallback"><span data-icon="user"></span></div>
           </div>
-          <div class="profile-card__body">
-            <div>
-              <div class="profile-card__name">Mihir Koladiya</div>
-              <div class="profile-card__role">Project Engineer · SVNIT Surat</div>
-            </div>
-            <span class="profile-card__more" aria-hidden="true">•••</span>
-          </div>
-          <p class="profile-card__quote">Data-driven tools for safer roads.</p>
-        </div>
-        <div class="hero__float hero__float--chip">
-          <span class="hero__float-icon" data-icon="cap"></span>
-          <div><strong>M.E. · 8.8 CGPA</strong><span>MSU Baroda</span></div>
-        </div>
-        <div class="hero__float hero__float--note">
-          <span class="hero__float-icon" data-icon="file"></span>
-          <div><strong>3 papers published</strong><span>+4 under publication</span></div>
         </div>
       </div>
     </div>

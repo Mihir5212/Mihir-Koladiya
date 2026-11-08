@@ -512,7 +512,7 @@ function renderHero() {
   const nameEl  = el('#hero-name');
   const titleEl = el('#hero-title');
   const chipsEl = el('#hero-chips');
-  const metaEl  = el('#hero-meta');
+  const socialEl = el('#hero-social');
   const badgeEl = el('#hero-badge');
 
   if (nameEl) {
@@ -535,12 +535,12 @@ function renderHero() {
     badgeEl.innerHTML = `<span class="hero__badge-dot" aria-hidden="true"></span><span>Currently <strong>${sanitize(role)}</strong> · ${sanitize(org)}</span>`;
   }
 
-  if (metaEl) {
-    metaEl.innerHTML = `
-      <span>${icon('pin')} ${sanitize(p.location)}</span>
-      <a href="mailto:${sanitize(p.email)}">${icon('mail')} ${sanitize(p.email)}</a>
-      ${DATA.LINKS && DATA.LINKS.linkedin ? `<a href="${sanitize(DATA.LINKS.linkedin)}" target="_blank" rel="noopener">${icon('linkedin')} LinkedIn</a>` : ''}
-    `;
+  if (socialEl) {
+    const L = DATA.LINKS || {};
+    socialEl.innerHTML = [
+      L.linkedin && `<a href="${sanitize(L.linkedin)}" target="_blank" rel="noopener" data-tip="LinkedIn" aria-label="LinkedIn profile">${icon('linkedin')}</a>`,
+      p.email && `<a href="mailto:${sanitize(p.email)}" data-tip="Email me" aria-label="Email ${sanitize(p.email)}">${icon('mail')}</a>`,
+    ].filter(Boolean).join('');
   }
 }
 
@@ -1572,23 +1572,6 @@ function renderReferences() {
 
 const prefersReducedMotion = () => window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-function initTilt(selector, max = 6) {
-  if (prefersReducedMotion() || (window.matchMedia && window.matchMedia('(hover: none)').matches)) return;
-  els(selector).forEach(card => {
-    card.addEventListener('mouseenter', () => card.classList.add('is-tilting'));
-    card.addEventListener('mousemove', e => {
-      const r = card.getBoundingClientRect();
-      const px = (e.clientX - r.left) / r.width - 0.5;
-      const py = (e.clientY - r.top) / r.height - 0.5;
-      card.style.transform = `perspective(900px) rotateX(${(-py * max).toFixed(2)}deg) rotateY(${(px * max).toFixed(2)}deg)`;
-    });
-    card.addEventListener('mouseleave', () => {
-      card.classList.remove('is-tilting');
-      card.style.transform = '';
-    });
-  });
-}
-
 function initScrollUI() {
   const top = document.createElement('button');
   top.type = 'button';
@@ -1658,7 +1641,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initQuickActions();
   initDock();
   initScrollUI();
-  initTilt('.profile-card');
   initPageTransitions();
   // Delay reveal init to allow dynamic content to render first
   setTimeout(initReveal, 100);
