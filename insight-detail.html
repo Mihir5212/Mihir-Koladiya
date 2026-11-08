@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Insight — Mihir Koladiya" />
+  <title>Insight — Mihir Koladiya</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23191923'/><text x='16' y='22' text-anchor='middle' font-family='serif' font-size='18' font-weight='bold' fill='%23DD421D'>M</text></svg>" />
+  <style>
+    /* ── Reading progress bar ── */
+    .reading-progress {
+      position: fixed; top: var(--nav-h); left: 0;
+      height: 3px; background: linear-gradient(90deg, var(--accent), var(--gold));
+      width: 0%; z-index: 101; transition: width 0.1s linear;
+      pointer-events: none;
+    }
+
+    /* ── ARTICLE HERO ── */
+    .insight-hero {
+      background: var(--dark); padding: 72px 0 64px;
+      position: relative; overflow: hidden;
+    }
+    .insight-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 55% 80% at 85% 50%, rgba(243,182,31,0.07) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(221,66,29,0.08) 0%, transparent 55%);
+    }
+    .insight-hero__inner {
+      position: relative; z-index: 1;
+      max-width: 900px; margin: 0 auto; padding: 0 36px;
+    }
+    .insight-hero__back {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.82rem; font-weight: 600;
+      color: rgba(255,255,255,0.5); margin-bottom: 28px;
+      transition: color var(--transition);
+    }
+    .insight-hero__back::before { content: '←'; }
+    .insight-hero__back:hover { color: var(--white); }
+    .insight-hero__meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 22px; }
+    .insight-hero__date, .insight-hero__read {
+      font-family: var(--font-mono); font-size: 0.72rem; color: rgba(255,255,255,0.42); letter-spacing: 0.08em;
+    }
+    .insight-hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      color: var(--white); line-height: 1.1; margin-bottom: 22px; letter-spacing: -0.02em;
+    }
+    .insight-hero__excerpt {
+      font-size: 1.05rem; color: rgba(255,255,255,0.58);
+      line-height: 1.8; font-weight: 300; font-style: italic;
+      border-left: 3px solid var(--accent); padding-left: 20px;
+    }
+
+    /* ── ARTICLE LAYOUT ── */
+    .article-layout {
+      max-width: 900px; margin: 0 auto; padding: 72px 36px;
+      display: grid; grid-template-columns: 1fr 260px; gap: 56px; align-items: start;
+    }
+    .article-body h2 {
+      font-family: var(--font-display); font-size: 1.45rem; color: var(--dark);
+      margin: 44px 0 14px; padding-top: 44px; border-top: 1px solid var(--gray-lt); line-height: 1.2;
+    }
+    .article-body h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+    .article-body p { font-size: 1rem; color: var(--gray); line-height: 1.9; margin-bottom: 20px; }
+    .article-cover {
+      margin: 0 0 32px; border: 1px solid var(--gray-lt); border-radius: var(--radius-xl);
+      overflow: hidden; background: var(--white); box-shadow: var(--shadow-lg);
+    }
+    .article-cover img {
+      width: 100%; height: clamp(240px, 42vw, 420px); object-fit: cover; display: block;
+    }
+    .article-cover figcaption {
+      padding: 14px 18px; font-size: 0.82rem; line-height: 1.7; color: var(--gray);
+      background: var(--light); border-top: 1px solid var(--gray-lt);
+    }
+    .article-figure {
+      margin: 30px 0 34px; border-radius: var(--radius-lg); overflow: hidden;
+      background: var(--white); border: 1px solid var(--gray-lt); box-shadow: var(--shadow-md);
+    }
+    .article-figure img {
+      width: 100%; display: block; max-height: 420px; object-fit: cover; background: var(--light);
+    }
+    .article-figure figcaption {
+      padding: 12px 16px; font-size: 0.8rem; line-height: 1.7; color: var(--gray);
+      background: var(--light); border-top: 1px solid var(--gray-lt);
+    }
+    .article-graphic-grid {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px;
+      margin: 28px 0 36px;
+    }
+    .article-graphic-card {
+      background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(248,247,244,1) 100%);
+      border: 1px solid var(--gray-lt); border-radius: var(--radius-lg); padding: 18px;
+      box-shadow: var(--shadow-sm);
+    }
+    .article-graphic-card__label {
+      font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 10px;
+    }
+    .article-graphic-card__value {
+      font-family: var(--font-display); font-size: clamp(1.2rem, 2.2vw, 1.7rem);
+      color: var(--dark); line-height: 1.1; margin-bottom: 8px;
+    }
+    .article-graphic-card__note {
+      font-size: 0.82rem; line-height: 1.65; color: var(--gray);
+    }
+    .article-sidebar {
+      position: sticky; top: calc(var(--nav-h) + 24px);
+      display: flex; flex-direction: column; gap: 20px;
+    }
+    .article-card {
+      background: var(--white); border: 1px solid var(--gray-lt);
+      border-radius: var(--radius-lg); padding: 22px;
+    }
+    .article-card__heading {
+      font-family: var(--font-mono); font-size: 0.68rem;
+      letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
+    }
+    .article-card__author { display: flex; align-items: center; gap: 12px; }
+    .article-card__avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--light); border: 1px solid var(--gray-lt); overflow: hidden; flex-shrink: 0;
+    }
+    .article-card__avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .article-card__name { font-weight: 700; font-size: 0.88rem; color: var(--dark); margin-bottom: 2px; }
+    .article-card__role { font-size: 0.76rem; color: var(--gray); line-height: 1.4; }
+    .related-insight {
+      display: block; padding: 12px 0; border-bottom: 1px solid var(--gray-lt);
+      text-decoration: none; transition: all var(--transition);
+    }
+    .related-insight:last-child { border-bottom: none; padding-bottom: 0; }
+    .related-insight:hover { padding-left: 5px; }
+    .related-insight__cat { font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 3px; }
+    .related-insight__title { font-size: 0.83rem; color: var(--dark); font-weight: 600; line-height: 1.4; }
+    .related-insight__read { font-size: 0.7rem; color: var(--gray-mid); margin-top: 3px; }
+
+    /* ═══════════════════════════════════════
+       VIEWER HERO (Report / PPT)
+    ═══════════════════════════════════════ */
+    .viewer-hero {
+      background: var(--dark); padding: 56px 0 48px;
+      position: relative; overflow: hidden;
+    }
+    .viewer-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 90% at 90% 50%, rgba(221,66,29,0.1) 0%, transparent 65%),
+        radial-gradient(ellipse 35% 60% at 8% 85%, rgba(243,182,31,0.06) 0%, transparent 55%);
+    }
+    .viewer-hero__inner {
+      position: relative; z-index: 1;
+      max-width: var(--max-w); margin: 0 auto; padding: 0 36px;
+    }
+    .viewer-hero__inner--presentation {
+      max-width: var(--max-w);
+      padding: 0 36px;
+    }
+    .viewer-hero__back {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.82rem; font-weight: 600;
+      color: rgba(255,255,255,0.5); margin-bottom: 24px; transition: color var(--transition);
+    }
+    .viewer-hero__back::before { content: '←'; }
+    .viewer-hero__back:hover { color: var(--white); }
+    .viewer-hero__meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+    .viewer-type-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.75rem; font-weight: 700; padding: 5px 14px; border-radius: 40px;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.9); letter-spacing: 0.03em;
+    }
+    .viewer-hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+      color: var(--white); line-height: 1.1; margin-bottom: 14px; letter-spacing: -0.02em; max-width: 800px;
+    }
+    .viewer-hero__sub {
+      font-size: 0.95rem; color: rgba(255,255,255,0.55); line-height: 1.7; font-weight: 300; max-width: 640px;
+    }
+
+    /* ═══════════════════════════════════════
+       VIEWER LAYOUT
+    ═══════════════════════════════════════ */
+    .viewer-layout {
+      max-width: var(--max-w); margin: 0 auto; padding: 48px 36px 80px;
+      display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 40px; align-items: start;
+    }
+    .viewer-layout--presentation {
+      max-width: var(--max-w);
+      padding: 48px 36px 80px;
+      grid-template-columns: minmax(0, 1fr) 300px;
+      gap: 40px;
+      align-items: start;
+    }
+    .viewer-sidebar--presentation {
+      gap: 16px;
+      top: calc(var(--nav-h) + 18px);
+    }
+    .viewer-card--compact {
+      padding: 18px;
+      border-radius: 18px;
+    }
+    .viewer-sidebar {
+      position: sticky; top: calc(var(--nav-h) + 24px);
+      display: flex; flex-direction: column; gap: 20px;
+    }
+    .viewer-card {
+      background: var(--white); border: 1px solid var(--gray-lt);
+      border-radius: var(--radius-lg); padding: 22px;
+    }
+    .viewer-card__heading {
+      font-family: var(--font-mono); font-size: 0.68rem;
+      letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
+    }
+    .viewer-highlights { display: flex; flex-direction: column; gap: 9px; }
+    .viewer-highlight-item {
+      display: flex; gap: 10px; align-items: flex-start;
+      font-size: 0.83rem; color: var(--gray); line-height: 1.6;
+    }
+    .viewer-highlight-item::before { content: '✓'; color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+    /* TOC */
+    .toc-list { display: flex; flex-direction: column; }
+    .toc-row {
+      display: flex; align-items: baseline; gap: 12px;
+      padding: 9px 0; border-bottom: 1px solid var(--gray-lt);
+      cursor: pointer; transition: all var(--transition);
+    }
+    .toc-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .toc-row:hover { padding-left: 4px; }
+    .toc-row.active .toc-row__title { color: var(--accent); font-weight: 700; }
+    .toc-row__num { font-family: var(--font-mono); font-size: 0.66rem; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+    .toc-row__title { font-size: 0.82rem; color: var(--dark); font-weight: 500; line-height: 1.4; transition: color var(--transition); }
+
+    /* Conference block */
+    .conf-block {
+      background: var(--light); border: 1px solid var(--gray-lt);
+      border-radius: var(--radius); padding: 16px;
+    }
+    .conf-block__name { font-weight: 700; color: var(--dark); font-size: 0.88rem; margin-bottom: 4px; line-height: 1.4; }
+    .conf-block__meta { font-size: 0.78rem; color: var(--gray); margin-bottom: 10px; }
+
+    /* ═══════════════════════════════════════
+       VIEWER BOX (the slideshow itself)
+    ═══════════════════════════════════════ */
+    .viewer-box {
+      background: var(--white); border: 1px solid var(--gray-lt);
+      border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-lg);
+    }
+    .viewer-box--presentation {
+      width: 100%;
+      background: linear-gradient(180deg, #10131b 0%, #0b0d13 100%);
+      border: 1px solid rgba(19, 23, 34, 0.9);
+      border-radius: var(--radius-xl);
+      padding: 14px;
+      box-shadow: var(--shadow-lg);
+    }
+    .viewer-toolbar--presentation {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      margin-bottom: 14px;
+      padding: 12px 14px;
+      backdrop-filter: blur(10px);
+    }
+    .viewer-stage-shell--presentation {
+      padding: 10px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.015) 100%);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 18px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+
+    /* Toolbar */
+    .viewer-toolbar {
+      background: var(--dark); display: flex; align-items: center;
+      justify-content: space-between; padding: 12px 18px; gap: 12px;
+    }
+    .viewer-toolbar__dots { display: flex; gap: 6px; align-items: center; }
+    .viewer-toolbar__dot { width: 10px; height: 10px; border-radius: 50%; }
+    .viewer-toolbar__label {
+      font-family: var(--font-mono); font-size: 0.72rem;
+      color: rgba(255,255,255,0.5); letter-spacing: 0.1em; margin-left: 8px;
+    }
+    .viewer-toolbar__counter {
+      font-family: var(--font-mono); font-size: 0.75rem;
+      color: rgba(255,255,255,0.55); font-weight: 600;
+    }
+
+    /* Stage */
+    .viewer-stage {
+      position: relative; background: #0c0c12;
+      aspect-ratio: 16/9; overflow: hidden; cursor: default;
+      user-select: none;
+    }
+    .viewer-stage--presentation {
+      aspect-ratio: 16 / 9;
+      width: 100%;
+      min-height: clamp(460px, 56vw, 760px);
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.06) 0%, transparent 32%),
+        #090b10;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05), 0 18px 46px rgba(0,0,0,0.24);
+    }
+    .viewer-stage--portrait { aspect-ratio: 794 / 1123; }
+
+    .viewer-slide {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s ease;
+    }
+    .viewer-slide.active { opacity: 1; }
+    .viewer-slide img { width: 100%; height: 100%; object-fit: contain; display: block; margin: 0; }
+    .viewer-stage--presentation .viewer-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #090b10;
+    }
+    .viewer-stage--presentation .viewer-arrow {
+      opacity: 1;
+      width: 50px;
+      height: 50px;
+      background: rgba(12,14,20,0.72);
+      border-color: rgba(255,255,255,0.14);
+      backdrop-filter: blur(8px);
+    }
+    .viewer-stage--presentation .viewer-arrow--prev { left: 18px; }
+    .viewer-stage--presentation .viewer-arrow--next { right: 18px; }
+    .viewer-stage--presentation .viewer-fs-btn {
+      opacity: 1;
+      top: 16px;
+      right: 16px;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: rgba(12,14,20,0.72);
+      color: rgba(255,255,255,0.82);
+    }
+
+    /* Arrow buttons */
+    .viewer-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(10,10,16,0.75); border: 1px solid rgba(255,255,255,0.12);
+      color: var(--white); font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; z-index: 10;
+      opacity: 0; transition: opacity var(--transition), background var(--transition), transform var(--transition);
+    }
+    .viewer-stage:hover .viewer-arrow { opacity: 1; }
+    .viewer-arrow:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-50%) scale(1.08); }
+    .viewer-arrow--prev { left: 12px; }
+    .viewer-arrow--next { right: 12px; }
+
+    /* Fullscreen button */
+    .viewer-fs-btn {
+      position: absolute; top: 10px; right: 10px;
+      width: 32px; height: 32px; border-radius: 6px;
+      background: rgba(10,10,16,0.7); border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.65); font-size: 0.8rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; z-index: 10;
+      opacity: 0; transition: opacity var(--transition), background var(--transition);
+    }
+    .viewer-stage:hover .viewer-fs-btn { opacity: 1; }
+    .viewer-fs-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+
+    /* Label bar */
+    .viewer-label-bar {
+      background: var(--dark); padding: 9px 18px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .viewer-label-bar--presentation {
+      background: transparent;
+      padding: 14px 6px 10px;
+    }
+    .viewer-label-bar--presentation .viewer-label-bar__text {
+      color: rgba(255,255,255,0.88);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .viewer-label-bar--presentation .viewer-label-bar__hint {
+      color: rgba(255,255,255,0.34);
+    }
+    .viewer-label-bar__text { font-size: 0.8rem; color: rgba(255,255,255,0.6); font-weight: 500; }
+    .viewer-label-bar__hint { font-family: var(--font-mono); font-size: 0.65rem; color: rgba(255,255,255,0.25); letter-spacing: 0.06em; }
+
+    /* Thumbnail strip */
+    .viewer-thumbs {
+      display: flex; gap: 6px; padding: 12px 14px;
+      overflow-x: auto; background: var(--light); border-top: 1px solid var(--gray-lt);
+      scrollbar-width: thin; scrollbar-color: var(--gray-lt) transparent;
+    }
+    .viewer-thumbs--presentation {
+      gap: 12px;
+      padding: 8px 2px 2px;
+      background: transparent;
+      border-top: none;
+      scrollbar-color: rgba(255,255,255,0.14) transparent;
+      scroll-snap-type: x proximity;
+    }
+    .viewer-thumbs--presentation::-webkit-scrollbar { height: 6px; }
+    .viewer-thumbs--presentation::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.16); border-radius: 999px; }
+    .viewer-thumbs::-webkit-scrollbar { height: 4px; }
+    .viewer-thumbs::-webkit-scrollbar-thumb { background: var(--gray-lt); border-radius: 2px; }
+    .viewer-thumb {
+      flex-shrink: 0; width: 76px; height: 48px;
+      border-radius: 5px; overflow: hidden;
+      border: 2px solid transparent; cursor: pointer;
+      transition: all var(--transition); background: var(--dark);
+      position: relative;
+    }
+    .viewer-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .viewer-thumb.active { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(221,66,29,0.2); }
+    .viewer-thumb:hover:not(.active) { border-color: var(--gray-mid); }
+    .viewer-thumb--presentation {
+      width: 124px;
+      height: 76px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #0b0d13;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.16);
+      scroll-snap-align: start;
+    }
+    .viewer-thumb--presentation::after {
+      content: '';
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 30px;
+      background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.7) 100%);
+      pointer-events: none;
+    }
+    .viewer-thumb--presentation.active {
+      border-color: rgba(221,66,29,0.8);
+      box-shadow: 0 0 0 2px rgba(221,66,29,0.2), 0 14px 28px rgba(0,0,0,0.24);
+      transform: translateY(-2px);
+    }
+    .viewer-thumb--presentation:hover:not(.active) {
+      border-color: rgba(255,255,255,0.22);
+      transform: translateY(-2px);
+    }
+    .viewer-thumb__num {
+      position: absolute;
+      left: 8px;
+      bottom: 8px;
+      z-index: 2;
+      min-width: 28px;
+      height: 22px;
+      padding: 0 8px;
+      border-radius: 999px;
+      background: rgba(10,12,18,0.72);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.9);
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── Fullscreen overlay ── */
+    .fs-overlay {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: radial-gradient(circle at top, rgba(32,35,48,0.45) 0%, rgba(4,5,9,0.96) 48%, rgba(3,4,8,0.98) 100%);
+      flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 28px;
+      backdrop-filter: blur(10px);
+    }
+    .fs-overlay.open { display: flex; }
+    .fs-overlay__stage {
+      position: relative;
+      width: min(92vw, 1480px);
+      height: min(80vh, calc(92vw * 0.5625));
+      min-height: 420px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 100%);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 30px 90px rgba(0,0,0,0.45);
+      overflow: hidden;
+    }
+    .fs-overlay__img {
+      width: 100%; height: 100%;
+      object-fit: contain; display: block;
+      background: #07080d;
+    }
+    .fs-overlay__meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      width: min(92vw, 1480px);
+      margin-top: 14px;
+      padding: 0 4px;
+    }
+    .fs-overlay__label { font-size: 0.92rem; color: rgba(255,255,255,0.78); font-weight: 500; }
+    .fs-overlay__hint { font-family: var(--font-mono); font-size: 0.72rem; color: rgba(255,255,255,0.38); letter-spacing: 0.06em; }
+    .fs-overlay__close {
+      position: absolute; top: 22px; right: 24px;
+      width: 42px; height: 42px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.62);
+      font-size: 1.15rem; cursor: pointer; line-height: 1; transition: all var(--transition);
+      z-index: 3;
+    }
+    .fs-overlay__close:hover { color: white; background: rgba(221,66,29,0.85); border-color: rgba(221,66,29,0.85); }
+    .fs-nav {
+      width: 54px; height: 54px; border-radius: 50%;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14);
+      color: white; font-size: 1.25rem;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all var(--transition);
+      backdrop-filter: blur(8px);
+    }
+    .fs-nav:hover { background: var(--accent); border-color: var(--accent); }
+    .fs-nav--side {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+    }
+    .fs-nav--left { left: 20px; }
+    .fs-nav--right { right: 20px; }
+
+    /* ── Not found ── */
+    .not-found { text-align: center; padding: 120px 36px; }
+    .not-found h1 { font-family: var(--font-display); font-size: 2.5rem; color: var(--dark); margin-bottom: 16px; }
+    .not-found p { color: var(--gray); margin-bottom: 32px; }
+
+    /* ── Responsive ── */
+    @media (max-width: 1000px) {
+      .viewer-layout,
+      .viewer-layout--presentation { grid-template-columns: 1fr; gap: 32px; padding: 36px 22px 60px; }
+      .viewer-sidebar { position: static; }
+      .viewer-stage--presentation { min-height: 0; }
+      .article-graphic-grid { grid-template-columns: 1fr; }
+      .article-layout { grid-template-columns: 1fr; gap: 36px; padding: 48px 22px; }
+      .article-sidebar { position: static; }
+      .fs-overlay {
+        padding: 18px;
+      }
+      .fs-overlay__stage,
+      .fs-overlay__meta {
+        width: 100%;
+      }
+    }
+    @media (max-width: 600px) {
+      .viewer-hero__inner, .insight-hero__inner { padding: 0 20px; }
+      .viewer-thumb { width: 58px; height: 38px; }
+      .viewer-thumb--presentation { width: 96px; height: 58px; }
+      .viewer-stage-shell--presentation { padding: 8px; }
+      .viewer-stage--presentation .viewer-arrow {
+        width: 42px;
+        height: 42px;
+      }
+      .viewer-layout--presentation {
+        padding-left: 22px;
+        padding-right: 22px;
+      }
+      .fs-nav--left { left: 10px; }
+      .fs-nav--right { right: 10px; }
+      .fs-overlay__meta {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__logo">MK<span>.</span></a>
+      <div class="navbar__links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="publications.html">Publications</a>
+        <a href="insights.html">Insights</a>
+        <a href="showcase.html">Showcase</a>
+<a href="gallery.html">Gallery</a>
+        <a href="contact.html" class="nav-cta">Contact</a>
+      </div>
+      <button class="navbar__toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- DYNAMIC CONTENT -->
+  <div id="page-content"></div>
+
+  <!-- FULLSCREEN OVERLAY -->
+  <div class="fs-overlay" id="fs-overlay" role="dialog" aria-modal="true" aria-label="Fullscreen slide viewer">
+    <button class="fs-overlay__close" id="fs-close" aria-label="Close fullscreen">✕</button>
+    <div class="fs-overlay__stage">
+      <button class="fs-nav fs-nav--side fs-nav--left" id="fs-prev" aria-label="Previous">‹</button>
+      <img class="fs-overlay__img" id="fs-img" src="" alt="" />
+      <button class="fs-nav fs-nav--side fs-nav--right" id="fs-next" aria-label="Next">›</button>
+    </div>
+    <div class="fs-overlay__meta">
+      <span class="fs-overlay__label" id="fs-label"></span>
+      <span class="fs-overlay__hint">ESC to close · ← → navigate</span>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand-name">MK<span>.</span></div>
+          <p class="footer__brand-desc">Highway &amp; Transportation Engineer focused on road safety research, GIS-based crash analysis, and evidence-based transport planning.</p>
+        </div>
+        <div>
+          <div class="footer__heading">Navigation</div>
+          <nav class="footer__links">
+            <a href="index.html">Home</a><a href="about.html">About</a>
+            <a href="projects.html">Projects</a><a href="publications.html">Publications</a>
+            <a href="insights.html">Insights</a>
+        <a href="showcase.html">Showcase</a>
+<a href="gallery.html">Gallery</a>
+            <a href="contact.html">Contact</a>
+          </nav>
+        </div>
+        <div>
+          <div class="footer__heading">Research Profiles</div>
+          <div class="footer__links">
+            <a href="https://linkedin.com/in/mihirkoladiya" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://researchgate.net/profile/Mihir_Koladiya" target="_blank" rel="noopener">ResearchGate</a>
+            <a href="https://scholar.google.com/citations?user=XXXXXXXX" target="_blank" rel="noopener">Google Scholar</a>
+            <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener">ORCID</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>&copy; 2024 Mihir Koladiya. All rights reserved.</span>
+        <div class="footer__social">
+          <a href="https://linkedin.com/in/mihirkoladiya" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/mihirkoladiya" target="_blank" rel="noopener">GitHub</a>
+          <a href="mailto:mihir.koladiya@example.com">Email</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+  (function () {
+    /* ── helpers ── */
+    function esc(str) {
+      const d = document.createElement('div');
+      d.textContent = str || '';
+      return d.innerHTML;
+    }
+
+    const params  = new URLSearchParams(window.location.search);
+    const id      = parseInt(params.get('id'), 10);
+    const insight = (DATA.INSIGHTS || []).find(i => i.id === id);
+    const content = document.getElementById('page-content');
+
+    if (!insight) {
+      document.title = 'Not Found — Mihir Koladiya';
+      content.innerHTML = `<div class="not-found"><h1>Not Found</h1><p>This item does not exist.</p><a href="insights.html" class="btn btn-primary">All Insights</a></div>`;
+      return;
+    }
+
+    document.title = esc(insight.title) + ' — Mihir Koladiya';
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.content = insight.excerpt || '';
+
+    const isReport  = insight.contentType === 'report';
+    const isPPT     = insight.contentType === 'presentation';
+    const isPoster  = insight.contentType === 'poster';
+    const isNote    = insight.contentType === 'note';
+    const isBook    = insight.contentType === 'book';
+    const isSpecial = Boolean(insight.contentType);
+    const listingPage = isSpecial ? 'showcase.html' : 'insights.html';
+    const contentTypeLabel = (type) => ({ report: 'Report', presentation: 'Presentation', poster: 'Poster', note: 'Short Note', book: 'Book' }[type] || 'Document');
+    const viewerToolbarLabel = isReport ? 'Report Viewer' : isPPT ? 'Presentation Viewer' : isPoster ? 'Poster Viewer' : isNote ? 'Short Note Viewer' : isBook ? 'Book Viewer' : 'Document Viewer';
+    const authorLabel = isReport ? 'Authored by' : isPPT ? 'Presented by' : isPoster ? 'Designed by' : isNote ? 'Prepared by' : isBook ? 'Compiled by' : 'Created by';
+
+    /* related items for sidebar */
+    const related = (DATA.INSIGHTS || []).filter(i => i.id !== insight.id && (!!i.contentType) === isSpecial).slice(0, 3);
+    const relatedHTML = related.map(r => `
+      <a href="insight-detail.html?id=${r.id}" class="related-insight">
+        <div class="related-insight__cat">${esc(r.category)}${r.contentType ? ' · ' + contentTypeLabel(r.contentType) : ''}</div>
+        <div class="related-insight__title">${esc(r.title)}</div>
+        <div class="related-insight__read">${esc(r.readTime)}</div>
+      </a>`).join('');
+
+    /* ════════════════════════════════════════
+       TEXT ARTICLE
+    ════════════════════════════════════════ */
+    if (!isSpecial) {
+      const renderArticleBlock = (block) => {
+        if (!block || typeof block !== 'object') return '';
+        if (block.type === 'h2') return `<h2>${esc(block.text)}</h2>`;
+        if (block.type === 'image') {
+          return `
+            <figure class="article-figure reveal">
+              <img src="${esc(block.src || '')}" alt="${esc(block.alt || insight.title)}" loading="lazy"
+                onerror="this.style.display='none';this.parentNode.style.display='none';" />
+              ${block.caption ? `<figcaption>${esc(block.caption)}</figcaption>` : ''}
+            </figure>`;
+        }
+        if (block.type === 'graphicGrid' && Array.isArray(block.items) && block.items.length) {
+          return `
+            <div class="article-graphic-grid reveal">
+              ${block.items.map(item => `
+                <div class="article-graphic-card">
+                  <div class="article-graphic-card__label">${esc(item.label || '')}</div>
+                  <div class="article-graphic-card__value">${esc(item.value || '')}</div>
+                  <div class="article-graphic-card__note">${esc(item.note || '')}</div>
+                </div>`).join('')}
+            </div>`;
+        }
+        return `<p>${esc(block.text || '')}</p>`;
+      };
+
+      const bodyHTML = Array.isArray(insight.fullContent)
+        ? insight.fullContent.map(renderArticleBlock).join('')
+        : `<p>${esc(insight.excerpt)}</p>`;
+
+      const heroMediaHTML = insight.heroImage ? `
+        <figure class="article-cover reveal">
+          <img src="${esc(insight.heroImage)}" alt="${esc(insight.heroImageAlt || insight.title)}" loading="eager"
+            onerror="this.style.display='none';this.parentNode.style.display='none';" />
+          ${insight.heroImageCaption ? `<figcaption>${esc(insight.heroImageCaption)}</figcaption>` : ''}
+        </figure>` : '';
+
+      content.innerHTML = `
+        <div class="insight-hero">
+          <div class="insight-hero__inner">
+            <a href="${listingPage}" class="insight-hero__back">${isSpecial ? 'All Showcase Items' : 'All Insights'}</a>
+            <div class="insight-hero__meta">
+              <span class="tag tag--accent">${esc(insight.category)}</span>
+              <span class="insight-hero__date">${esc(insight.date)}</span>
+              <span class="insight-hero__read">${esc(insight.readTime)}</span>
+            </div>
+            <h1 class="insight-hero__title">${esc(insight.title)}</h1>
+            <p class="insight-hero__excerpt">${esc(insight.excerpt)}</p>
+          </div>
+        </div>
+        <div class="article-layout">
+          <article class="article-body" id="article-body">
+            ${heroMediaHTML}
+            ${bodyHTML}
+            <div style="margin-top:56px;padding-top:40px;border-top:1px solid var(--gray-lt)">
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px">
+                <div style="width:40px;height:40px;border-radius:50%;overflow:hidden;background:var(--light);border:1px solid var(--gray-lt);flex-shrink:0">
+                  <img src="assets/images/profile.jpg" alt="Mihir Koladiya" style="width:100%;height:100%;object-fit:cover"
+                    onerror="this.parentNode.innerHTML='<span style=display:flex;align-items:center;justify-content:center;height:100%;font-size:1.2rem>👤</span>'"/>
+                </div>
+                <div>
+                  <div style="font-weight:700;font-size:0.88rem;color:var(--dark)">Mihir Koladiya</div>
+                  <div style="font-size:0.78rem;color:var(--gray)">Highway &amp; Transportation Engineer</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:12px;flex-wrap:wrap">
+                <a href="${listingPage}" class="btn btn-outline">← ${isSpecial ? 'All Showcase Items' : 'All Insights'}</a>
+                <a href="contact.html" class="btn btn-ghost">Discuss This Topic</a>
+              </div>
+            </div>
+          </article>
+          <aside class="article-sidebar">
+            <div class="article-card">
+              <div class="article-card__heading">Written by</div>
+              <div class="article-card__author">
+                <div class="article-card__avatar">
+                  <img src="assets/images/profile.jpg" alt="Mihir Koladiya"
+                    onerror="this.parentNode.innerHTML='<span style=font-size:1.4rem;display:flex;align-items:center;justify-content:center;height:100%>👤</span>'"/>
+                </div>
+                <div>
+                  <div class="article-card__name">Mihir Koladiya</div>
+                  <div class="article-card__role">Highway &amp; Transportation Engineer · SVNIT Surat</div>
+                </div>
+              </div>
+            </div>
+            <div class="article-card">
+              <div class="article-card__heading">Article Info</div>
+              <div style="display:flex;flex-direction:column">
+                ${[['Published',insight.date],['Read time',insight.readTime],['Category',insight.category]].map(([l,v],i,a)=>`
+                <div style="display:flex;justify-content:space-between;font-size:0.83rem;padding:10px 0;${i<a.length-1?'border-bottom:1px solid var(--gray-lt)':''}">
+                  <span style="color:var(--gray)">${l}</span><span style="color:var(--dark);font-weight:600">${esc(v)}</span>
+                </div>`).join('')}
+              </div>
+            </div>
+            ${related.length ? `<div class="article-card"><div class="article-card__heading">More Insights</div>${relatedHTML}</div>` : ''}
+            <div class="article-card" style="background:var(--dark);border-color:var(--dark)">
+              <div style="font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:10px">Research Enquiries</div>
+              <p style="font-size:0.83rem;color:rgba(255,255,255,0.6);line-height:1.7;margin-bottom:14px">Interested in the methods discussed? Let's connect.</p>
+              <a href="contact.html" class="btn btn-white" style="width:100%;justify-content:center">Get in Touch</a>
+            </div>
+          </aside>
+        </div>`;
+
+      /* reading progress */
+      const bar  = document.getElementById('reading-progress');
+      const body = document.getElementById('article-body');
+      if (bar && body) {
+        window.addEventListener('scroll', () => {
+          const pct = Math.min(Math.max(-body.getBoundingClientRect().top / (body.offsetHeight - window.innerHeight || 1), 0), 1);
+          bar.style.width = (pct * 100) + '%';
+        }, { passive: true });
+      }
+      setTimeout(() => { if (typeof initReveal === 'function') initReveal(); }, 80);
+      return;
+    }
+
+    /* ════════════════════════════════════════
+       VIEWER (PDF-only showcase)
+    ════════════════════════════════════════ */
+    const totalUnits = insight.pageCount || insight.slideCount || 1;
+    const typeLabel = isReport ? '📄 Technical Report' : isPPT ? '📊 Presentation' : isPoster ? '🖼 Poster' : isNote ? '📝 Notes' : isBook ? '📚 Book' : '📁 Document';
+
+    content.innerHTML = `
+      <!-- VIEWER HERO -->
+      <div class="viewer-hero">
+        <div class="viewer-hero__inner${isPPT ? " viewer-hero__inner--presentation" : ""}">
+          <a href="showcase.html" class="viewer-hero__back">All Showcase Items</a>
+          <div class="viewer-hero__meta">
+            <span class="tag tag--accent">${esc(insight.category)}</span>
+            <span class="viewer-type-pill">${typeLabel}</span>
+            <span style="font-family:var(--font-mono);font-size:0.72rem;color:rgba(255,255,255,0.4)">${esc(insight.date)}</span>
+          </div>
+          <h1 class="viewer-hero__title">${esc(insight.title)}</h1>
+        </div>
+      </div>
+
+      <!-- VIEWER LAYOUT -->
+      <div class="viewer-layout${isPPT ? " viewer-layout--presentation" : ""}">
+        <!-- Main: viewer box -->
+        <div>
+          <div class="viewer-box${isPPT ? " viewer-box--presentation" : ""}">
+            <div class="viewer-toolbar${isPPT ? " viewer-toolbar--presentation" : ""}">
+              <div style="display:flex;align-items:center">
+                <div class="viewer-toolbar__dots">
+                  <div class="viewer-toolbar__dot" style="background:#ff5f57"></div>
+                  <div class="viewer-toolbar__dot" style="background:#febc2e"></div>
+                  <div class="viewer-toolbar__dot" style="background:#28c840"></div>
+                </div>
+                <span class="viewer-toolbar__label">${viewerToolbarLabel}</span>
+              </div>
+              <span class="viewer-toolbar__counter">PDF</span>
+            </div>
+
+            <div class="insight-pdf-wrap" style="display:block;margin:0">
+              <div class="insight-pdf-toolbar">
+                <div class="insight-pdf-toolbar__dots">
+                  <span style="background:#ff5f57"></span>
+                  <span style="background:#febc2e"></span>
+                  <span style="background:#28c840"></span>
+                </div>
+                <span class="insight-pdf-toolbar__label">${viewerToolbarLabel} - ${esc(insight.title)}</span>
+              </div>
+              <iframe
+                src="${esc(insight.pdfSrc || '')}#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                class="insight-pdf-iframe"
+                style="height:780px"
+                title="${esc(insight.title)} PDF Viewer"
+                loading="lazy"
+                aria-label="PDF viewer for ${esc(insight.title)}">
+                <p>Your browser does not support embedded PDFs.</p>
+              </iframe>
+            </div>
+            <div class="viewer-label-bar">
+              <span class="viewer-label-bar__text">Embedded PDF document</span>
+              <span class="viewer-label-bar__hint">Only PDF is required for Showcase items</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="viewer-sidebar${isPPT ? ' viewer-sidebar--presentation' : ''}">
+          <div class="viewer-card${isPPT ? ' viewer-card--compact' : ''}">
+            <div class="viewer-card__heading">${authorLabel}</div>
+            <div style="display:flex;align-items:center;gap:12px">
+              <div style="width:44px;height:44px;border-radius:50%;overflow:hidden;background:var(--light);border:1px solid var(--gray-lt);flex-shrink:0">
+                <img src="assets/images/profile.jpg" alt="Mihir Koladiya" style="width:100%;height:100%;object-fit:cover"
+                  onerror="this.parentNode.innerHTML='<span style=display:flex;align-items:center;justify-content:center;height:100%;font-size:1.2rem>👤</span>'"/>
+              </div>
+              <div>
+                <div style="font-weight:700;font-size:0.88rem;color:var(--dark)">Mihir Koladiya</div>
+                <div style="font-size:0.76rem;color:var(--gray);line-height:1.4">Highway &amp; Transportation Engineer · SVNIT Surat</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="viewer-card${isPPT ? ' viewer-card--compact' : ''}">
+            <div class="viewer-card__heading">${isReport ? 'Report Info' : isPPT ? 'Presentation Info' : isPoster ? 'Poster Info' : isNote ? 'Notes Info' : isBook ? 'Book Info' : 'Document Info'}</div>
+            <div style="display:flex;flex-direction:column">
+              ${[['Type',typeLabel],['Date',insight.date],[isPPT ? 'Slides' : 'Pages', String(totalUnits)],['Category',insight.category]].map(([l,v],i,a)=>`
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.83rem;padding:10px 0;${i<a.length-1?'border-bottom:1px solid var(--gray-lt)':''}">
+                <span style="color:var(--gray)">${l}</span><span style="color:var(--dark);font-weight:600">${esc(v)}</span>
+              </div>`).join('')}
+            </div>
+          </div>
+
+          <div class="viewer-card${isPPT ? ' viewer-card--compact' : ''}">
+            <div class="viewer-card__heading">Key Highlights</div>
+            <div class="viewer-highlights">
+              ${(insight.highlights||[]).length ? (insight.highlights||[]).map(h=>`<div class="viewer-highlight-item">${esc(h)}</div>`).join('') : `<div class="viewer-highlight-item">No highlights available for this item yet.</div>`}
+            </div>
+          </div>
+        </aside>
+      </div>`;
+    /* ── Viewer JS ── */
+    setTimeout(() => { if (typeof initReveal === 'function') initReveal(); }, 80);
+  })();
+  </script>
+</body>
+</html>

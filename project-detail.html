@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Project details — Mihir Koladiya" />
+  <title>Project — Mihir Koladiya</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23191923'/><text x='16' y='22' text-anchor='middle' font-family='serif' font-size='18' font-weight='bold' fill='%23DD421D'>M</text></svg>" />
+  <style>
+    /* ── Detail page specific styles ── */
+    .detail-hero {
+      background: var(--dark);
+      padding: 72px 0 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .detail-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 55% 80% at 85% 50%, rgba(221,66,29,0.1) 0%, transparent 65%),
+                  radial-gradient(ellipse 35% 60% at 10% 80%, rgba(243,182,31,0.06) 0%, transparent 55%);
+    }
+    .detail-hero__inner {
+      position: relative;
+      z-index: 1;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 36px;
+    }
+    .detail-hero__back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 28px;
+      transition: color var(--transition);
+    }
+    .detail-hero__back:hover { color: var(--white); }
+    .detail-hero__back::before { content: '←'; }
+    .detail-hero__meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .detail-hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+      max-width: 820px;
+    }
+    .detail-hero__desc {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.8;
+      max-width: 680px;
+      font-weight: 300;
+    }
+
+    /* Content layout */
+    .detail-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 56px;
+      align-items: start;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 72px 36px;
+    }
+
+    /* Main prose */
+    .detail-body h2 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--dark);
+      margin: 40px 0 14px;
+      padding-top: 40px;
+      border-top: 1px solid var(--gray-lt);
+      line-height: 1.2;
+    }
+    .detail-body h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+    .detail-body p {
+      font-size: 0.97rem;
+      color: var(--gray);
+      line-height: 1.85;
+      margin-bottom: 18px;
+    }
+    .detail-body ul {
+      list-style: none;
+      margin: 0 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .detail-body ul li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 0.94rem;
+      color: var(--gray);
+      line-height: 1.7;
+    }
+    .detail-body ul li::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      margin-top: 8px;
+    }
+
+    /* Sidebar */
+    .detail-sidebar {
+      position: sticky;
+      top: calc(var(--nav-h) + 24px);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .detail-card {
+      background: var(--white);
+      border: 1px solid var(--gray-lt);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+    }
+    .detail-card__heading {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .detail-card__row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--gray-lt);
+      font-size: 0.85rem;
+    }
+    .detail-card__row:last-child { border-bottom: none; padding-bottom: 0; }
+    .detail-card__row-label { color: var(--gray); font-weight: 500; flex-shrink: 0; }
+    .detail-card__row-value { color: var(--dark); font-weight: 600; text-align: right; }
+    .detail-tools { display: flex; flex-wrap: wrap; gap: 8px; }
+    .detail-tool {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 5px 12px;
+      background: var(--light);
+      border: 1px solid var(--gray-lt);
+      border-radius: 4px;
+      color: var(--dark);
+      font-weight: 500;
+    }
+
+    /* Outcomes / objectives lists in sidebar */
+    .detail-list { display: flex; flex-direction: column; gap: 10px; }
+    .detail-list-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 0.83rem;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+    .detail-list-item::before {
+      content: '→';
+      color: var(--accent);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Not found */
+    .not-found {
+      text-align: center;
+      padding: 120px 36px;
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+    .not-found h1 {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: var(--dark);
+      margin-bottom: 16px;
+    }
+    .not-found p { color: var(--gray); margin-bottom: 32px; }
+
+    /* Related projects */
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .detail-layout { grid-template-columns: 1fr; gap: 40px; padding: 48px 22px; }
+      .detail-sidebar { position: static; }
+      .related-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .detail-hero__inner { padding: 0 22px; }
+      .related-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAVBAR ── -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="navbar__inner">
+      <a href="index.html" class="navbar__logo">MK<span>.</span></a>
+      <div class="navbar__links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="publications.html">Publications</a>
+        <a href="insights.html">Insights</a>
+        <a href="showcase.html">Showcase</a>
+<a href="gallery.html">Gallery</a>
+        <a href="contact.html" class="nav-cta">Contact</a>
+      </div>
+      <button class="navbar__toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── DYNAMIC CONTENT ── -->
+  <div id="page-content"></div>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand-name">MK<span>.</span></div>
+          <p class="footer__brand-desc">Highway &amp; Transportation Engineer focused on road safety research, GIS-based crash analysis, and evidence-based transport planning.</p>
+        </div>
+        <div>
+          <div class="footer__heading">Navigation</div>
+          <nav class="footer__links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="projects.html">Projects</a>
+            <a href="publications.html">Publications</a>
+            <a href="insights.html">Insights</a>
+        <a href="showcase.html">Showcase</a>
+<a href="gallery.html">Gallery</a>
+            <a href="contact.html">Contact</a>
+          </nav>
+        </div>
+        <div>
+          <div class="footer__heading">Research Profiles</div>
+          <div class="footer__links">
+            <a href="https://linkedin.com/in/mihirkoladiya" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://researchgate.net/profile/Mihir_Koladiya" target="_blank" rel="noopener">ResearchGate</a>
+            <a href="https://scholar.google.com/citations?user=XXXXXXXX" target="_blank" rel="noopener">Google Scholar</a>
+            <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener">ORCID</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>&copy; 2024 Mihir Koladiya. All rights reserved.</span>
+        <div class="footer__social">
+          <a href="https://linkedin.com/in/mihirkoladiya" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/mihirkoladiya" target="_blank" rel="noopener">GitHub</a>
+          <a href="mailto:mihir.koladiya@example.com">Email</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    (function () {
+      // Get project id from URL ?id=1
+      const params = new URLSearchParams(window.location.search);
+      const id = parseInt(params.get('id'), 10);
+      const project = (DATA.PROJECTS || []).find(p => p.id === id);
+      const content = document.getElementById('page-content');
+
+      function s(str) {
+        const d = document.createElement('div');
+        d.textContent = str || '';
+        return d.innerHTML;
+      }
+
+      function getStatusClass(status) {
+        const st = (status || '').toLowerCase();
+        if (st === 'completed') return 'status--completed';
+        if (st.includes('progress') || st.includes('ongoing')) return 'status--progress';
+        if (st === 'published' || st === 'presented') return 'status--published';
+        if (st.includes('review')) return 'status--review';
+        return 'status--progress';
+      }
+
+      if (!project) {
+        document.title = 'Project Not Found — Mihir Koladiya';
+        content.innerHTML = `
+          <div class="not-found">
+            <h1>Project Not Found</h1>
+            <p>The project you are looking for does not exist or has been removed.</p>
+            <a href="projects.html" class="btn btn-primary">View All Projects</a>
+          </div>`;
+        return;
+      }
+
+      // Update page title and meta
+      document.title = s(project.title) + ' — Mihir Koladiya';
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) metaDesc.setAttribute('content', project.description);
+
+      // Tools HTML
+      const toolsHTML = (project.tools || []).map(t =>
+        `<span class="detail-tool">${s(t)}</span>`
+      ).join('');
+
+      // Objectives list
+      const objectivesHTML = (project.objectives || []).map(o =>
+        `<div class="detail-list-item">${s(o)}</div>`
+      ).join('');
+
+      // Outcomes list
+      const outcomesHTML = (project.outcomes || []).map(o =>
+        `<div class="detail-list-item">${s(o)}</div>`
+      ).join('');
+
+      // Full description paragraphs
+      const bodyHTML = project.fullDescription
+        ? project.fullDescription.split('\n\n').map(para => {
+            para = para.trim();
+            if (!para) return '';
+            if (para.startsWith('**') && para.endsWith('**')) {
+              return `<h2>${s(para.slice(2, -2))}</h2>`;
+            }
+            // Bold inline
+            const formatted = para.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+            return `<p>${formatted}</p>`;
+          }).join('')
+        : `<p>${s(project.description)}</p>`;
+
+      // Related projects (same category, exclude current)
+      const related = (DATA.PROJECTS || [])
+        .filter(p => p.id !== project.id && p.category === project.category)
+        .slice(0, 3);
+      const relatedHTML = related.length ? `
+        <section style="background:var(--light);padding:72px 0">
+          <div style="max-width:var(--max-w);margin:0 auto;padding:0 36px">
+            <div class="section-header reveal">
+              <span class="section-label">More in ${s(project.category)}</span>
+              <h2 class="section-title">Related Projects</h2>
+              <div class="divider"></div>
+            </div>
+            <div class="related-grid">
+              ${related.map(rp => `
+                <a href="project-detail.html?id=${rp.id}" class="project-card" style="text-decoration:none;display:flex;flex-direction:column">
+                  <div class="project-card__bar"></div>
+                  <div class="project-card__body">
+                    <div class="project-card__header">
+                      <div class="project-card__title">${s(rp.title)}</div>
+                      <div class="project-card__year">${s(rp.year)}</div>
+                    </div>
+                    <span class="tag">${s(rp.category)}</span>
+                    <div class="project-card__desc">${s(rp.description)}</div>
+                  </div>
+                  <div class="project-card__footer">
+                    <div class="project-card__tools">
+                      ${(rp.tools || []).slice(0,3).map(t => `<span class="project-card__tool">${s(t)}</span>`).join('')}
+                    </div>
+                    <span class="status-badge ${getStatusClass(rp.status)}">${s(rp.status)}</span>
+                  </div>
+                </a>
+              `).join('')}
+            </div>
+          </div>
+        </section>` : '';
+
+      content.innerHTML = `
+        <!-- Hero -->
+        <div class="detail-hero">
+          <div class="detail-hero__inner">
+            <a href="projects.html" class="detail-hero__back">All Projects</a>
+            <div class="detail-hero__meta">
+              <span class="tag tag--accent">${s(project.category)}</span>
+              <span class="status-badge ${getStatusClass(project.status)}">${s(project.status)}</span>
+              <span style="font-family:var(--font-mono);font-size:0.72rem;color:rgba(255,255,255,0.4)">${s(project.year)}</span>
+            </div>
+            <h1 class="detail-hero__title">${s(project.title)}</h1>
+            <p class="detail-hero__desc">${s(project.description)}</p>
+          </div>
+        </div>
+
+        <!-- Body + Sidebar -->
+        <div class="detail-layout">
+
+          <!-- Main content -->
+          <article class="detail-body">
+            ${bodyHTML}
+
+            ${project.objectives && project.objectives.length ? `
+            <h2>Research Objectives</h2>
+            <ul>
+              ${(project.objectives || []).map(o => `<li>${s(o)}</li>`).join('')}
+            </ul>` : ''}
+
+            ${project.outcomes && project.outcomes.length ? `
+            <h2>Key Outcomes</h2>
+            <ul>
+              ${(project.outcomes || []).map(o => `<li>${s(o)}</li>`).join('')}
+            </ul>` : ''}
+
+            <div style="margin-top:48px;padding-top:40px;border-top:1px solid var(--gray-lt);display:flex;gap:14px;flex-wrap:wrap">
+              <a href="projects.html" class="btn btn-outline">← All Projects</a>
+              ${project.link ? `<a href="${s(project.link)}" target="_blank" rel="noopener" class="btn btn-primary">View External Resource ↗</a>` : ''}
+              <a href="contact.html" class="btn btn-ghost">Discuss This Project</a>
+            </div>
+          </article>
+
+          <!-- Sidebar -->
+          <aside class="detail-sidebar">
+
+            <!-- Project info -->
+            <div class="detail-card">
+              <div class="detail-card__heading">Project Details</div>
+              <div class="detail-card__row">
+                <span class="detail-card__row-label">Year</span>
+                <span class="detail-card__row-value">${s(project.year)}</span>
+              </div>
+              <div class="detail-card__row">
+                <span class="detail-card__row-label">Category</span>
+                <span class="detail-card__row-value">${s(project.category)}</span>
+              </div>
+              <div class="detail-card__row">
+                <span class="detail-card__row-label">Status</span>
+                <span class="status-badge ${getStatusClass(project.status)}">${s(project.status)}</span>
+              </div>
+            </div>
+
+            <!-- Tools -->
+            ${project.tools && project.tools.length ? `
+            <div class="detail-card">
+              <div class="detail-card__heading">Tools &amp; Methods</div>
+              <div class="detail-tools">${toolsHTML}</div>
+            </div>` : ''}
+
+            <!-- Outcomes -->
+            ${project.outcomes && project.outcomes.length ? `
+            <div class="detail-card">
+              <div class="detail-card__heading">Key Outcomes</div>
+              <div class="detail-list">${outcomesHTML}</div>
+            </div>` : ''}
+
+            <!-- CTA -->
+            <div class="detail-card" style="background:var(--dark);border-color:var(--dark)">
+              <div style="font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:12px">Collaboration</div>
+              <p style="font-size:0.85rem;color:rgba(255,255,255,0.65);line-height:1.7;margin-bottom:16px">Interested in this research area? I'm open to collaboration and discussion.</p>
+              <a href="contact.html" class="btn btn-white" style="width:100%;justify-content:center">Get in Touch</a>
+            </div>
+
+          </aside>
+        </div>
+
+        <!-- Related projects -->
+        ${relatedHTML}
+      `;
+
+      // Init reveal for dynamically rendered content
+      setTimeout(() => {
+        if (typeof initReveal === 'function') initReveal();
+      }, 80);
+    })();
+  </script>
+</body>
+</html>
