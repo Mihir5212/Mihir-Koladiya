@@ -1134,6 +1134,30 @@ function renderHomeHero() {
     toolsEl.innerHTML = (pick.length >= 6 ? pick : all).slice(0, 14).map(s => `<span>${sanitize(s)}</span>`).join('');
   }
 
+  // hero v2: stat cards + rotating focus words
+  const s2 = el('#stats-grid.hx2-stats');
+  if (s2) {
+    s2.innerHTML = (DATA.HIGHLIGHTS || []).map(h => `
+      <div class="hx2-stat">
+        <dd><span class="stat-card__value" data-value="${h.value}" data-suffix="">${h.value}</span><em>${sanitize(h.suffix || '')}</em></dd>
+        <dt>${sanitize(h.label)}</dt>
+      </div>`).join('');
+  }
+  const rot = el('#hx2-rotate');
+  if (rot && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const words = ['Road Safety', 'Crash Analytics', 'GIS Hotspot Mapping', 'AI / ML Modelling', 'Blackspot Studies'];
+    let w = 0, c = words[0].length, del = true;
+    const tick = () => {
+      const word = words[w];
+      c += del ? -1 : 1;
+      rot.textContent = word.slice(0, c);
+      let wait = del ? 45 : 85;
+      if (!del && c === word.length) { del = true; wait = 1800; }
+      else if (del && c === 0) { del = false; w = (w + 1) % words.length; wait = 300; }
+      setTimeout(tick, wait);
+    };
+    setTimeout(tick, 2200);
+  }
   const stats = el('#stats-grid.mh-stats');
   if (stats) {
     stats.innerHTML = (DATA.HIGHLIGHTS || []).map(h => `
