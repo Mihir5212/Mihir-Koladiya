@@ -33,42 +33,53 @@
     </div>
   </nav>
 
-  <!-- ── INTRO ── -->
-  <section class="ab-hero" aria-label="About Mihir Koladiya">
-    <div class="ab-hero__inner">
-      <div class="ab-hero__text">
-        <p class="ab-kicker ab-in" style="--i:0"><span aria-hidden="true"></span>About</p>
-        <h1 class="ab-hero__title ab-in" style="--i:1">Engineering practice <em>grounded in research</em></h1>
-        <p class="ab-hero__lead ab-in" style="--i:2" id="ab-lead"></p>
-        <div class="ab-hero__actions ab-in" style="--i:3">
-          <a href="assets/docs/Mihir_Koladiya_CV.pdf" download class="btn btn-primary">Download CV</a>
-          <a href="contact.html" class="btn btn-outline">Get in Touch</a>
-          <a href="publications.html" class="btn-ghost">View publications</a>
+  <!-- ── PAGE HERO ── -->
+  <div class="page-hero" role="banner">
+    <div class="page-hero__bg-text" aria-hidden="true">About</div>
+    <div class="page-hero__inner">
+      <div class="page-hero__eyebrow">
+        <div class="page-hero__eyebrow-line"></div>
+        <span class="page-hero__label">Profile</span>
+      </div>
+      <h1 class="page-hero__title">About Mihir</h1>
+      <p class="page-hero__desc">Transportation engineer, road safety researcher and GIS analyst — the full professional picture.</p>
+    </div>
+  </div>
+
+  <!-- ── INTRO: photo + summary ── -->
+  <section class="section ab-intro" aria-label="Profile summary">
+    <div class="container">
+      <div class="ab-intro__grid">
+        <figure class="ab-photo reveal">
+          <span class="ab-photo__back" aria-hidden="true"></span>
+          <div class="ab-photo__card">
+            <div class="ab-photo__img">
+              <img src="assets/images/profile.jpg" alt="Portrait of Mihir Koladiya"
+                onerror="this.style.display='none';this.nextElementSibling.style.display='grid';" />
+              <span class="ab-photo__fallback" aria-hidden="true">MK</span>
+              <figcaption class="ab-photo__caption">
+                <strong>Mihir Koladiya</strong>
+                <span>Highway &amp; Transportation Engineer</span>
+              </figcaption>
+            </div>
+            <div class="ab-photo__foot">
+              <span class="ab-photo__status"><i aria-hidden="true"></i>Open to opportunities</span>
+              <span id="ab-photo-loc">Surat, Gujarat</span>
+            </div>
+          </div>
+        </figure>
+        <div class="ab-intro__text reveal reveal-delay-1">
+          <span class="section-label">Professional Summary</span>
+          <h2 class="section-title">Engineering practice <em>grounded in research</em></h2>
+          <p class="ab-intro__lead" id="ab-lead"></p>
+          <div class="ab-intro__actions">
+            <a href="assets/docs/Mihir_Koladiya_CV.pdf" download class="btn btn-primary">Download CV</a>
+            <a href="contact.html" class="btn btn-outline">Get in Touch</a>
+            <a href="publications.html" class="btn-ghost">View publications</a>
+          </div>
         </div>
       </div>
-
-      <figure class="ab-photo ab-in" style="--i:2">
-        <span class="ab-photo__back" aria-hidden="true"></span>
-        <div class="ab-photo__card">
-          <div class="ab-photo__img">
-            <img src="assets/images/profile.jpg" alt="Portrait of Mihir Koladiya"
-              onerror="this.style.display='none';this.nextElementSibling.style.display='grid';" />
-            <span class="ab-photo__fallback" aria-hidden="true">MK</span>
-            <figcaption class="ab-photo__caption">
-              <strong>Mihir Koladiya</strong>
-              <span>Highway &amp; Transportation Engineer</span>
-            </figcaption>
-          </div>
-          <div class="ab-photo__foot">
-            <span class="ab-photo__status"><i aria-hidden="true"></i>Open to opportunities</span>
-            <span id="ab-photo-loc">Surat, Gujarat</span>
-          </div>
-        </div>
-      </figure>
-    </div>
-
-    <div class="ab-hero__inner">
-      <dl class="ab-facts ab-in" style="--i:4" id="ab-facts" aria-label="Quick facts"></dl>
+      <dl class="ab-facts reveal" id="ab-facts" aria-label="Quick facts"></dl>
     </div>
   </section>
 
@@ -76,7 +87,7 @@
   <section class="section ab-story" aria-labelledby="ab-story-title">
     <div class="container ab-split">
       <header class="ab-split__head reveal">
-        <span class="section-label">Professional Summary</span>
+        <span class="section-label">Biography</span>
         <h2 class="section-title" id="ab-story-title">The full picture</h2>
       </header>
       <div class="ab-story__body reveal reveal-delay-1" id="ab-story"></div>

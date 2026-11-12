@@ -467,7 +467,7 @@ function renderInsightsPreview() {
    ═══════════════════════════════════════════ */
 
 function renderAbout() {
-  if (el('.ab-hero')) return renderAboutV2();
+  if (el('#ab-facts')) return renderAboutV2();
   renderAboutBio();
   renderAboutQuickFacts();
   renderEducation();

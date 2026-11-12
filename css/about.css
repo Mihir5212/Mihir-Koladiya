@@ -226,3 +226,14 @@
   .ab-in { animation: none; opacity: 1; }
   .ab-hero__title em::after { animation: none; transform: none; }
 }
+
+/* ── Intro below the page banner ── */
+.ab-intro__grid { display: grid; grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr); gap: clamp(36px, 6vw, 88px); align-items: center; margin-bottom: 56px; }
+.ab-intro .ab-photo { margin: 0; width: min(100%, 360px); }
+.ab-intro__text .section-title em { font-style: italic; color: var(--ab-gold-text); }
+.ab-intro__lead { margin: 6px 0 30px; font-size: clamp(1.02rem, 1.25vw, 1.12rem); line-height: 1.85; color: var(--gray); max-width: 620px; }
+.ab-intro__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; }
+@media (max-width: 900px) {
+  .ab-intro__grid { grid-template-columns: 1fr; }
+  .ab-intro .ab-photo { margin: 0 auto; width: min(80vw, 330px); }
+}
