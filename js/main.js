@@ -1112,6 +1112,28 @@ function renderHomeHero() {
   const loc = el('#mh-loc');
   if (loc && p.location) loc.textContent = p.location.split(',').slice(0, 2).join(',');
 
+  // tile grid: current role, research areas, toolkit
+  const nowTile = el('#mh-now-tile');
+  if (nowTile && job) {
+    nowTile.innerHTML = `
+      <span class="mh-now__label"><i></i>Currently</span>
+      <h2 class="mh-now__role">${sanitize(job.role.split('–')[0].trim())}</h2>
+      <p class="mh-now__org">${sanitize(job.org)}</p>
+      <p class="mh-now__period">${sanitize(job.period || '')}</p>
+      <div class="mh-now__tags">${(job.highlights || []).slice(0, 4).map(t => `<span>${sanitize(t)}</span>`).join('')}</div>`;
+  }
+  const areasEl = el('#mh-areas');
+  if (areasEl) {
+    areasEl.innerHTML = (DATA.RESEARCH_AREAS || []).slice(0, 6).map((r, i) => `
+      <li><span class="mh-areas__num">${String(i + 1).padStart(2, '0')}</span><h3>${sanitize(r.title)}</h3><p>${sanitize(r.desc)}</p></li>`).join('');
+  }
+  const toolsEl = el('#mh-tools');
+  if (toolsEl) {
+    const all = Object.values(DATA.SKILLS || {}).flat();
+    const pick = all.filter(s => /gis|python|r\b|spss|autocad|excel|kde|jamovi|earth|sql|civil|vissim|revit|primavera|matlab/i.test(s));
+    toolsEl.innerHTML = (pick.length >= 6 ? pick : all).slice(0, 14).map(s => `<span>${sanitize(s)}</span>`).join('');
+  }
+
   const stats = el('#stats-grid.mh-stats');
   if (stats) {
     stats.innerHTML = (DATA.HIGHLIGHTS || []).map(h => `

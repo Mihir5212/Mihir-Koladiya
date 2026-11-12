@@ -33,28 +33,26 @@
     </div>
   </nav>
 
-  <!-- ── HERO ── -->
-  <section class="mh-hero" aria-label="Introduction">
-
+  <!-- ── HERO (dark) ── -->
+  <section class="mh-hero mh-hero--light" aria-label="Introduction">
     <div class="mh-hero__inner">
       <div class="mh-hero__text">
+        <p class="mh-role mh-in" style="--i:0"><span class="mh-role__bar" aria-hidden="true"></span><span id="hero-title">Highway &amp; Transportation Engineer</span></p>
 
         <h1 class="mh-name" id="hero-name" aria-label="Mihir Koladiya">
           <span class="mh-name__line"><span class="mh-name__word">Mihir</span></span>
           <span class="mh-name__line"><span class="mh-name__word mh-name__word--accent">Koladiya</span></span>
         </h1>
 
-        <p class="mh-role mh-in" style="--i:3"><span class="mh-role__bar" aria-hidden="true"></span><span id="hero-title">Highway &amp; Transportation Engineer</span></p>
+        <p class="mh-lead mh-in" style="--i:3">I turn crash data into safer roads — combining field audits, <strong>GIS hotspot mapping</strong> and <strong>AI/ML modelling</strong> to find where and why crashes happen, and what to fix first.</p>
 
-        <p class="mh-lead mh-in" style="--i:4">I turn crash data into safer roads — combining field audits, <strong>GIS hotspot mapping</strong> and <strong>AI/ML modelling</strong> to find where and why crashes happen, and what to fix first.</p>
-
-        <div class="mh-actions mh-in" style="--i:5">
-          <a href="assets/docs/Mihir_Koladiya_CV.pdf" download class="btn btn-primary">Download CV</a>
+        <div class="mh-actions mh-in" style="--i:4">
+          <a href="assets/docs/Mihir_Koladiya_CV.pdf" download class="btn mh-btn-gold">Download CV</a>
           <a href="projects.html" class="btn btn-outline">View Projects</a>
           <a href="contact.html" class="btn-ghost">Get in touch</a>
         </div>
 
-        <dl class="mh-stats mh-in" style="--i:6" id="stats-grid" aria-label="Career highlights"></dl>
+        <dl class="mh-stats mh-in" style="--i:5" id="stats-grid" aria-label="Career highlights"></dl>
       </div>
 
       <div class="mh-hero__visual mh-in" style="--i:2">
@@ -86,27 +84,43 @@
   </section>
 
   <!-- ── KEYWORD RIBBON ── -->
-  <div class="mh-ribbon" aria-hidden="true">
+  <div class="mh-ribbon mh-ribbon--gold" aria-hidden="true">
     <div class="mh-ribbon__track">
       <span>Road Safety Audits</span><i>✦</i><span>Crash Data Analytics</span><i>✦</i><span>GIS Hotspot Mapping</span><i>✦</i><span>Blackspot Investigation</span><i>✦</i><span>AI / ML Modelling</span><i>✦</i><span>Transport Planning</span><i>✦</i>
       <span>Road Safety Audits</span><i>✦</i><span>Crash Data Analytics</span><i>✦</i><span>GIS Hotspot Mapping</span><i>✦</i><span>Blackspot Investigation</span><i>✦</i><span>AI / ML Modelling</span><i>✦</i><span>Transport Planning</span><i>✦</i>
     </div>
   </div>
 
-  <!-- ── ABOUT SNAPSHOT ── -->
-  <section class="section mh-about" id="mh-about" aria-labelledby="mh-about-title">
-    <div class="container mh-about__grid">
-      <div class="reveal">
-        <span class="section-label">Engineering Profile</span>
-        <h2 class="section-title" id="mh-about-title">Bridging highway engineering and spatial research</h2>
-      </div>
-      <div class="reveal reveal-delay-1">
-        <p class="mh-about__lead">A transportation engineer with a dual focus on field practice and academic research — road safety, crash hotspot identification, and geospatial analysis of infrastructure risk.</p>
-        <p class="mh-about__body">I apply QGIS, ArcGIS, Python and AI/ML methods to analyse crash patterns, identify blackspots and support data-driven highway safety decisions.</p>
-        <div class="mh-about__actions">
-          <a href="about.html" class="btn btn-primary">Full Profile</a>
-          <a href="contact.html" class="btn btn-outline">Get in Touch</a>
-        </div>
+  <!-- ── AT A GLANCE (tile grid) ── -->
+  <section class="section mh-bento-wrap" id="mh-about" aria-label="At a glance">
+    <div class="container">
+      <div class="mh-bento">
+
+        <article class="mh-tile mh-tile--about reveal">
+          <span class="section-label">Engineering Profile</span>
+          <h2 class="mh-tile__title">Bridging highway engineering and <em>spatial research</em></h2>
+          <p class="mh-tile__text">A transportation engineer with a dual focus on field practice and academic research — road safety, crash hotspot identification, and geospatial analysis of infrastructure risk.</p>
+          <div class="mh-tile__actions">
+            <a href="about.html" class="btn btn-primary">Full Profile</a>
+            <a href="contact.html" class="btn btn-outline">Get in Touch</a>
+          </div>
+        </article>
+
+        <article class="mh-tile mh-tile--now reveal reveal-delay-1" id="mh-now-tile"></article>
+
+        <article class="mh-tile mh-tile--areas reveal">
+          <div class="mh-tile__head">
+            <span class="section-label">Research Focus</span>
+            <a href="about.html" class="btn-ghost">Full profile</a>
+          </div>
+          <ol class="mh-areas" id="mh-areas"></ol>
+        </article>
+
+        <article class="mh-tile mh-tile--tools reveal reveal-delay-1">
+          <span class="section-label">Toolkit</span>
+          <div class="mh-tools" id="mh-tools"></div>
+        </article>
+
       </div>
     </div>
   </section>
@@ -125,22 +139,8 @@
     </div>
   </section>
 
-  <!-- ── RESEARCH AREAS ── -->
-  <section class="section" aria-label="Research areas">
-    <div class="container">
-      <div class="mh-head reveal">
-        <div>
-          <span class="section-label">Research Focus</span>
-          <h2 class="section-title">Areas of Expertise</h2>
-        </div>
-        <a href="about.html" class="btn-ghost">Full profile</a>
-      </div>
-      <div class="research-grid" id="research-areas"></div>
-    </div>
-  </section>
-
   <!-- ── PUBLICATIONS PREVIEW ── -->
-  <section class="section section--alt" aria-label="Publications preview">
+  <section class="section" aria-label="Publications preview">
     <div class="container">
       <div class="mh-head reveal">
         <div>
@@ -154,7 +154,7 @@
   </section>
 
   <!-- ── INSIGHTS PREVIEW ── -->
-  <section class="section" aria-label="Insights preview">
+  <section class="section section--alt" aria-label="Insights preview">
     <div class="container">
       <div class="mh-head reveal">
         <div>
