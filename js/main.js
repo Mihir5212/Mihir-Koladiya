@@ -240,29 +240,20 @@ function initQuickActions() {
   els('.qa__tile', wrap).forEach(t => t.addEventListener('click', () => setOpen(false)));
 }
 
-function initDock() {
-  const activeHref = activeNavHref();
-  const items = [
-    { href: 'index.html',        label: 'Home',   icon: 'home' },
-    { href: 'about.html',        label: 'About',  icon: 'user' },
-    { href: 'projects.html',     label: 'Work',   icon: 'layers' },
-    { href: 'publications.html', label: 'Papers', icon: 'file' },
-  ];
-  const dock = document.createElement('nav');
-  dock.className = 'dock';
-  dock.setAttribute('aria-label', 'Quick navigation');
-  dock.innerHTML = items.map(i => {
-    const active = i.href === activeHref;
-    return `<a class="dock__item${active ? ' active' : ''}" href="${i.href}" aria-label="${i.label}"${active ? ' aria-current="page"' : ''}>${icon(i.icon)}<span>${i.label}</span></a>`;
-  }).join('');
-  document.body.appendChild(dock);
-}
-
 /* ═══════════════════════════════════════════
    SCROLL REVEAL
    ═══════════════════════════════════════════ */
 
+// Content is only hidden for the fade-in while this script is running (see .js-reveal in style.css).
+// If the script never loads, nothing is hidden; if it stalls, a safety timer shows everything.
+document.documentElement.classList.add('js-reveal');
+setTimeout(() => els('.reveal:not(.visible)').forEach(e => e.classList.add('visible')), 4000);
+
 function initReveal() {
+  if (!('IntersectionObserver' in window)) {
+    els('.reveal').forEach(e => e.classList.add('visible'));
+    return;
+  }
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
@@ -511,7 +502,6 @@ function renderHero() {
   const p = DATA.PROFILE;
   const nameEl  = el('#hero-name');
   const titleEl = el('#hero-title');
-  const chipsEl = el('#hero-chips');
   const socialEl = el('#hero-social');
   const badgeEl = el('#hero-badge');
 
@@ -522,11 +512,6 @@ function renderHero() {
                      + `<span class="hero__name-line">${sanitize(rest.join(' '))}</span>`;
   }
   if (titleEl) titleEl.textContent = p.title;
-
-  if (chipsEl) {
-    chipsEl.innerHTML = (p.tagline || '').split('|').map(t => t.trim()).filter(Boolean)
-      .map(t => `<span class="hero__chip">${sanitize(t)}</span>`).join('');
-  }
 
   const current = (DATA.EXPERIENCE || [])[0];
   if (badgeEl && current) {
@@ -1038,29 +1023,88 @@ function renderGallery() {
   }
 
   renderGalleryItems(grid, DATA.GALLERY);
+  initLightbox();
 }
 
 function renderGalleryItems(grid, items) {
-  grid.innerHTML = items.map((item, idx) => `
-    <div class="gallery-item reveal" data-idx="${idx}">
-      <img
-        src="${sanitize(item.src)}"
-        alt="${sanitize(item.caption)}"
-        loading="lazy"
-        onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-      />
+  // Each tile keeps its index in DATA.GALLERY, so the lightbox always opens the tile you clicked,
+  // whatever filter is active. Tiles without a real photo show an illustration and are not clickable.
+  grid.innerHTML = items.map(item => {
+    const gi = DATA.GALLERY.indexOf(item);
+    const label = `${sanitize(item.category)}: ${sanitize(item.caption)}`;
+    const placeholder = `
       <div class="gallery-item__placeholder">
-        ${coverArt(item.category, idx + 1)}
-        ${icon('image')}
-        <span>${sanitize(item.caption)}</span>
-      </div>
-      <div class="gallery-item__overlay">
-        <span class="tag tag--dark">${sanitize(item.category)}</span>
-        <div class="gallery-item__caption">${sanitize(item.caption)}</div>
-      </div>
-    </div>
-  `).join('');
+        ${coverArt(item.category, gi + 1)}
+        <span class="tag">${sanitize(item.category)}</span>
+        <span class="gallery-item__placeholder-caption">${sanitize(item.caption)}</span>
+      </div>`;
+    if (!item.src) {
+      return `<div class="gallery-item gallery-item--placeholder reveal">${placeholder}</div>`;
+    }
+    return `
+      <button type="button" class="gallery-item reveal" data-gi="${gi}" aria-label="Open photo — ${label}">
+        <img src="${sanitize(item.src)}" alt="${sanitize(item.caption)}" loading="lazy"
+          onerror="const t=this.closest('.gallery-item');t.classList.add('is-missing');t.disabled=true;this.remove();" />
+        ${placeholder}
+        <div class="gallery-item__overlay">
+          <span class="tag tag--dark">${sanitize(item.category)}</span>
+          <div class="gallery-item__caption">${sanitize(item.caption)}</div>
+        </div>
+      </button>`;
+  }).join('');
   setTimeout(initReveal, 60);
+}
+
+/* Gallery lightbox — navigates within the photos currently shown */
+function initLightbox() {
+  const grid = el('#gallery-grid');
+  const box = el('#lightbox');
+  if (!grid || !box) return;
+  const img = el('#lightbox-img', box);
+  const caption = el('#lightbox-caption', box);
+  let list = [];
+  let pos = 0;
+  let opener = null;
+
+  const show = () => {
+    const item = DATA.GALLERY[list[pos]];
+    if (!item) return;
+    img.src = item.src;
+    img.alt = item.caption;
+    caption.textContent = `${item.caption} — ${item.category}`;
+    els('.lightbox__nav', box).forEach(b => { b.hidden = list.length < 2; });
+  };
+  const open = gi => {
+    list = els('.gallery-item[data-gi]:not(.is-missing)', grid).map(t => Number(t.dataset.gi));
+    pos = Math.max(0, list.indexOf(gi));
+    show();
+    box.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    el('#lightbox-close', box).focus();
+  };
+  const close = () => {
+    box.classList.remove('open');
+    document.body.style.overflow = '';
+    if (opener) opener.focus();
+  };
+  const step = dir => { pos = (pos + dir + list.length) % list.length; show(); };
+
+  grid.addEventListener('click', e => {
+    const tile = e.target.closest('.gallery-item[data-gi]');
+    if (!tile || tile.disabled) return;
+    opener = tile;
+    open(Number(tile.dataset.gi));
+  });
+  el('#lightbox-close', box).addEventListener('click', close);
+  el('#lightbox-prev', box).addEventListener('click', e => { e.stopPropagation(); step(-1); });
+  el('#lightbox-next', box).addEventListener('click', e => { e.stopPropagation(); step(1); });
+  box.addEventListener('click', e => { if (e.target === box) close(); });
+  document.addEventListener('keydown', e => {
+    if (!box.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') step(-1);
+    if (e.key === 'ArrowRight') step(1);
+  });
 }
 
 /* ═══════════════════════════════════════════
@@ -1637,9 +1681,12 @@ function route() {
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
   hydrateIcons();
-  route();
+  try {
+    route();
+  } catch (err) {
+    console.error(err);
+  }
   initQuickActions();
-  initDock();
   initScrollUI();
   initPageTransitions();
   // Delay reveal init to allow dynamic content to render first

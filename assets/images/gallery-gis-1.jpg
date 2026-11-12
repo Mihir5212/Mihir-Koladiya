@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
-  <rect width="600" height="600" fill="#1a1a2a"/>
-  <rect x="0" y="596" width="600" height="4" fill="#DD421D"/>
-  <text x="300" y="284" text-anchor="middle" font-family="Georgia,serif" font-size="22" fill="rgba(255,255,255,0.18)" letter-spacing="2">GIS ANALYSIS — ARCGIS</text>
-  <text x="300" y="324" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="rgba(255,255,255,0.35)">Add your photo here</text>
-  <circle cx="300" cy="240" r="32" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
-  <text x="300" y="256" text-anchor="middle" font-size="28" fill="rgba(255,255,255,0.2)">📷</text>
-</svg>

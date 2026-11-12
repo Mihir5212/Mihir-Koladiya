@@ -736,6 +736,7 @@
         if (!block || typeof block !== 'object') return '';
         if (block.type === 'h2') return `<h2>${esc(block.text)}</h2>`;
         if (block.type === 'image') {
+          if (!block.src) return '';
           return `
             <figure class="article-figure reveal">
               <img src="${esc(block.src || '')}" alt="${esc(block.alt || insight.title)}" loading="lazy"

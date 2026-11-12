@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200">
-  <rect width="600" height="200" fill="#FBFFFE"/>
-  <rect x="0" y="0" width="6" height="200" fill="#DD421D"/>
-  <text x="40" y="80" font-family="Georgia,serif" font-size="20" fill="#191923">AutoCAD Civil 3D</text>
-  <text x="40" y="108" font-family="Georgia,serif" font-size="13" fill="#6B6B7A">Certificate placeholder — add photo here</text>
-  <rect x="40" y="130" width="60" height="4" fill="#F3B61F" rx="2"/>
-  <text x="520" y="170" text-anchor="middle" font-size="36" fill="#F3B61F">🏅</text>
-</svg>
