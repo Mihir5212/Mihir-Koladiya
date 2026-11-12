@@ -61,14 +61,25 @@
       </div>
 
       <div class="hero__visual">
-        <div class="portrait-frame">
-          <div class="portrait-frame__photo">
+        <div class="portrait-dial">
+          <svg class="portrait-dial__arc" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="dial-gradient" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0" stop-color="#A9E5D8" />
+                <stop offset="0.55" stop-color="#42BFA5" />
+                <stop offset="1" stop-color="#23917B" />
+              </linearGradient>
+            </defs>
+            <path class="portrait-dial__value" d="M21.19 78.81 A40.75 40.75 0 1 1 78.81 78.81" pathLength="100" stroke="url(#dial-gradient)" />
+          </svg>
+          <span class="portrait-dial__knob" aria-hidden="true"></span>
+          <div class="portrait-dial__photo">
             <img
               src="assets/images/profile.jpg"
               alt="Portrait of Mihir Koladiya"
               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
             />
-            <div class="portrait-frame__fallback"><span data-icon="user"></span></div>
+            <div class="portrait-dial__fallback"><span data-icon="user"></span></div>
           </div>
         </div>
       </div>

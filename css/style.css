@@ -580,68 +580,79 @@ strong { font-weight: 600; }
 .hero__social a:active { box-shadow: var(--inset-sm); transform: none; }
 .hero__social svg { width: 19px; height: 19px; }
 
-/* Portrait frame — rounded-rectangle photo with two offset accent blocks */
-.hero__visual { position: relative; display: grid; place-items: center; min-width: 0; padding: 26px; }
-.portrait-frame {
-  /* width follows the screen height too, so the 4:5 photo always fits the first screen */
-  --w: clamp(240px, min(30vw, calc((100svh - var(--nav-h) - 110px) * 0.8)), 420px);
-  --pad: clamp(16px, calc(var(--w) * 0.055), 24px);
+/* Portrait dial — raised disc, inset groove, cobalt gauge, round photo */
+.hero__visual { position: relative; display: grid; place-items: center; min-width: 0; }
+.portrait-dial {
+  --size: clamp(280px, min(34vw, 62vh), 470px);
   position: relative;
-  width: var(--w);
+  width: var(--size);
   max-width: 100%;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow: var(--raise-lg);
   isolation: isolate;
 }
-.portrait-frame::before,
-.portrait-frame::after {
+.portrait-dial::before {
   content: '';
   position: absolute;
-  z-index: -1;
-  border-radius: 16px;
-  transition: transform 0.6s var(--ease);
+  inset: 5%;
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow: var(--inset);
 }
-.portrait-frame::before {          /* yellow block, top-left */
-  top: calc(var(--pad) * -1);
-  left: calc(var(--pad) * -1);
-  width: 24%;
-  height: 20%;
-  background: #F5C542;
-  box-shadow: 0 10px 24px -12px rgba(176, 128, 0, 0.55);
-  animation: block-in-tl 0.9s var(--ease) 0.15s backwards;
+.portrait-dial__arc { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.portrait-dial__value {
+  fill: none;
+  stroke-width: 3.1;
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  filter: drop-shadow(0 2px 3px rgba(35, 145, 123, 0.35));
+  animation: dial-draw 1.8s var(--ease) 0.35s forwards;
 }
-.portrait-frame::after {           /* orange block, bottom-right */
-  right: calc(var(--pad) * -1.3);
-  bottom: calc(var(--pad) * -1.3);
-  width: 38%;
-  height: 21%;
-  background: var(--orange-500);
-  box-shadow: 0 14px 30px -14px rgba(173, 76, 11, 0.6);
-  animation: block-in-br 0.9s var(--ease) 0.25s backwards;
+.portrait-dial__knob {
+  position: absolute;
+  left: 78.8%;
+  top: 78.8%;
+  width: 7.4%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--surface);
+  box-shadow: var(--raise-sm);
+  transform: translate(-50%, -50%) scale(0);
+  animation: knob-pop 0.6s var(--spring) 1.9s forwards;
 }
-.portrait-frame:hover::before { transform: translate(-5px, -5px); }
-.portrait-frame:hover::after { transform: translate(5px, 5px); }
-.portrait-frame__photo {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 24px;
+.portrait-dial__knob::after {
+  content: '';
+  position: absolute;
+  inset: 32%;
+  border-radius: 50%;
+  background: var(--blue-600);
+}
+.portrait-dial__photo {
+  position: absolute;
+  inset: 13.6%;
+  border-radius: 50%;
   overflow: hidden;
   background: var(--well);
-  box-shadow: 0 26px 50px -20px rgba(16, 27, 45, 0.42), 0 4px 12px -4px rgba(16, 27, 45, 0.12);
+  border: calc(var(--size) * 0.018) solid var(--surface);
+  box-shadow: var(--raise);
+  z-index: 1;
 }
-.portrait-frame__photo img {
+.portrait-dial__photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 22%;
+  transform: scale(1.1) translateY(3.5%);
   transition: transform 0.9s var(--ease);
 }
-.portrait-frame:hover .portrait-frame__photo img { transform: scale(1.04); }
-.portrait-frame__fallback { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; color: var(--blue-600); }
-.portrait-frame__fallback svg { width: 64px; height: 64px; }
+.portrait-dial:hover .portrait-dial__photo img { transform: scale(1.15) translateY(3.5%); }
+.portrait-dial__fallback { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; color: var(--teal-600); }
+.portrait-dial__fallback svg { width: 64px; height: 64px; }
 
-@keyframes block-in-tl { from { opacity: 0; transform: translate(14px, 14px); } to { opacity: 1; transform: none; } }
-@keyframes block-in-br { from { opacity: 0; transform: translate(-14px, -14px); } to { opacity: 1; transform: none; } }
+@keyframes dial-draw { to { stroke-dashoffset: 0; } }
+@keyframes knob-pop { to { transform: translate(-50%, -50%) scale(1); } }
 @keyframes pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.55; transform: scale(0.82); } }
 
 
@@ -2414,7 +2425,7 @@ body.is-leaving { opacity: 0; transition: opacity 0.17s ease; }
   .hero { min-height: 0; padding: clamp(28px, 6vw, 48px) 0 clamp(40px, 7vw, 64px); }
   .hero__inner { grid-template-columns: 1fr; gap: 36px; text-align: center; }
   .hero__visual { order: -1; }
-  .portrait-frame { --w: clamp(220px, 52vw, 320px); }
+  .portrait-dial { --size: clamp(230px, 46vw, 340px); }
   .hero__lead { margin-left: auto; margin-right: auto; }
   .hero__actions { justify-content: center; }
   .intro__grid { grid-template-columns: 1fr; }
@@ -2472,6 +2483,7 @@ body.is-leaving { opacity: 0; transition: opacity 0.17s ease; }
   html { scroll-behavior: auto; }
   .js-reveal .reveal, .reveal.visible { opacity: 1; animation: none; }
   .hero__badge-dot, .about-photo-card__status-dot { animation: none; }
-  .portrait-frame::before, .portrait-frame::after { animation: none; }
+  .portrait-dial__value { animation: none; stroke-dashoffset: 0; }
+  .portrait-dial__knob { animation: none; transform: translate(-50%, -50%); }
   *, *::before, *::after { transition-duration: 0.01ms !important; }
 }
