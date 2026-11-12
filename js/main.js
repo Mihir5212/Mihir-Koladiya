@@ -671,17 +671,52 @@ function renderAboutQuickFacts() {
   `).join('');
 }
 
+function orgLogo(name) {
+  const hit = (DATA.ORG_LOGOS || []).find(o => (name || '').includes(o.match));
+  const short = hit ? hit.short : initialsOf(name);
+  const tile = `<span class="org-logo__initials org-logo--t${toneOf(short)}">${sanitize(short)}</span>`;
+  const img = hit && hit.logo
+    ? `<img src="${attr(hit.logo)}" alt="" loading="lazy" onerror="this.remove()">` : '';
+  return `<span class="org-logo${short.length > 4 ? ' org-logo--wide' : ''}" aria-hidden="true">${tile}${img}</span>`;
+}
+
+const MONTHS = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11 };
+// "Aug 2025 – Mar 2026" -> "8 mos"; "May 2026 – Present" counts to today
+function durationOf(period) {
+  const parts = (period || '').split(/\s*[–-]\s*/);
+  const parse = t => {
+    if (/present/i.test(t)) { const d = new Date(); return d.getFullYear() * 12 + d.getMonth(); }
+    const m = /([A-Za-z]{3})[a-z]*\s+(\d{4})/.exec(t);
+    return m ? Number(m[2]) * 12 + MONTHS[m[1].toLowerCase()] : null;
+  };
+  if (parts.length < 2) return '';
+  const s = parse(parts[0]), e = parse(parts[1]);
+  if (s === null || e === null || e < s) return '';
+  const n = e - s + 1, y = Math.floor(n / 12), mo = n % 12;
+  return [y && `${y} yr${y > 1 ? 's' : ''}`, mo && `${mo} mo${mo > 1 ? 's' : ''}`].filter(Boolean).join(' ');
+}
+
 function renderEducation() {
   const container = el('#education-timeline');
   if (!container) return;
-  container.innerHTML = DATA.EDUCATION.map(e => `
-    <div class="timeline-item reveal">
-      <div class="timeline-item__period">${sanitize(e.period)}</div>
-      <div class="timeline-item__title">${sanitize(e.degree)}</div>
-      <div class="timeline-item__org">${sanitize(e.institution)} &middot; ${sanitize(e.location)}</div>
-      ${gradeBarHTML(e.grade)}
-      ${e.thesis ? `<div class="timeline-item__desc" style="margin-top:12px"><strong>Thesis:</strong> ${sanitize(e.thesis)}</div>` : ''}
-    </div>
+  container.className = 'xp-list';
+  container.innerHTML = DATA.EDUCATION.map((e, i) => `
+    <article class="xp-card${i === 0 ? ' is-latest' : ''} reveal" role="listitem">
+      ${orgLogo(e.institution)}
+      <div class="xp-card__body">
+        <div class="xp-card__top">
+          <h3 class="xp-card__title">${sanitize(e.degree)}</h3>
+          ${i === 0 ? '<span class="xp-badge">Latest</span>' : ''}
+        </div>
+        <div class="xp-card__org">${sanitize(e.institution)}</div>
+        <div class="xp-card__meta">
+          <span>${icon('clock')} ${sanitize(e.period)}</span>
+          <span>${icon('pin')} ${sanitize(e.location)}</span>
+        </div>
+        ${gradeBarHTML(e.grade)}
+        ${e.thesis ? `<p class="xp-card__desc"><strong>Thesis:</strong> ${sanitize(e.thesis)}</p>` : ''}
+      </div>
+    </article>
   `).join('');
 }
 
@@ -702,17 +737,28 @@ function gradeBarHTML(grade) {
 function renderExperience() {
   const container = el('#experience-timeline');
   if (!container) return;
-  container.innerHTML = DATA.EXPERIENCE.map(e => `
-    <div class="timeline-item reveal" data-type="${attr(e.type || '')}">
-      <div class="timeline-item__period">${sanitize(e.period)}</div>
-      <div class="timeline-item__title">${sanitize(e.role)}</div>
-      <div class="timeline-item__org">${sanitize(e.org)}</div>
-      <div class="timeline-item__desc">${sanitize(e.description)}</div>
-      <div class="timeline-item__tags">
-        ${(e.highlights || []).map(h => `<span class="tag">${sanitize(h)}</span>`).join('')}
+  container.className = 'xp-list';
+  container.innerHTML = DATA.EXPERIENCE.map(e => {
+    const current = /present/i.test(e.period);
+    const dur = durationOf(e.period);
+    return `
+    <article class="xp-card${current ? ' is-current' : ''} reveal" data-type="${attr(e.type || '')}" role="listitem">
+      ${orgLogo(e.org)}
+      <div class="xp-card__body">
+        <div class="xp-card__top">
+          <h3 class="xp-card__title">${sanitize(e.role)}</h3>
+          ${current ? '<span class="xp-badge xp-badge--live"><i></i>Current</span>' : ''}
+        </div>
+        <div class="xp-card__org">${sanitize(e.org)}</div>
+        <div class="xp-card__meta">
+          <span>${icon('clock')} ${sanitize(e.period)}${dur ? ` · ${dur}` : ''}</span>
+          ${e.type ? `<span class="xp-chip">${sanitize(e.type)}</span>` : ''}
+        </div>
+        <p class="xp-card__desc">${sanitize(e.description)}</p>
+        <div class="xp-card__tags">${(e.highlights || []).map(h => `<span class="tag">${sanitize(h)}</span>`).join('')}</div>
       </div>
-    </div>
-  `).join('');
+    </article>`;
+  }).join('');
   initExperienceTabs(container);
 }
 
@@ -744,6 +790,7 @@ function renderCertifications() {
         <div>
           <h3 class="cert-card__title">${sanitize(c.title)}</h3>
           <div class="cert-card__meta">${sanitize(c.org)} &middot; ${sanitize(c.year)}</div>
+          ${c.description ? `<p class="cert-card__desc">${sanitize(c.description)}</p>` : ''}
         </div>
       </div>
     </div>
@@ -1583,7 +1630,7 @@ function initExperienceTabs(container) {
       b.classList.toggle('active', b === btn);
       b.setAttribute('aria-pressed', String(b === btn));
     });
-    els('.timeline-item', container).forEach(item => {
+    els('.xp-card', container).forEach(item => {
       const show = btn.dataset.type === 'All' || item.dataset.type === btn.dataset.type;
       item.hidden = !show;
       if (show) { item.classList.remove('visible'); void item.offsetWidth; item.classList.add('visible'); }

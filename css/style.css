@@ -1454,6 +1454,7 @@ button.gallery-item { display: block; width: 100%; font: inherit; text-align: le
 }
 .cert-card__icon svg { width: 22px; height: 22px; }
 .cert-card__title { margin-bottom: 4px; font-size: 0.98rem; font-weight: 600; line-height: 1.4; color: var(--charcoal); }
+.cert-card__desc { margin-top: 8px; font-size: 0.88rem; line-height: 1.65; color: var(--text); }
 .cert-card__meta { font-size: 0.85rem; line-height: 1.5; color: var(--muted); }
 
 /* ═══════════════════════════════════════════
@@ -2378,6 +2379,83 @@ body.is-leaving { opacity: 0; transition: opacity 0.17s ease; }
   .donut__seg { stroke-dasharray: var(--len) 999; }
   .legend__bar i { width: var(--w); }
   .stepper::after { transform: scaleX(1); }
+}
+
+
+/* ═══════════════════════════════════════════
+   EDUCATION & EXPERIENCE — logo cards on a rail
+   ═══════════════════════════════════════════ */
+.xp-list { position: relative; display: flex; flex-direction: column; gap: 18px; }
+.xp-list::before {
+  content: '';
+  position: absolute;
+  left: 53px;
+  top: 40px;
+  bottom: 40px;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--teal-500), var(--line-solid) 35%, var(--line-solid));
+}
+.xp-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+  padding: 20px 22px;
+  border-radius: 24px;
+  background: var(--surface);
+  border: var(--edge);
+  box-shadow: var(--raise);
+  transition: transform var(--transition-slow), box-shadow var(--transition-slow);
+}
+.xp-card:hover { transform: translateY(-3px); box-shadow: var(--raise-lg); }
+.xp-card[hidden] { display: none; }
+.xp-card.is-current { background: var(--surface-hi); box-shadow: var(--raise), inset 4px 0 0 var(--blue-600); }
+.org-logo {
+  position: relative;
+  z-index: 1;
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: var(--surface-hi);
+  border: 1px solid var(--line-solid);
+  box-shadow: var(--raise-sm), 0 0 0 5px var(--surface);
+}
+.org-logo img { position: absolute; inset: 8px; width: calc(100% - 16px); height: calc(100% - 16px); object-fit: contain; background: var(--surface-hi); }
+.org-logo__initials { width: 100%; height: 100%; display: grid; place-items: center; font-size: 0.95rem; font-weight: 700; letter-spacing: 0.02em; }
+.org-logo--wide .org-logo__initials { font-size: 0.72rem; }
+.org-logo--t0 { background: var(--navy-50); color: var(--deep-navy); }
+.org-logo--t1 { background: var(--teal-50); color: var(--teal-700); }
+.org-logo--t2 { background: var(--blue-50); color: var(--blue-700); }
+.org-logo--t3 { background: var(--orange-50); color: var(--orange-700); }
+.xp-card__body { min-width: 0; }
+.xp-card__top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.xp-card__title { font-size: 1.05rem; font-weight: 600; line-height: 1.35; letter-spacing: -0.01em; color: var(--charcoal); }
+.xp-card__org { margin-top: 3px; font-size: 0.92rem; font-weight: 500; line-height: 1.45; color: var(--blue-700); }
+.xp-card__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; margin-top: 10px; font-size: 0.82rem; color: var(--muted); }
+.xp-card__meta > span { display: inline-flex; align-items: center; gap: 6px; }
+.xp-card__meta svg { width: 14px; height: 14px; color: var(--teal-600); }
+.xp-chip { padding: 3px 10px; border-radius: var(--radius-pill); background: var(--well); font-size: 0.72rem; font-weight: 600; color: var(--text); }
+.xp-card__desc { margin-top: 12px; font-size: 0.92rem; line-height: 1.7; color: var(--muted); }
+.xp-card__desc strong { color: var(--text); }
+.xp-card__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.xp-card__tags:empty { display: none; }
+.xp-card__tags .tag { padding: 6px 12px; background: var(--bg); color: var(--text); box-shadow: var(--inset-sm); text-transform: none; letter-spacing: 0; font-size: 0.76rem; font-weight: 500; }
+.xp-card .grade-bar { margin-top: 12px; }
+.xp-badge { flex-shrink: 0; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: var(--radius-pill); background: var(--navy-50); color: var(--deep-navy); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+.xp-badge--live { background: var(--blue-50); color: var(--blue-700); }
+.xp-badge--live i { width: 7px; height: 7px; border-radius: 50%; background: var(--blue-600); animation: pulse-dot 2.4s ease-in-out infinite; }
+@media (max-width: 520px) {
+  .xp-card { grid-template-columns: 48px minmax(0, 1fr); gap: 14px; padding: 18px; }
+  .org-logo { width: 48px; height: 48px; border-radius: 14px; }
+  .org-logo__initials { font-size: 0.78rem; }
+  .org-logo--wide .org-logo__initials { font-size: 0.6rem; }
+  .xp-list::before { left: 42px; }
+  .xp-card__top { flex-direction: column-reverse; gap: 6px; }
 }
 
 /* ═══════════════════════════════════════════

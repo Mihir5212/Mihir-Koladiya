@@ -109,6 +109,26 @@ Languages: Gujarati (native), Hindi and English (full professional proficiency).
   ],
 
   // ─────────────────────────────────────────
+  // ORGANISATION LOGOS (Education & Experience cards)
+  // Save a logo as e.g. assets/images/logos/svnit.png and put that path in "logo".
+  // While "logo" is empty, a tile with the short name is shown instead.
+  // "match" is text found in the institution / organisation name.
+  // ─────────────────────────────────────────
+  ORG_LOGOS: [
+    { match: "SVNIT",              short: "SVNIT",  logo: "" },
+    { match: "Sigma University",   short: "SU",     logo: "" },
+    { match: "MSU Baroda",         short: "MSU",    logo: "" },
+    { match: "Maharaja Sayajirao", short: "MSU",    logo: "" },
+    { match: "Mattest",            short: "ME",     logo: "" },
+    { match: "TD Patel",           short: "TDP",    logo: "" },
+    { match: "Pramukh",            short: "PT",     logo: "" },
+    { match: "KKB",                short: "KKB",    logo: "" },
+    { match: "SSASIT",             short: "SSASIT", logo: "" },
+    { match: "Tapi Diploma",       short: "TDEC",   logo: "" },
+    { match: "Vivekanand",         short: "VV",     logo: "" },
+  ],
+
+  // ─────────────────────────────────────────
   // EDUCATION
   // ─────────────────────────────────────────
   EDUCATION: [
@@ -181,25 +201,29 @@ Languages: Gujarati (native), Hindi and English (full professional proficiency).
       title: "Paper Presentation Certificate – TIPCE 2025",
       org: "IIT Roorkee",
       year: "18–21 Sep 2025",
-      photo: "",
+      photo: "",          // e.g. "assets/images/certificates/tipce-2025.jpg"
+      description: "",    // a sentence or two about this certificate
     },
     {
       title: "Paper Presentation Certificate – CTSEM 2025",
       org: "MANIT Bhopal & CSIR-CRRI",
       year: "04–05 Jul 2025",
-      photo: "",
+      photo: "",          // e.g. "assets/images/certificates/tipce-2025.jpg"
+      description: "",    // a sentence or two about this certificate
     },
     {
       title: "Certificate of Reviewing – Journal of Engineering Research & Reviews",
       org: "eJManager",
       year: "12 Apr 2025",
-      photo: "",
+      photo: "",          // e.g. "assets/images/certificates/tipce-2025.jpg"
+      description: "",    // a sentence or two about this certificate
     },
     {
       title: "Paper Presentation Certificate – TPMDC 2024",
       org: "IIT Bombay",
       year: "18–20 Dec 2024",
-      photo: "",
+      photo: "",          // e.g. "assets/images/certificates/tipce-2025.jpg"
+      description: "",    // a sentence or two about this certificate
     },
   ],
 
