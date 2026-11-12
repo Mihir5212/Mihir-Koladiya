@@ -147,24 +147,101 @@ function projectCardHTML(p) {
   `;
 }
 
-function pubCardHTML(p, accentClass = '') {
+const QUOTE_SVG = '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/></svg>';
+const EXT_SVG = '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>';
+const CHECK_SVG = '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>';
+
+function pubAuthors(authors) {
+  const list = String(authors || '')
+    .split(/\s*,?\s*&\s*|(?<=\.)\s*,\s*|\s*,\s*(?=\[)/)
+    .map(a => a.trim()).filter(Boolean);
+  const me = a => /koladiya/i.test(a);
+  const initials = a => {
+    if (/^\[/.test(a)) return '+';
+    const surname = a.split(',')[0];
+    const rest = a.slice(surname.length).replace(/[^A-Za-z]/g, '');
+    return ((surname[0] || '') + (rest[0] || '')).toUpperCase();
+  };
+  const avatars = list.slice(0, 4).map((a, i) => me(a)
+    ? `<span class="pub-av pub-av--me" data-tip="${sanitize(a)}" style="z-index:${9 - i}"><img src="assets/images/profile.jpg" alt="" onerror="this.remove()" /></span>`
+    : `<span class="pub-av pub-av--${i % 3}" data-tip="${sanitize(a)}" style="z-index:${9 - i}">${sanitize(initials(a))}</span>`).join('');
+  const names = list.map(a => me(a) ? `<strong>${sanitize(a)}</strong>` : sanitize(a)).join(', ');
+  return `<div class="pub-card__authors"><span class="pub-avs" aria-hidden="true">${avatars}</span><span class="pub-card__names">${names}</span></div>`;
+}
+
+function pubCardHTML(p, accentClass = '', kindOverride = '') {
   const venue = p.journal || p.conference || '';
-  const doi   = p.doi ? `<span class="pub-card__doi">DOI: ${sanitize(p.doi)}</span>` : '';
-  const link  = p.link ? `<a href="${p.link}" target="_blank" rel="noopener" class="pub-card__link">View ↗</a>` : '';
+  const kind  = kindOverride || (p.journal ? 'Journal' : 'Conference');
+  const doi   = p.doi ? `<span class="pub-card__doi">DOI ${sanitize(p.doi)}</span>` : '';
+  const link  = p.link ? `<a href="${sanitize(p.link)}" target="_blank" rel="noopener" class="pub-card__link">Read paper ${EXT_SVG}</a>` : '';
+  const cite  = `${p.authors || ''} (${p.year || ''}). ${p.title || ''}. ${venue}.${p.doi ? ' https://doi.org/' + p.doi : ''}`;
   return `
-    <div class="pub-card reveal">
-      <div class="pub-card__accent ${accentClass}"></div>
+    <article class="pub-card reveal ${accentClass ? 'pub-card--gold' : ''}">
+      <div class="pub-card__year">${sanitize(p.year)}<small>${sanitize(kind)}</small></div>
       <div class="pub-card__body">
-        <div class="pub-card__title">${sanitize(p.title)}</div>
-        <div class="pub-card__meta">${sanitize(p.authors)} &middot; ${sanitize(venue)} &middot; ${sanitize(p.year)}</div>
+        ${venue ? `<div class="pub-card__venue">${sanitize(venue)}</div>` : ''}
+        <h3 class="pub-card__title">${sanitize(p.title)}</h3>
+        ${p.authors ? pubAuthors(p.authors) : ''}
+        ${p.note ? `<p class="pub-card__note">${sanitize(p.note)}</p>` : ''}
         <div class="pub-card__footer">
-          <span class="status-badge ${getStatusClass(p.status)}">${sanitize(p.status)}</span>
+          ${p.status ? `<span class="status-badge ${getStatusClass(p.status)}">${sanitize(p.status)}</span>` : ''}
+          
           ${doi}
           ${link}
+          ${p.note ? '' : `<button type="button" class="pub-card__cite" data-cite="${sanitize(cite)}">${QUOTE_SVG} Cite</button>`}
         </div>
       </div>
-    </div>
+    </article>
   `;
+}
+
+/* Cite: copy the citation and show a toast (same behaviour as the earlier site) */
+document.addEventListener('click', e => {
+  const btn = e.target.closest && e.target.closest('.pub-card__cite');
+  if (!btn) return;
+  e.preventDefault();
+  copyText(btn.getAttribute('data-cite'), 'Citation');
+});
+
+function toast(message, kind = 'success') {
+  let stack = el('.toast-stack');
+  if (!stack) {
+    stack = document.createElement('div');
+    stack.className = 'toast-stack';
+    stack.setAttribute('role', 'status');
+    stack.setAttribute('aria-live', 'polite');
+    document.body.appendChild(stack);
+  }
+  const t = document.createElement('div');
+  t.className = `toast toast--${kind}`;
+  t.innerHTML = `<span class="toast__icon">${kind === 'success' ? CHECK_SVG : '!'}</span><span>${sanitize(message)}</span>`;
+  stack.appendChild(t);
+  requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add('is-in')));
+  setTimeout(() => {
+    t.classList.remove('is-in');
+    setTimeout(() => t.remove(), 450);
+  }, 2600);
+}
+
+async function copyText(text, label = 'Text') {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+      document.body.appendChild(ta);
+      ta.select();
+      const ok = document.execCommand('copy');
+      ta.remove();
+      if (!ok) throw new Error('copy failed');
+    }
+    toast(`${label} copied to clipboard`);
+  } catch {
+    toast('Could not copy — please select and copy it manually', 'error');
+  }
 }
 
 function getContentTypeMeta(type) {
@@ -296,8 +373,7 @@ function insightCardHTML(item) {
    ═══════════════════════════════════════════ */
 
 function renderHome() {
-  renderHero();
-  renderStats();
+  if (el('.mh-hero')) renderHomeHero(); else { renderHero(); renderStats(); }
   renderFeaturedProjects();
   renderResearchAreas();
   renderPubsPreview();
@@ -596,20 +672,10 @@ function renderPublications() {
       <div class="pub-section__heading">
         <span class="pub-section__heading-dot" style="background:var(--gold)"></span>
         Peer Review Contributions
+        <span class="pub-section__count">${pub.peerReview.length}</span>
       </div>
       <div class="pub-cards">
-        ${pub.peerReview.map(r => `
-          <div class="pub-card reveal">
-            <div class="pub-card__accent pub-card__accent--gold"></div>
-            <div class="pub-card__body">
-              <div class="pub-card__title">${sanitize(r.title)} — ${sanitize(r.journal)}</div>
-              <div class="pub-card__meta">${sanitize(r.year)}</div>
-              <div class="pub-card__footer">
-                <span class="tag">${sanitize(r.note)}</span>
-              </div>
-            </div>
-          </div>
-        `).join('')}
+        ${pub.peerReview.map(r => pubCardHTML({ title: r.journal, journal: r.title, year: r.year, note: r.note }, 'gold', 'Review')).join('')}
       </div>
     `;
   }
@@ -620,6 +686,7 @@ function pubSectionHTML(label, items, accentClass) {
     <div class="pub-section__heading">
       <span class="pub-section__heading-dot"></span>
       ${sanitize(label)}
+      <span class="pub-section__count">${items.length}</span>
     </div>
     <div class="pub-cards">
       ${items.map(p => pubCardHTML(p, accentClass)).join('')}
@@ -944,6 +1011,169 @@ function route() {
 document.addEventListener('DOMContentLoaded', () => {
   initNavbar();
   route();
+  try { initDock(); } catch (e) { console.error(e); }
+  try { initNavMotion(); initPageTransitions(); } catch (e) { console.error(e); }
   // Delay reveal init to allow dynamic content to render first
   setTimeout(initReveal, 100);
 });
+
+/* ═══════════════════════════════════════════
+   QUICK DOCK — back to top, page-progress ring, quick menu
+   ═══════════════════════════════════════════ */
+function initDock() {
+  const P = DATA.PROFILE || {};
+  const L = DATA.LINKS || {};
+  const svg = (d) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+  const I = {
+    mail:   '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+    phone:  '<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/>',
+    linkedin: '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/>',
+    download: '<path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16"/>',
+    layers: '<path d="m12 3 9 5-9 5-9-5 9-5z"/><path d="m3 13 9 5 9-5"/>',
+    file:   '<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>',
+    up:     '<path d="M12 19V5m-6 6 6-6 6 6"/>',
+    plus:   '<path d="M12 5v14M5 12h14"/>',
+  };
+  const realPhone = P.phone && !/x/i.test(P.phone);
+  const realEmail = P.email && !/example\.com/i.test(P.email);
+  const items = [
+    { label: 'Email',    icon: 'mail',     href: realEmail ? `mailto:${P.email}` : 'contact.html' },
+    realPhone && { label: 'Call', icon: 'phone', href: `tel:${P.phone.replace(/\s+/g, '')}` },
+    L.linkedin && { label: 'LinkedIn', icon: 'linkedin', href: L.linkedin, ext: true },
+    { label: 'CV',       icon: 'download', href: P.cvFile || 'assets/docs/Mihir_Koladiya_CV.pdf', dl: true },
+    { label: 'Projects', icon: 'layers',   href: 'projects.html' },
+    { label: 'Papers',   icon: 'file',     href: 'publications.html' },
+  ].filter(Boolean);
+
+  const dock = document.createElement('div');
+  dock.className = 'dock';
+  dock.innerHTML = `
+    <nav class="dock__panel" id="dock-panel" aria-label="Quick actions">
+      ${items.map((it, i) => `<a class="dock__item" style="--i:${i}" href="${sanitize(it.href)}"${it.ext ? ' target="_blank" rel="noopener"' : ''}${it.dl ? ' download' : ''}>${svg(I[it.icon])}<span>${it.label}</span></a>`).join('')}
+    </nav>
+    <button type="button" class="dock__top" aria-label="Back to top">${svg(I.up)}</button>
+    <button type="button" class="dock__fab" aria-label="Quick actions" aria-expanded="false" aria-controls="dock-panel">
+      <svg class="dock__ring" viewBox="0 0 100 100" aria-hidden="true"><circle class="track" cx="50" cy="50" r="47"/><circle class="bar" cx="50" cy="50" r="47" pathLength="1"/></svg>
+      <span class="dock__icon">${svg(I.plus)}</span>
+    </button>`;
+  document.body.appendChild(dock);
+
+  const fab = el('.dock__fab', dock);
+  const bar = el('.dock__ring .bar', dock);
+  const setOpen = open => {
+    dock.classList.toggle('is-open', open);
+    fab.setAttribute('aria-expanded', String(open));
+    fab.setAttribute('aria-label', open ? 'Close quick actions' : 'Quick actions');
+  };
+  fab.addEventListener('click', e => { e.stopPropagation(); setOpen(!dock.classList.contains('is-open')); });
+  el('.dock__top', dock).addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  document.addEventListener('click', e => { if (!dock.contains(e.target)) setOpen(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
+
+  let ticking = false;
+  const update = () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const k = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+    bar.style.strokeDashoffset = String(1 - k);
+    dock.classList.toggle('is-scrolled', window.scrollY > 300);
+    ticking = false;
+  };
+  window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+}
+
+/* ═══════════════════════════════════════════
+   MOTION — sliding nav pill, page fades, reveal safety
+   (ported from the earlier site)
+   ═══════════════════════════════════════════ */
+
+// Content is hidden for the fade-in only while this script runs; a safety timer shows everything.
+document.documentElement.classList.add('js-reveal');
+setTimeout(() => els('.reveal:not(.visible)').forEach(e => e.classList.add('visible')), 4000);
+
+const prefersReducedMotion = () => window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function initNavMotion() {
+  const links = el('.navbar__links');
+  const toggle = el('.navbar__toggle');
+  if (toggle && links) {
+    const sync = () => {
+      const open = links.classList.contains('open');
+      toggle.classList.toggle('is-open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    };
+    toggle.addEventListener('click', () => setTimeout(sync, 0));
+    els('a', links).forEach(a => a.addEventListener('click', () => setTimeout(sync, 0)));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { links.classList.remove('open'); sync(); } });
+  }
+  if (!links) return;
+
+  const ind = document.createElement('span');
+  ind.className = 'navbar__indicator';
+  ind.setAttribute('aria-hidden', 'true');
+  links.prepend(ind);
+  links.classList.add('has-indicator');
+
+  const items = els('a:not(.nav-cta)', links);
+  const active = items.find(a => a.classList.contains('active'));
+  const isInline = () => getComputedStyle(links).flexDirection !== 'column';
+  const moveTo = (a, instant = false) => {
+    if (!a || !isInline()) { ind.style.opacity = '0'; return; }
+    if (instant) ind.style.transition = 'none';
+    ind.style.width = `${a.offsetWidth}px`;
+    ind.style.transform = `translate(${a.offsetLeft}px, -50%)`;
+    ind.style.opacity = '1';
+    if (instant) requestAnimationFrame(() => requestAnimationFrame(() => { ind.style.transition = ''; }));
+  };
+  items.forEach(a => {
+    a.addEventListener('mouseenter', () => moveTo(a));
+    a.addEventListener('focus', () => moveTo(a));
+  });
+  links.addEventListener('mouseleave', () => moveTo(active));
+  window.addEventListener('resize', () => moveTo(active, true));
+  moveTo(active, true);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => moveTo(active, true));
+}
+
+function initPageTransitions() {
+  if (prefersReducedMotion()) return;
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href]');
+    if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (a.target === '_blank' || a.hasAttribute('download')) return;
+    const url = new URL(a.getAttribute('href'), window.location.href);
+    if (url.origin !== window.location.origin) return;
+    if (!/(\.html|\/)$/.test(url.pathname)) return;
+    if (url.pathname === window.location.pathname && url.search === window.location.search) return;
+    e.preventDefault();
+    document.body.classList.add('is-leaving');
+    setTimeout(() => { window.location.href = url.href; }, 170);
+  });
+  window.addEventListener('pageshow', () => document.body.classList.remove('is-leaving'));
+}
+
+
+/* ═══════════════════════════════════════════
+   HOME HERO (index.html .mh-hero)
+   ═══════════════════════════════════════════ */
+function renderHomeHero() {
+  const p = DATA.PROFILE;
+  const job = (DATA.EXPERIENCE || [])[0];
+  const now = el('#mh-now');
+  if (now && job) {
+    const org = /SVNIT/.test(job.org) ? 'SVNIT Surat' : job.org.split(',')[0];
+    now.innerHTML = `<span class="mh-float__label">Currently</span><strong>${sanitize(job.role.split('–')[0].trim())}</strong><span>${sanitize(org)}</span>`;
+  }
+  const loc = el('#mh-loc');
+  if (loc && p.location) loc.textContent = p.location.split(',').slice(0, 2).join(',');
+
+  const stats = el('#stats-grid.mh-stats');
+  if (stats) {
+    stats.innerHTML = (DATA.HIGHLIGHTS || []).map(h => `
+      <div class="mh-stat">
+        <dt>${sanitize(h.label)}</dt>
+        <dd><span class="stat-card__value" data-value="${h.value}" data-suffix="">${h.value}</span>${h.suffix ? `<em>${sanitize(h.suffix)}</em>` : ''}</dd>
+      </div>`).join('');
+  }
+}
