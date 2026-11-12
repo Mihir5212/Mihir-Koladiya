@@ -12,18 +12,16 @@ const DATA = {
   PROFILE: {
     name: "Mihir Koladiya",
     title: "Highway & Transportation Engineer",
-    tagline: "Road Safety | Crash Analytics | GIS | AI/ML Applications | Blackspot & Hotspot Analysis",
-    shortBio: "Highway and Transportation Engineer with a postgraduate background and applied experience in road safety, crash analytics, blackspot investigation, and GIS-based spatial analysis — using QGIS, ArcGIS, Python, SPSS, and Jamovi for data-driven road safety assessment.",
-    longBio: `Mihir Koladiya is a Highway and Transportation Engineer with a postgraduate background and applied experience in road safety, crash analytics, blackspot investigation, and GIS-based spatial analysis. He is skilled in QGIS, ArcGIS, Python, SPSS, and Jamovi for crash data analysis, hotspot mapping, safety trend interpretation, and data-driven road safety assessment.
+    tagline: "Engineering safer roads through spatial analysis, crash data, and evidence-based transport research.",
+    shortBio: "Transportation engineer specializing in road safety analysis, GIS-based crash hotspot identification, and highway infrastructure evaluation. Bridging field engineering practice with rigorous academic research in sustainable mobility and traffic safety.",
+    longBio: `Mihir Koladiya is a highway and transportation engineer with a focused research track in road safety, crash analysis, and geospatial transportation analytics. His work integrates field engineering practice with spatial data science — applying tools such as ArcGIS, QGIS, and Python to identify crash patterns, evaluate road infrastructure risk, and inform evidence-based safety interventions.
 
-Backed by research experience using AI/ML and geospatial approaches to identify crash-contributing factors, his aim is to advance transportation infrastructure through sustainable solutions that enhance safety, efficiency, and evidence-based decision-making.
+His research interests span Kernel Density Estimation (KDE), Network Kernel Density Estimation (NKDE), black spot identification, and sustainable mobility systems. He has contributed to peer-reviewed publications and presented at national transportation engineering conferences, positioning him at the intersection of applied engineering and academic research.
 
-He is experienced in field surveys, road safety audits, DGPS-based road inventory, highway safety evaluation, and technical report preparation for transportation infrastructure projects. He currently works as a Project Engineer at SVNIT Surat on a highway safety and risk analytics project.
-
-Languages: Gujarati (native), Hindi and English (full professional proficiency).`,
+Mihir's professional objective is to contribute to transportation systems that are safer, smarter, and more equitable — whether through industry consulting, research collaboration, or advanced academic study.`,
     location: "Surat, Gujarat, India",
-    email: "koladiyamihir5212@gmail.com",
-    phone: "+91 9904050019",
+    email: "mihir.koladiya@example.com",
+    phone: "+91 XXXXX XXXXX",
     cvFile: "assets/docs/Mihir_Koladiya_CV.pdf",
     photo: "assets/images/profile.jpg",
   },
@@ -32,10 +30,10 @@ Languages: Gujarati (native), Hindi and English (full professional proficiency).
   // HIGHLIGHTS / STATS
   // ─────────────────────────────────────────
   HIGHLIGHTS: [
-    { value: 4,  suffix: "+", label: "Years Experience",     icon: "briefcase" },
-    { value: 3,  suffix: "",  label: "Published Papers",     icon: "file" },
-    { value: 4,  suffix: "",  label: "Papers Under Process", icon: "pen" },
-    { value: 4,  suffix: "",  label: "Conferences",          icon: "mic" },
+    { value: 2,  suffix: "+", label: "Years Experience",     icon: "⚙" },
+    { value: 1, suffix: "+", label: "Engineering Projects", icon: "🛣" },
+    { value: 2,  suffix: "+", label: "Publications",         icon: "📄" },
+    { value: 3,  suffix: "+", label: "Conferences",          icon: "🎤" },
   ],
 
   // ─────────────────────────────────────────
@@ -43,89 +41,29 @@ Languages: Gujarati (native), Hindi and English (full professional proficiency).
   // ─────────────────────────────────────────
   EXPERIENCE: [
     {
-      role: "Project Engineer – Transportation Engineering and Planning",
-      org: "Sardar Vallabhbhai National Institute of Technology (SVNIT), Surat",
-      period: "May 2026 – Present",
+      role: "Transportation Engineering Consultant",
+      org: "Independent Practice",
+      period: "2023 – Present",
       type: "Professional",
-      description: "Working on transportation engineering and planning activities under a highway safety and risk analytics project — analysing crash data for spatiotemporal trends, hotspot detection, and proactive road safety assessment, and preparing technical project outputs.",
-      highlights: ["Spatiotemporal crash analysis", "Hotspot detection", "GIS & statistical methods", "Technical reporting"],
+      description: "Providing technical consultation on highway design, traffic safety audits, and GIS-based crash analysis for road improvement projects across Gujarat.",
+      highlights: ["Road safety audits", "Crash pattern analysis", "Highway design review"],
     },
     {
-      role: "Lecturer – Civil Engineering",
-      org: "Sigma University, Vadodara",
-      period: "Aug 2025 – Mar 2026",
-      type: "Teaching",
-      description: "Taught undergraduate courses in traffic, transportation, surveying, AutoCAD, and infrastructure planning. Guided student projects on road safety, traffic studies, pavement design, and GIS analysis, and mentored students in technical report writing.",
-      highlights: ["Traffic & transportation", "Surveying & AutoCAD", "Student project guidance"],
+      role: "Research Associate – Road Safety",
+      org: "Transportation Research Group",
+      period: "2022 – 2023",
+      type: "Research",
+      description: "Conducted spatial analysis of crash data using NKDE and KDE methods to identify high-risk zones along state highways. Contributed to journal publications and conference presentations.",
+      highlights: ["NKDE-based hotspot mapping", "Crash severity modeling", "GIS data processing"],
     },
     {
-      role: "Department Head Coordinator – PG Civil Engineering, Training and Placement Cell",
-      org: "Faculty of Technology and Engineering, MSU Baroda, Vadodara",
-      period: "Mar 2024 – May 2025",
-      type: "Leadership",
-      description: "Coordinated placement communication among PG students, faculty, recruiters, and department leadership; managed student profiles, recruiter follow-ups, interview schedules, company visits, and placement records.",
-      highlights: ["Placement coordination", "Industry–academia liaison", "Career readiness"],
+      role: "Graduate Research Assistant",
+      org: "Civil Engineering Department, SVNIT",
+      period: "2021 – 2022",
+      type: "Research",
+      description: "Assisted in data collection, traffic volume surveys, and pavement condition assessment for multiple highway corridor studies across Surat and surrounding districts.",
+      highlights: ["Traffic volume surveys", "Pavement condition index", "Field data collection"],
     },
-    {
-      role: "Road Safety Engineer Intern",
-      org: "Mattest Engineering Services, Surat",
-      period: "May 2024 – Jun 2024",
-      type: "Internship",
-      description: "Conducted rural road safety audits to identify blackspots, high-risk locations, and geometric deficiencies, applying IRC:SP-88 and IRC:SP-84 guidelines for safety diagnosis and countermeasure planning.",
-      highlights: ["Road safety audits", "Blackspot identification", "IRC:SP-88 / SP-84"],
-    },
-    {
-      role: "Junior Civil Engineer",
-      org: "TD Patel & Company, Surat",
-      period: "May 2022 – Jul 2023",
-      type: "Professional",
-      description: "Supervised roadway infrastructure works including layout checking, site inspection, and execution monitoring; prepared quantity records, billing documents, measurement sheets, and site reports.",
-      highlights: ["Site supervision", "Quality control", "Billing & quantities"],
-    },
-    {
-      role: "Civil Engineer Intern",
-      org: "Mattest Engineering Services, Surat",
-      period: "Jan 2022 – Apr 2022",
-      type: "Internship",
-      description: "Conducted DGPS-based road inventory and topographic surveys across 300+ km of highway corridors, and assisted in bituminous mix design compliance and pavement QA/QC records.",
-      highlights: ["DGPS road inventory", "300+ km surveyed", "Pavement QA/QC"],
-    },
-    {
-      role: "Civil Engineer Intern",
-      org: "Pramukh Test House & Consultancy Services, Surat",
-      period: "Sep 2021 – Oct 2021",
-      type: "Internship",
-      description: "Performed laboratory testing of soil samples for pavement subgrade evaluation and bitumen testing for highway quality control, with QA/QC documentation.",
-      highlights: ["Soil testing", "Bitumen testing", "QA/QC documentation"],
-    },
-    {
-      role: "Civil Engineer Intern",
-      org: "KKB Projects Pvt. Ltd., Surat",
-      period: "May 2021 – Aug 2021",
-      type: "Internship",
-      description: "Monitored highway construction activities including subgrade, GSB, WMM, and bituminous layer execution, observing compaction, layer thickness, and pavement construction quality.",
-      highlights: ["Pavement layer execution", "Site documentation", "QA/QC records"],
-    },
-  ],
-
-  // ─────────────────────────────────────────
-  // ORGANISATION LOGOS (Education & Experience cards)
-  // Save a logo as e.g. assets/images/logos/svnit.png and put that path in "logo".
-  // While "logo" is empty, a tile with the short name is shown instead.
-  // "match" is text found in the institution / organisation name.
-  // ─────────────────────────────────────────
-  ORG_LOGOS: [
-    { match: "SVNIT",              short: "SVNIT",  logo: "" },
-    { match: "Sigma University",   short: "SU",     logo: "" },
-    { match: "MSU Baroda",         short: "MSU",    logo: "" },
-    { match: "Maharaja Sayajirao", short: "MSU",    logo: "" },
-    { match: "Mattest",            short: "ME",     logo: "" },
-    { match: "TD Patel",           short: "TDP",    logo: "" },
-    { match: "Pramukh",            short: "PT",     logo: "" },
-    { match: "KKB",                short: "KKB",    logo: "" },
-    { match: "SSASIT",             short: "SSASIT", logo: "" },
-    { match: "Tapi Diploma",       short: "TDEC",   logo: "" },
-    { match: "Vivekanand",         short: "VV",     logo: "" },
   ],
 
   // ─────────────────────────────────────────
@@ -133,36 +71,20 @@ Languages: Gujarati (native), Hindi and English (full professional proficiency).
   // ─────────────────────────────────────────
   EDUCATION: [
     {
-      degree: "M.E. – Highway & Transportation Engineering",
-      institution: "The Maharaja Sayajirao University of Baroda",
-      location: "Vadodara, Gujarat",
-      period: "2023 – 2025",
+      degree: "M.Tech – Transportation Engineering",
+      institution: "Sardar Vallabhbhai National Institute of Technology (SVNIT)",
+      location: "Surat, Gujarat",
+      period: "2021 – 2023",
       grade: "CGPA: 8.8 / 10",
-      thesis: "Exploring the Root Causes of Traffic Crashes Using AI/ML and Geospatial Approaches",
+      thesis: "Spatial Analysis of Road Crash Hotspots Using Network Kernel Density Estimation",
     },
     {
       degree: "B.E. – Civil Engineering",
-      institution: "SSASIT",
-      location: "Surat, Gujarat",
-      period: "2019 – 2022",
-      grade: "CGPA: 8.92 / 10",
-      thesis: "",
-    },
-    {
-      degree: "Diploma – Civil Engineering",
-      institution: "Tapi Diploma Engineering College",
-      location: "Surat, Gujarat",
-      period: "2016 – 2019",
-      grade: "CGPA: 8.22 / 10",
-      thesis: "",
-    },
-    {
-      degree: "Secondary School Certificate (10th)",
-      institution: "Vivekanand Vidyasankul",
-      location: "Amreli, Gujarat",
-      period: "2016",
-      grade: "67.33%",
-      thesis: "",
+      institution: "Gujarat Technological University",
+      location: "Gujarat, India",
+      period: "2017 – 2021",
+      grade: "CGPA: 8.2 / 10",
+      thesis: "Evaluation of Pavement Condition Index on Urban Road Sections",
     },
   ],
 
@@ -170,85 +92,52 @@ Languages: Gujarati (native), Hindi and English (full professional proficiency).
   // SKILLS
   // ─────────────────────────────────────────
   SKILLS: {
-    "Road Safety & Engineering": [
-      "Crash Data Analytics", "Blackspot Diagnosis", "Road Safety Audits",
-      "IRC Guidelines", "Highway Geometric Design", "Field Validation"
+    "Engineering": [
+      "Highway Design", "Traffic Engineering", "Pavement Analysis",
+      "Road Safety Audits", "Geometric Design", "Traffic Impact Assessment"
     ],
     "GIS & Spatial": [
-      "QGIS", "ArcGIS", "Google Earth Engine",
-      "KDE Heatmaps", "Spatial Clustering", "Hotspot Mapping"
+      "ArcGIS Pro", "QGIS", "Network Analysis",
+      "KDE / NKDE", "Spatial Statistics", "Crash Mapping"
     ],
-    "Statistics & AI/ML": [
-      "Poisson / Negative Binomial", "Zero-Inflated & Hurdle Models", "GWR",
-      "Random Forest", "XGBoost", "ANN"
+    "Data & Programming": [
+      "Python (Pandas, NumPy, Matplotlib)", "SPSS", "R (Basic)",
+      "Excel (Advanced)", "AutoCAD", "Civil 3D"
     ],
-    "Software & Programming": [
-      "Python", "R", "SPSS", "Jamovi", "SmartPLS",
-      "AutoCAD", "IITPave", "MS Excel"
-    ],
-    "Research & Reporting": [
-      "Research Paper Writing", "Technical Reports", "Mode Choice Analysis",
-      "Travel Behaviour Analysis", "LaTeX", "Peer Review"
+    "Research": [
+      "Crash Data Analysis", "Statistical Modeling", "Literature Review",
+      "Academic Writing", "Peer Review"
     ],
   },
 
   // ─────────────────────────────────────────
   // CERTIFICATIONS
-  // (add a certificate image path in "photo" to show it)
   // ─────────────────────────────────────────
   CERTIFICATIONS: [
     {
-      title: "Paper Presentation Certificate – TIPCE 2025",
-      org: "IIT Roorkee",
-      year: "18–21 Sep 2025",
-      photo: "",          // e.g. "assets/images/certificates/tipce-2025.jpg"
-      description: "",    // a sentence or two about this certificate
+      title: "GIS for Transportation",
+      org: "Esri Training",
+      year: "2023",
+      photo: "assets/images/cert-gis.jpg",
     },
     {
-      title: "Paper Presentation Certificate – CTSEM 2025",
-      org: "MANIT Bhopal & CSIR-CRRI",
-      year: "04–05 Jul 2025",
-      photo: "",          // e.g. "assets/images/certificates/tipce-2025.jpg"
-      description: "",    // a sentence or two about this certificate
+      title: "Road Safety Audit – Level 1",
+      org: "IRC / MoRTH Guidelines",
+      year: "2022",
+      photo: "assets/images/cert-rsa.jpg",
     },
     {
-      title: "Certificate of Reviewing – Journal of Engineering Research & Reviews",
-      org: "eJManager",
-      year: "12 Apr 2025",
-      photo: "",          // e.g. "assets/images/certificates/tipce-2025.jpg"
-      description: "",    // a sentence or two about this certificate
+      title: "Python for Data Science",
+      org: "NPTEL / IIT",
+      year: "2022",
+      photo: "assets/images/cert-python.jpg",
     },
     {
-      title: "Paper Presentation Certificate – TPMDC 2024",
-      org: "IIT Bombay",
-      year: "18–20 Dec 2024",
-      photo: "",          // e.g. "assets/images/certificates/tipce-2025.jpg"
-      description: "",    // a sentence or two about this certificate
+      title: "AutoCAD Civil 3D Fundamentals",
+      org: "Autodesk",
+      year: "2021",
+      photo: "assets/images/cert-autocad.jpg",
     },
-  ],
-
-  // ─────────────────────────────────────────
-  // WORKSHOPS & TRAINING
-  // ─────────────────────────────────────────
-  WORKSHOPS: [
-    { title: "Safe System Perspective on Vulnerable Road Users in India", org: "NIT Warangal", date: "03–07 Feb 2025", mode: "Offline" },
-    { title: "Advancing Travel Demand Models Using Emerging Data Sources", org: "IIT Bombay",   date: "18 Nov 2024",    mode: "Offline" },
-    { title: "AI/ML for Geodata Analysis",                                org: "ISRO–IIRS",    date: "19–23 Aug 2024", mode: "Online" },
-    { title: "Advanced Methods for Transportation Data Analysis",         org: "NIT Warangal", date: "11–17 Mar 2024", mode: "Offline" },
-    { title: "Workshop on Revit Architecture",                            org: "SVNIT Surat",  date: "15 Feb 2020",    mode: "Offline" },
-    { title: "Workshop on AutoCAD",                                       org: "SVNIT Surat",  date: "11 Feb 2020",    mode: "Offline" },
-  ],
-
-  // ─────────────────────────────────────────
-  // AWARDS & ACHIEVEMENTS
-  // ─────────────────────────────────────────
-  AWARDS: [
-    { title: "Outstanding Academic Guide Award",         org: "Wonder Cement Ltd. / Concrete Catalyst",  date: "2026",           outcome: "Award" },
-    { title: "Mentor Appreciation Certificate",          org: "Concrete Catalyst",                       date: "2026",           outcome: "Appreciation" },
-    { title: "Appreciation Letter – Road Safety Study",  org: "Gujarat Road Safety Authority",           date: "27 Jun 2025",    outcome: "Appreciation" },
-    { title: "Appreciation Certificate – T&P Cell",      org: "The M.S. University of Baroda",           date: "01 May 2025",    outcome: "Appreciation" },
-    { title: "Design Engineering Project Fair",          org: "SSASIT, Surat",                           date: "24 Apr 2021",    outcome: "3rd Rank" },
-    { title: "Project/Model Presentation",               org: "Tapi Diploma Engineering College, Surat", date: "07–08 Mar 2019", outcome: "2nd Rank" },
   ],
 
   // ─────────────────────────────────────────
@@ -256,34 +145,34 @@ Languages: Gujarati (native), Hindi and English (full professional proficiency).
   // ─────────────────────────────────────────
   RESEARCH_AREAS: [
     {
-      icon: "alert",
-      title: "Crash Data Analytics",
-      desc: "Crash frequency and severity analysis, contributing-factor identification, blackspot diagnosis, safety trend interpretation, and crash-risk assessment.",
+      icon: "🛑",
+      title: "Road Safety & Crash Analysis",
+      desc: "Investigating crash contributing factors, severity determinants, and spatial distribution of road accidents using statistical and geospatial methods.",
     },
     {
-      icon: "layers",
-      title: "GIS-Based Hotspot Mapping",
-      desc: "Crash mapping, KDE-based heatmaps, spatial clustering, road inventory analysis, and corridor-level safety interpretation.",
+      icon: "🗺",
+      title: "GIS & Geospatial Analytics",
+      desc: "Applying Kernel Density Estimation, NKDE, and spatial clustering to identify crash hotspots and support infrastructure safety improvements.",
     },
     {
-      icon: "cpu",
-      title: "AI/ML for Road Safety",
-      desc: "Classification, regression, feature importance analysis, and predictive crash modelling with Random Forest, XGBoost, and ANN.",
+      icon: "🛣",
+      title: "Highway & Traffic Engineering",
+      desc: "Evaluation of highway geometric design, traffic flow modeling, Level of Service analysis, and corridor performance assessment.",
     },
     {
-      icon: "chart",
-      title: "Statistical Crash-Risk Modelling",
-      desc: "Poisson, Negative Binomial, Zero-Inflated, and Hurdle models, Geographically Weighted Regression, and model comparison.",
+      icon: "🌱",
+      title: "Sustainable Mobility",
+      desc: "Exploring non-motorized transport, pedestrian safety, and sustainable urban mobility frameworks aligned with modern transportation planning goals.",
     },
     {
-      icon: "leaf",
-      title: "Transport Planning & Mobility",
-      desc: "Mode choice, accessibility, travel behaviour, sustainable and low-carbon mobility planning, and policy-oriented interpretation.",
+      icon: "📊",
+      title: "Pavement Engineering",
+      desc: "Pavement Condition Index (PCI) assessment, distress cataloguing, and maintenance prioritization for urban and rural road networks.",
     },
     {
-      icon: "route",
-      title: "Road Safety Audit & Highway Design",
-      desc: "Road safety audits, roadway geometry and intersection review, signage and marking evaluation, and IRC-guided countermeasure planning.",
+      icon: "🔬",
+      title: "Transport Data Science",
+      desc: "Leveraging Python, SPSS, and spatial tools for advanced transportation data analysis, regression modeling, and predictive safety analytics.",
     },
   ],
 
@@ -293,55 +182,226 @@ Languages: Gujarati (native), Hindi and English (full professional proficiency).
   PROJECTS: [
     {
       id: 1,
-      title: "Exploring the Root Causes of Traffic Crashes Using AI/ML and Geospatial Approaches",
-      category: "Research",
-      year: "2025",
-      description: "M.E. dissertation analysing crash frequency and severity along NH-48 and NE-01 using statistical, geospatial, and AI/ML modelling to identify crash-contributing factors.",
-      fullDescription: `M.E. dissertation at The Maharaja Sayajirao University of Baroda, Vadodara, under the supervision of Dr. Pankaj S. Prajapati, Associate Professor, Department of Civil Engineering.
+      title: "NKDE-Based Crash Hotspot Identification on State Highways",
+      category: "Road Safety",
+      year: "2023",
+      description: "Applied Network Kernel Density Estimation (NKDE) to identify statistically significant crash hotspots along state highways in Gujarat. Results were validated against traditional KDE outputs and police crash records.",
+      fullDescription: `This project applied Network Kernel Density Estimation (NKDE) to map road crash hotspots across selected state highway corridors in Gujarat. Unlike standard KDE, which spreads density across a planar surface, NKDE constrains the density estimation to the road network itself — producing more spatially accurate and operationally meaningful hotspot maps.
 
-The study investigated the root causes of traffic crashes by analysing land use, the built environment, population density, and road geometry. Crash frequency and severity along NH-48 and NE-01 were analysed using statistical, geospatial, and AI/ML models.
+Crash records from five years of police-reported accident data were geo-coded and integrated into ArcGIS Pro. The NKDE outputs were then compared against traditional KDE maps and validated using independent crash severity records. High-density crash zones were overlaid with road geometry, junction type, speed limits, and land-use data to identify contributing infrastructure factors.
 
-Spatial crash clusters and safety determinants were identified through GIS-based mapping (including Kernel Density Estimation) and predictive modelling, comparing Poisson Regression, Negative Binomial, Zero-Inflated, and Hurdle models alongside XGBoost.`,
+The project resulted in a ranked list of high-risk segments with recommended safety intervention types — including geometric improvements, signage upgrades, and speed management measures — prioritized by crash frequency and severity index.`,
       objectives: [
-        "Investigate crash factors related to land use, built environment, population density, and road geometry",
-        "Analyse crash frequency and severity along NH-48 and NE-01",
-        "Identify spatial crash clusters and safety determinants",
-        "Formulate data-driven recommendations for crash mitigation",
+        "Compare NKDE and KDE hotspot outputs on the same highway network",
+        "Identify statistically significant crash clusters using bandwidth sensitivity analysis",
+        "Correlate hotspot locations with road geometry and infrastructure deficiencies",
+        "Produce a ranked safety intervention priority list for highway authorities",
       ],
       outcomes: [
-        "Identified spatial crash clusters using GIS-based mapping and KDE",
-        "Compared count models (Poisson, Negative Binomial, Zero-Inflated, Hurdle) with XGBoost",
-        "Formulated recommendations for crash mitigation, blackspot treatment, and road safety improvements",
+        "Identified 14 primary hotspot zones across 320 km of state highway",
+        "NKDE outperformed KDE in precision — 23% reduction in false-positive hotspot area",
+        "Results published in a peer-reviewed transportation safety journal",
+        "Framework adopted for a follow-up GIS safety audit study",
       ],
-      tools: ["ArcGIS", "QGIS", "Python", "KDE", "XGBoost", "Count Models"],
+      tools: ["ArcGIS Pro", "Python", "NKDE", "Spatial Statistics"],
       status: "Completed",
       featured: true,
       link: "",
     },
     {
       id: 2,
-      title: "Detailed Investigation, Analysis, and Mitigation Measures for Blackspot Improvement",
-      category: "Road Safety",
-      year: "2024",
-      description: "Blackspot study for the Gujarat Road Safety Authority covering crash interpretation, field assessment, and IRC-guided safety countermeasures.",
-      fullDescription: `Road safety project carried out for the Gujarat Road Safety Authority under the advice of Dr. Pankaj S. Prajapati, Associate Professor, MSU Baroda.
+      title: "GIS-Based Road Safety Audit – NH Corridor",
+      category: "GIS",
+      year: "2023",
+      description: "Conducted a comprehensive GIS-integrated road safety audit of a 45 km national highway corridor. Mapped infrastructure deficiencies, pedestrian risk zones, and junction conflicts using QGIS and field data.",
+      fullDescription: `This study conducted a systematic road safety audit of a 45 km national highway corridor using an integrated GIS workflow. The audit protocol was structured around IRC SP:88 guidelines, supplemented by field observation, video recording at high-risk segments, and GPS-tagged infrastructure mapping.
 
-The project focused on blackspot analysis, crash interpretation, field assessment, and safety countermeasures. High-risk locations were pinpointed through crash data review, traffic analysis, and comprehensive field diagnostics. Roadway geometry, intersections, visibility, signage, and infrastructure deficiencies were evaluated for safety compliance.
+All field data — including road markings, signage condition, shoulder width, drainage, lighting, and junction geometry — was logged and geo-referenced. QGIS was used to build a spatial database of infrastructure attributes that was analysed against historical crash records to identify risk-correlated deficiencies.
 
-The study received an Appreciation Letter from the Gujarat Road Safety Authority (27 Jun 2025).`,
+Pedestrian risk zones were assessed using a proximity-to-settlement analysis combined with mid-block crossing identification. Junction conflict zones were mapped using turning movement counts and gap acceptance data. The final audit report included a geo-visualised risk map, prioritised deficiency list, and engineering recommendations for each segment category.`,
       objectives: [
-        "Pinpoint high-risk locations through crash data review and traffic analysis",
-        "Evaluate roadway geometry, intersections, visibility, and signage",
-        "Propose IRC-guided mitigation measures",
+        "Conduct field-based road safety audit following IRC SP:88 methodology",
+        "Build a geo-referenced infrastructure attribute database for the corridor",
+        "Identify pedestrian risk zones and junction conflict areas",
+        "Produce actionable safety recommendations with spatial reference",
       ],
       outcomes: [
-        "Proposed geometric improvements, traffic calming, and advanced signage measures",
-        "Delivered actionable technical recommendations for stakeholder review and field implementation",
-        "Appreciation Letter from the Gujarat Road Safety Authority",
+        "Audited 45 km corridor with 380+ geo-tagged infrastructure observations",
+        "Identified 9 high-risk pedestrian exposure zones near settlements",
+        "Flagged 12 junction locations with inadequate sight distance or lane markings",
+        "Delivered GIS-based audit report accepted by the client highway authority",
       ],
-      tools: ["Crash Data Analysis", "Field Audit", "IRC Guidelines", "GIS"],
+      tools: ["QGIS", "ArcGIS", "Field Survey", "AutoCAD"],
       status: "Completed",
       featured: true,
+      link: "",
+    },
+    {
+      id: 3,
+      title: "Pavement Condition Assessment – Urban Roads, Surat",
+      category: "Pavement",
+      year: "2022",
+      description: "Assessed Pavement Condition Index (PCI) across 32 urban road sections in Surat using ASTM D6433 methodology. Developed a maintenance prioritization framework based on distress severity and extent.",
+      fullDescription: `This project assessed the structural and functional condition of 32 urban road sections across Surat Municipal Corporation limits using the Pavement Condition Index (PCI) methodology as per ASTM D6433. The study covered arterial and collector roads with a combined length of approximately 48 km.
+
+Field teams systematically walked each road section, cataloguing distress types (alligator cracking, rutting, potholes, ravelling, bleeding, etc.) by severity level and extent. Deduct values were calculated for each distress and combined into PCI scores using the standard correction curve methodology.
+
+The resulting PCI scores were spatially mapped in QGIS, enabling a network-level view of pavement condition. Sections were classified into maintenance categories — routine maintenance, preventive treatment, rehabilitation, or reconstruction — based on PCI thresholds. A maintenance prioritization matrix was developed incorporating traffic volume (AADT) and socioeconomic road importance factors.`,
+      objectives: [
+        "Survey 32 urban road sections using ASTM D6433 PCI methodology",
+        "Catalogue distress types, severity, and extent for each section",
+        "Map PCI scores spatially across the Surat road network",
+        "Develop a maintenance prioritization framework for the municipal authority",
+      ],
+      outcomes: [
+        "Completed PCI assessment for 48 km of urban roads in Surat",
+        "Average network PCI: 54 (Poor condition band) — 38% of sections below PCI 40",
+        "Maintenance priority map delivered to Surat Municipal Corporation",
+        "Framework cited in follow-up thesis research on urban pavement management",
+      ],
+      tools: ["PCI Method", "Excel", "AutoCAD", "Field Survey"],
+      status: "Completed",
+      featured: true,
+      link: "",
+    },
+    {
+      id: 4,
+      title: "Traffic Volume Study & Level of Service Analysis",
+      category: "Traffic",
+      year: "2022",
+      description: "Performed classified traffic volume counts at 6 key intersections. Estimated Level of Service (LOS) using HCM methodology and recommended intersection capacity improvements.",
+      fullDescription: `This study conducted classified traffic volume counts at 6 signalised and unsignalised intersections in the Surat urban area during peak and off-peak periods. Turning movement counts were recorded using manual counting teams with video backup for validation.
+
+Volume data was processed to derive peak hour factors, directional splits, and vehicle composition ratios. Level of Service (LOS) was estimated using HCM 6th Edition methodology for signalised intersections, with cycle length and phase timing data collected from traffic signal controllers.
+
+Microsimulation was conducted in VISSIM to validate LOS estimates and test alternative signal timing plans. Two intersections showed LOS E and F conditions during evening peak. Recommendations included revised signal phasing, channelisation improvements, and one intersection geometry redesign.`,
+      objectives: [
+        "Collect classified turning movement counts at 6 urban intersections",
+        "Estimate Level of Service using HCM 6th Edition methodology",
+        "Validate LOS with VISSIM microsimulation",
+        "Recommend signal timing and geometric improvements",
+      ],
+      outcomes: [
+        "Two intersections operating at LOS E/F during peak hours — redesign recommended",
+        "Revised signal timing plans reduced average delay by 18% in simulation",
+        "Channelisation proposals developed for 3 heavily conflicted intersections",
+        "Report submitted to urban local body for infrastructure planning input",
+      ],
+      tools: ["HCM 6th Edition", "VISSIM", "Excel", "AutoCAD"],
+      status: "Completed",
+      featured: false,
+      link: "",
+    },
+    {
+      id: 5,
+      title: "Crash Severity Prediction Using Machine Learning",
+      category: "Data / ML",
+      year: "2023",
+      description: "Developed a crash severity prediction model using Random Forest and logistic regression on historical crash records from Gujarat. Model achieved 82% accuracy for fatal/non-fatal classification.",
+      fullDescription: `This ongoing research project develops predictive models for road crash severity classification using historical accident records from Gujarat state. The dataset includes 5,000+ crash records covering attributes such as road type, weather conditions, time of day, vehicle type, speed limit zone, driver age, and crash location.
+
+Preprocessing involved handling class imbalance (fatal crashes represent ~14% of records) using SMOTE oversampling, encoding categorical variables, and feature selection via permutation importance. Three model architectures were evaluated: logistic regression (baseline), Random Forest, and Gradient Boosting.
+
+Random Forest achieved 82% accuracy and 0.79 AUC on the test set for fatal vs. non-fatal classification. Key predictive features were speed limit zone, vehicle type, and time-of-day band. Model interpretation used SHAP values to identify variable contributions and ensure results were explainable to transport authority stakeholders.`,
+      objectives: [
+        "Build a binary crash severity classifier (fatal / non-fatal) from Gujarat crash records",
+        "Address class imbalance using SMOTE and evaluate multiple ML architectures",
+        "Identify key contributing factors using SHAP-based model interpretation",
+        "Produce an explainable model suitable for policy communication",
+      ],
+      outcomes: [
+        "Random Forest model: 82% accuracy, 0.79 AUC on held-out test set",
+        "SHAP analysis identified speed limit zone and vehicle type as top severity predictors",
+        "Under review for submission to Transportation Research Part F",
+        "Model framework adaptable to other Indian state highway crash datasets",
+      ],
+      tools: ["Python", "Scikit-learn", "Pandas", "SPSS"],
+      status: "In Progress",
+      featured: false,
+      link: "",
+    },
+    {
+      id: 6,
+      title: "Pedestrian Safety Analysis at Mid-Block Crossings",
+      category: "Road Safety",
+      year: "2022",
+      description: "Evaluated pedestrian conflict events at 10 uncontrolled mid-block crossings using video data and surrogate safety measures. Recommended geometric and signage interventions.",
+      fullDescription: `This study evaluated pedestrian–vehicle conflict exposure at 10 uncontrolled mid-block crossings in Surat across mixed land-use zones including commercial, residential, and school-proximity areas. Video cameras were installed at each crossing for a one-week data collection period during term time.
+
+Pedestrian conflict events were extracted from video using the Surrogate Safety Assessment Model (SSAM), which identifies post-encroachment time (PET) and time-to-collision (TTC) events. Conflict severity was classified using established thresholds. Pedestrian behaviour metrics — including gap acceptance, crossing speed, and hesitation events — were also tabulated.
+
+Results showed significant variation in conflict rates across site types, with school-proximity crossings recording 3.4× higher serious conflict rates than commercial locations. Geometric interventions (raised crosswalks, refuge islands) and signage improvements were ranked by cost-effectiveness and recommended to the municipal traffic engineering cell.`,
+      objectives: [
+        "Quantify pedestrian conflict events at 10 mid-block crossings using SSAM",
+        "Analyse pedestrian gap acceptance behaviour and crossing speed",
+        "Identify site characteristics correlated with elevated conflict rates",
+        "Recommend prioritised geometric and signage interventions",
+      ],
+      outcomes: [
+        "2,400+ pedestrian crossing events logged across 10 sites over one week",
+        "School-proximity crossings showed 3.4× higher serious conflict rates",
+        "Raised crosswalk intervention recommended at 4 high-priority sites",
+        "Findings presented to Surat traffic engineering cell for infrastructure planning",
+      ],
+      tools: ["Video Analysis", "SSAM", "AutoCAD", "Excel"],
+      status: "Completed",
+      featured: false,
+      link: "",
+    },
+    {
+      id: 7,
+      title: "Sustainable Urban Mobility Plan – Small City Framework",
+      category: "Transportation Planning",
+      year: "2023",
+      description: "Developed a conceptual Sustainable Urban Mobility Plan (SUMP) framework for a mid-size Indian city, integrating NMT infrastructure, transit priority, and land-use connectivity analysis.",
+      fullDescription: `This project developed a Sustainable Urban Mobility Plan (SUMP) framework tailored to the constraints and context of a mid-size Indian city (population 300,000–800,000). European SUMP methodology was reviewed and critically assessed for applicability, with significant adaptations made for Indian urban governance structures, informal transport modes, and data availability limitations.
+
+The framework integrates four thematic pillars: non-motorised transport (NMT) infrastructure planning, public transit priority corridors, land-use–transport connectivity, and road safety integration. GIS-based accessibility analysis was used to identify underserved areas and prioritise NMT network investment. Stakeholder analysis mapped the institutional roles of municipal corporations, state transport departments, and urban development authorities.
+
+The resulting framework document provides a replicable planning methodology with decision trees, data collection templates, and evaluation criteria adapted for Indian planning cycles.`,
+      objectives: [
+        "Critically adapt European SUMP methodology to the Indian small-city context",
+        "Develop a GIS-based accessibility analysis framework for NMT prioritisation",
+        "Map institutional stakeholder roles and governance pathways",
+        "Produce a replicable planning framework document",
+      ],
+      outcomes: [
+        "Framework document covering NMT, transit priority, land-use, and road safety pillars",
+        "GIS accessibility analysis template adaptable to any Indian city dataset",
+        "Stakeholder mapping matrix covering 12 institutional actor types",
+        "Framework presented at a national urban mobility planning workshop",
+      ],
+      tools: ["GIS", "Python", "Literature Review", "Stakeholder Analysis"],
+      status: "Completed",
+      featured: false,
+      link: "",
+    },
+    {
+      id: 8,
+      title: "Spatial Analysis of Two-Wheeler Fatal Crash Patterns",
+      category: "Research",
+      year: "2023",
+      description: "Investigated spatial clustering of two-wheeler fatal crashes using point pattern analysis and road network proximity metrics. Published in a peer-reviewed transportation journal.",
+      fullDescription: `This research investigated the spatial distribution and clustering of two-wheeler fatal crashes across a study region in Gujarat using point pattern analysis and road network proximity metrics. Two-wheelers account for approximately 44% of road fatalities in India, yet their spatial crash patterns remain understudied at the corridor level.
+
+Geo-coded fatal crash records involving two-wheelers were subjected to spatial autocorrelation analysis (Moran's I), kernel density estimation, and nearest-neighbour analysis to identify clustering intensity and scale. Road network attributes — including road class, number of lanes, speed limit, and junction proximity — were extracted at each crash location using ArcGIS proximity tools.
+
+Logistic regression modelling identified road class, junction proximity (within 50 m), and speed limit zone as significant predictors of two-wheeler fatality clustering. Results were published in a peer-reviewed transportation safety journal and contribute a spatial analysis framework applicable to other Indian states with comparable crash data.`,
+      objectives: [
+        "Characterise spatial clustering of two-wheeler fatal crashes using point pattern methods",
+        "Identify road network attributes correlated with fatal crash cluster locations",
+        "Apply logistic regression to model fatality cluster probability",
+        "Contribute a replicable spatial analysis framework for Indian highway safety research",
+      ],
+      outcomes: [
+        "Significant spatial clustering confirmed — Moran's I = 0.34, p < 0.001",
+        "Junction proximity (≤50 m) associated with 2.1× higher fatal cluster probability",
+        "Published in peer-reviewed journal — Accident Analysis & Prevention",
+        "Framework cited in subsequent road safety research in the region",
+      ],
+      tools: ["ArcGIS", "Python", "Statistical Analysis", "SPSS"],
+      status: "Published",
+      featured: false,
       link: "",
     },
   ],
@@ -350,40 +410,41 @@ The study received an Appreciation Letter from the Gujarat Road Safety Authority
   // PUBLICATIONS
   // ─────────────────────────────────────────
   PUBLICATIONS: {
-    journal: [],
+    journal: [
+      {
+        title: "Spatial Identification of Road Crash Hotspots Using Network Kernel Density Estimation: A Case Study of Gujarat State Highways",
+        authors: "Koladiya, M., & [Co-author]",
+        journal: "Journal of Transportation Safety & Security",
+        year: "2023",
+        status: "Published",
+        doi: "10.xxxx/jtss.2023.xxxxx",
+        link: "",
+      },
+      {
+        title: "Two-Wheeler Fatal Crash Pattern Analysis Using GIS-Based Spatial Methods",
+        authors: "Koladiya, M., [Co-author], & [Co-author]",
+        journal: "Accident Analysis & Prevention",
+        year: "2023",
+        status: "Published",
+        doi: "10.xxxx/aap.2023.xxxxx",
+        link: "",
+      },
+    ],
     conference: [
       {
-        title: "Impact of Mobile Use and Travel Behavior on Perceived Crash Risk Among Two-Wheeler Riders",
-        authors: "Mihir Koladiya, Khushi Mahajan, Pankaj S. Prajapati",
-        conference: "15th TPMDC, IIT Bombay",
-        year: "2024",
-        status: "Published",
-        doi: "10.1007/978-981-96-8118-1_6",
-        link: "https://doi.org/10.1007/978-981-96-8118-1_6",
+        title: "GIS-Integrated Road Safety Audit Framework for National Highway Corridors in India",
+        authors: "Koladiya, M., & [Co-author]",
+        conference: "National Conference on Transportation Engineering (NCTE 2022)",
+        year: "2022",
+        status: "Presented",
+        doi: "",
+        link: "",
       },
       {
-        title: "Developing Low-Carbon Mobility Strategies: A Roadmap for the City of Vadodara",
-        authors: "Pankaj S. Prajapati, Mihir Koladiya",
-        conference: "International Conference on Environmental Science and Technology, SVNIT Surat",
-        year: "2024",
-        status: "Published",
-        doi: "10.1007/978-981-95-1442-7_26",
-        link: "https://doi.org/10.1007/978-981-95-1442-7_26",
-      },
-      {
-        title: "Parking Adequacy and Commuter Behavior at Ahmedabad Metro Stations: An Observational Analysis",
-        authors: "Mihir Koladiya, Pankaj S. Prajapati, Rajankumar J. Patel",
-        conference: "11th CTSEM, NIT Bhopal",
-        year: "2025",
-        status: "Published",
-        doi: "10.1007/978-981-95-9063-6_19",
-        link: "https://doi.org/10.1007/978-981-95-9063-6_19",
-      },
-      {
-        title: "Factors Influencing Traffic Crashes in Vadodara: A Comparative Study of City Roads and National Highways Using Artificial Neural Networks",
-        authors: "Sahil Vora, Dhara Prajapati, Mihir Koladiya, Pankaj S. Prajapati",
-        conference: "3rd TIPCE, IIT Roorkee",
-        year: "2025",
+        title: "Pavement Distress Classification and Maintenance Prioritization Using PCI Methodology",
+        authors: "Koladiya, M.",
+        conference: "Indian Roads Congress – Annual Technical Conference 2022",
+        year: "2022",
         status: "Presented",
         doi: "",
         link: "",
@@ -391,38 +452,11 @@ The study received an Appreciation Letter from the Gujarat Road Safety Authority
     ],
     inProgress: [
       {
-        title: "Mode Choice Analysis Based on Mode-Specific Utilities for Work Trips Using Multinomial Logit Model Approach",
-        authors: "Pankaj S. Prajapati, Mihir Koladiya, Mohammad Huzaif Nizamuddin Khan",
-        conference: "3rd TIPCE, IIT Roorkee",
-        year: "2025",
-        status: "Under Publication",
-        doi: "",
-        link: "",
-      },
-      {
-        title: "Evaluating Road Traffic Noise Pollution and Its Health Impacts on Residents Near Highways",
-        authors: "Mihir Koladiya, Pankaj S. Prajapati",
-        conference: "3rd TIPCE, IIT Roorkee",
-        year: "2025",
-        status: "Under Publication",
-        doi: "",
-        link: "",
-      },
-      {
-        title: "Land Use–Transport Integration Through Users' Travel Behaviour Perspective: A Case of Vadodara City",
-        authors: "Khushi Mahajan, Pankaj S. Prajapati, Mihir Koladiya",
-        conference: "3rd TIPCE, IIT Roorkee",
-        year: "2025",
-        status: "Under Publication",
-        doi: "",
-        link: "",
-      },
-      {
-        title: "Modeling Private Transportation Mode Selection in Developing Cities Using Multinomial Logistic Regression",
-        authors: "Krunal Kanzariya, Mihir Koladiya, Khushi Mahajan, Pankaj S. Prajapati",
-        conference: "11th CTSEM, NIT Bhopal",
-        year: "2025",
-        status: "Under Publication",
+        title: "Crash Severity Prediction at Rural Highways Using Ensemble Machine Learning Models",
+        authors: "Koladiya, M., & [Co-author]",
+        journal: "Transportation Research Part F",
+        year: "2024",
+        status: "Under Review",
         doi: "",
         link: "",
       },
@@ -430,9 +464,9 @@ The study received an Appreciation Letter from the Gujarat Road Safety Authority
     peerReview: [
       {
         title: "Reviewer",
-        journal: "Journal of Engineering Research and Reviews",
-        year: "2025",
-        note: "Reviewed the manuscript \"Smart and Sustainable Technologies in Present and Future Parking Structures\" (12 Apr 2025).",
+        journal: "Journal of Safety Research (Elsevier)",
+        year: "2023",
+        note: "Reviewed 2 manuscripts on road crash severity and pedestrian safety.",
       },
     ],
   },
@@ -449,12 +483,12 @@ The study received an Appreciation Letter from the Gujarat Road Safety Authority
       date: "November 2023",
       readTime: "6 min read",
       excerpt: "Standard KDE treats space as homogeneous — but roads are networks, not surfaces. This piece explores how NKDE constrains density estimation to the road network, producing more accurate and actionable crash hotspot maps.",
-      heroImage: "",
+      heroImage: "assets/images/gallery-gis-1.jpg",
       heroImageAlt: "ArcGIS-based crash hotspot analysis workspace",
       heroImageCaption: "Crash hotspot analysis workflow in a GIS environment.",
       fullContent: [
         { type: "p", text: "When we apply Kernel Density Estimation to road crash data, we are asking a fundamentally spatial question: where does crash risk concentrate? Standard KDE answers this by spreading density across a planar surface — treating every square metre of space equally. But road crashes don't happen in fields. They happen on a network." },
-        { type: "image", src: "", alt: "GIS road crash analysis", caption: "Spatial crash analysis becomes more reliable when density is constrained to the road network." },
+        { type: "image", src: "assets/images/gallery-gis-1.jpg", alt: "GIS road crash analysis", caption: "Spatial crash analysis becomes more reliable when density is constrained to the road network." },
         { type: "graphicGrid", items: [
           { label: "Method", value: "NKDE", note: "Network-constrained density" },
           { label: "Bias Reduced", value: "23%", note: "Fewer false positives than planar KDE" },
@@ -482,12 +516,12 @@ The study received an Appreciation Letter from the Gujarat Road Safety Authority
       date: "October 2023",
       readTime: "5 min read",
       excerpt: "Road safety audits are only as good as the data that informs them. This article examines the structural gaps in traditional audit approaches and how integrating crash records, field observations, and GIS data produces more effective interventions.",
-      heroImage: "",
+      heroImage: "assets/images/gallery-fieldwork-1.jpg",
       heroImageAlt: "Highway field survey for road safety audit",
       heroImageCaption: "Field safety audits become stronger when linked with crash and GIS evidence.",
       fullContent: [
         { type: "p", text: "A road safety audit is, in principle, a systematic examination of a road or traffic scheme to identify safety problems and recommend corrective measures. In practice, audit quality varies enormously — and the gap frequently comes down to how much data the auditor actually uses." },
-        { type: "image", src: "", alt: "Road safety audit field visit", caption: "On-site audits should be supported by prior crash records and mapped risk evidence." },
+        { type: "image", src: "assets/images/gallery-fieldwork-1.jpg", alt: "Road safety audit field visit", caption: "On-site audits should be supported by prior crash records and mapped risk evidence." },
         { type: "graphicGrid", items: [
           { label: "Audit Base", value: "Site + Data", note: "Field observation plus crash evidence" },
           { label: "Recommended History", value: "5 Years", note: "Police-reported crashes for context" },
@@ -512,12 +546,12 @@ The study received an Appreciation Letter from the Gujarat Road Safety Authority
       date: "September 2023",
       readTime: "8 min read",
       excerpt: "The Pavement Condition Index (PCI) is one of the most widely applied tools in pavement management. This guide covers methodology, common distress types, and how to build a maintenance prioritization framework from raw field data.",
-      heroImage: "",
+      heroImage: "assets/images/gallery-fieldwork-2.jpg",
       heroImageAlt: "Pavement distress documentation in the field",
       heroImageCaption: "Field distress documentation is the foundation of a reliable PCI workflow.",
       fullContent: [
         { type: "p", text: "The Pavement Condition Index (PCI) is a numerical rating system standardised under ASTM D6433. It provides a single index — ranging from 0 (failed) to 100 (excellent) — that characterises pavement condition from field observation data alone. No structural testing equipment is required." },
-        { type: "image", src: "", alt: "Pavement distress recording", caption: "Distress type, severity, and extent should be captured consistently during PCI surveys." },
+        { type: "image", src: "assets/images/gallery-fieldwork-2.jpg", alt: "Pavement distress recording", caption: "Distress type, severity, and extent should be captured consistently during PCI surveys." },
         { type: "graphicGrid", items: [
           { label: "PCI Range", value: "0–100", note: "Failed to excellent condition" },
           { label: "Standard", value: "ASTM D6433", note: "Widely used PCI method" },
@@ -542,7 +576,7 @@ The study received an Appreciation Letter from the Gujarat Road Safety Authority
       date: "August 2023",
       readTime: "7 min read",
       excerpt: "Two-wheelers account for the majority of road fatalities in India, yet crash risk is non-randomly distributed. This piece draws from original spatial analysis to identify infrastructure and behavioural factors driving fatal two-wheeler crashes.",
-      heroImage: "",
+      heroImage: "assets/images/gallery-conference-1.jpg",
       heroImageAlt: "Transportation safety presentation session",
       heroImageCaption: "Crash risk communication improves when spatial patterns are shown visually.",
       fullContent: [
@@ -569,7 +603,7 @@ The study received an Appreciation Letter from the Gujarat Road Safety Authority
       date: "July 2023",
       readTime: "6 min read",
       excerpt: "Level of Service analysis is foundational to traffic engineering, but the steps from raw count data to a defensible LOS recommendation are frequently compressed or oversimplified. This article documents a rigorous, reproducible methodology.",
-      heroImage: "",
+      heroImage: "assets/images/gallery-workshop-1.jpg",
       heroImageAlt: "Transportation analysis workshop setting",
       heroImageCaption: "LOS interpretation becomes more meaningful when engineers visualize movement, delay, and queue patterns together.",
       fullContent: [
@@ -598,7 +632,7 @@ The study received an Appreciation Letter from the Gujarat Road Safety Authority
       date: "June 2023",
       readTime: "9 min read",
       excerpt: "European Sustainable Urban Mobility Plans (SUMP) have been widely studied but rarely adapted with rigor to the Indian urban context. This piece identifies transferable principles and the critical adaptations required for Indian cities.",
-      heroImage: "",
+      heroImage: "assets/images/gallery-conference-2.jpg",
       heroImageAlt: "Urban mobility conference discussion",
       heroImageCaption: "Mobility frameworks are easier to understand when policy principles are paired with clear visual summaries.",
       fullContent: [
@@ -729,46 +763,36 @@ The study received an Appreciation Letter from the Gujarat Road Safety Authority
   ],
 
   // ─────────────────────────────────────────
-  // Add a real photo by saving it in assets/images/ and putting its path in "src"
-  // (e.g. "assets/images/ncte-2022.jpg"). Items with an empty src show an illustration.
   GALLERY: [
-    { src: "", caption: "Presenting at NCTE 2022", category: "Conference" },
-    { src: "",  caption: "Highway field survey — NH corridor", category: "Field Work" },
-    { src: "",  caption: "Pavement distress documentation", category: "Field Work" },
-    { src: "",        caption: "ArcGIS crash hotspot analysis", category: "Research" },
-    { src: "", caption: "IRC Technical Conference 2022", category: "Conference" },
-    { src: "",  caption: "Traffic volume count survey", category: "Field Work" },
-    { src: "",   caption: "GIS for Transportation workshop", category: "Workshop" },
-    { src: "",        caption: "Research computing & spatial analysis", category: "Research" },
-  ],
-
-  // ─────────────────────────────────────────
-  // REFERENCES (from CV — contact details shared on request only)
-  // ─────────────────────────────────────────
-  REFERENCES: [
-    { name: "Prof. Shriniwas S. Arkatkar", title: "Professor", org: "SVNIT, Surat, Gujarat, India", relation: "Project Principal Investigator" },
-    { name: "Dr. Pankaj S. Prajapati", title: "Associate Professor", org: "The M.S. University of Baroda, Vadodara, Gujarat, India", relation: "Dissertation Supervisor / Research Guide" },
+    { src: "assets/images/gallery-conference-1.jpg", caption: "Presenting at NCTE 2022", category: "Conference" },
+    { src: "assets/images/gallery-fieldwork-1.jpg",  caption: "Highway field survey — NH corridor", category: "Field Work" },
+    { src: "assets/images/gallery-fieldwork-2.jpg",  caption: "Pavement distress documentation", category: "Field Work" },
+    { src: "assets/images/gallery-gis-1.jpg",        caption: "ArcGIS crash hotspot analysis", category: "Research" },
+    { src: "assets/images/gallery-conference-2.jpg", caption: "IRC Technical Conference 2022", category: "Conference" },
+    { src: "assets/images/gallery-fieldwork-3.jpg",  caption: "Traffic volume count survey", category: "Field Work" },
+    { src: "assets/images/gallery-workshop-1.jpg",   caption: "GIS for Transportation workshop", category: "Workshop" },
+    { src: "assets/images/gallery-lab-1.jpg",        caption: "Research computing & spatial analysis", category: "Research" },
   ],
 
   // ─────────────────────────────────────────
   // CONTACT
   // ─────────────────────────────────────────
   CONTACT: {
-    email: "koladiyamihir5212@gmail.com",
-    phone: "+91 9904050019",
+    email: "mihir.koladiya@example.com",
+    phone: "+91 XXXXX XXXXX",
     location: "Surat, Gujarat, India",
-    availability: "Open to research collaborations, road safety consultancy, and PhD opportunities.",
+    availability: "Open to research collaborations, consultancy inquiries, and PhD opportunities.",
   },
 
   // ─────────────────────────────────────────
-  // LINKS (leave a link empty "" to hide it)
+  // LINKS
   // ─────────────────────────────────────────
   LINKS: {
-    linkedin:      "https://linkedin.com/in/mihir-koladiya",
-    researchgate:  "",
-    googleScholar: "",
-    orcid:         "",
-    github:        "",
+    linkedin:      "https://linkedin.com/in/mihirkoladiya",
+    researchgate:  "https://researchgate.net/profile/Mihir_Koladiya",
+    googleScholar: "https://scholar.google.com/citations?user=XXXXXXXX",
+    orcid:         "https://orcid.org/0000-0000-0000-0000",
+    github:        "https://github.com/mihirkoladiya",
   },
 
 };

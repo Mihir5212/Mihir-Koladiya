@@ -3,28 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#F5F7FA" />
   <meta name="description" content="Mihir Koladiya — Highway & Transportation Engineer. Road safety researcher, GIS analyst, and transportation engineering professional based in Surat, Gujarat." />
   <title>Mihir Koladiya — Highway & Transportation Engineer</title>
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Mihir Koladiya" />
-  <meta property="og:title" content="Mihir Koladiya — Highway & Transportation Engineer" />
-  <meta property="og:description" content="Mihir Koladiya — Highway & Transportation Engineer. Road safety researcher, GIS analyst, and transportation engineering professional based in Surat, Gujarat." />
-  <meta property="og:url" content="https://mihir5212.github.io/Mihir-Koladiya/" />
-  <meta property="og:image" content="https://mihir5212.github.io/Mihir-Koladiya/assets/images/profile.jpg" />
-  <meta name="twitter:card" content="summary" />
+  <link rel="stylesheet" href="css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%23101B2D'/><text x='16' y='20.5' text-anchor='middle' font-family='Arial,sans-serif' font-size='12' font-weight='700' fill='white'>MK</text></svg>" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23191923'/><text x='16' y='22' text-anchor='middle' font-family='serif' font-size='18' font-weight='bold' fill='%23DD421D'>M</text></svg>" />
 </head>
 <body>
 
   <!-- ── NAVBAR ── -->
   <nav class="navbar" role="navigation" aria-label="Main navigation">
     <div class="navbar__inner">
-      <a href="index.html" class="navbar__logo" aria-label="Mihir Koladiya — Home"><span class="navbar__mark" aria-hidden="true">MK</span><span class="navbar__wordmark">Mihir Koladiya<small>Highway &amp; Transportation Engineer</small></span></a>
+      <a href="index.html" class="navbar__logo">MK<span>.</span></a>
       <div class="navbar__links" id="nav-links">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
@@ -43,46 +34,24 @@
 
   <!-- ── HERO ── -->
   <section class="hero" aria-label="Introduction">
+    <div class="hero__bg" aria-hidden="true"></div>
+    <div class="hero__grid-overlay" aria-hidden="true"></div>
     <div class="hero__inner">
       <div class="hero__content">
-        <div class="hero__badge" id="hero-badge">
-          <span class="hero__badge-dot" aria-hidden="true"></span>
-          <span>Highway Safety &amp; Risk Analytics</span>
+        <div class="hero__eyebrow" aria-hidden="true">
+          <div class="hero__eyebrow-line"></div>
+          <span class="hero__eyebrow-text">Transportation Engineering · Road Safety · GIS</span>
         </div>
         <h1 class="hero__name" id="hero-name">Mihir Koladiya</h1>
-        <p class="hero__title" id="hero-title">Highway &amp; Transportation Engineer</p>
-        <p class="hero__lead">
-          I turn crash data into safer roads — combining field audits, GIS hotspot mapping and AI/ML modelling to find where and why crashes happen, and what to fix first.
-        </p>
+        <div class="hero__title" id="hero-title" role="doc-subtitle">Highway &amp; Transportation Engineer</div>
+        <p class="hero__tagline" id="hero-tagline"></p>
         <div class="hero__actions">
-          <a href="assets/docs/Mihir_Koladiya_CV.pdf" download class="btn btn-primary"><span data-icon="download"></span> Download CV</a>
-          <div class="hero__social" id="hero-social"></div>
+          <a href="projects.html" class="btn btn-primary">View Projects</a>
+          <a href="publications.html" class="btn btn-outline">Publications</a>
+          <a href="assets/docs/Mihir_Koladiya_CV.pdf" download class="btn btn-ghost">Download CV</a>
         </div>
       </div>
-
-      <div class="hero__visual">
-        <div class="portrait-dial">
-          <svg class="portrait-dial__arc" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
-            <defs>
-              <linearGradient id="dial-gradient" x1="0" y1="1" x2="1" y2="0">
-                <stop offset="0" stop-color="#A9E5D8" />
-                <stop offset="0.55" stop-color="#42BFA5" />
-                <stop offset="1" stop-color="#23917B" />
-              </linearGradient>
-            </defs>
-            <path class="portrait-dial__value" d="M21.19 78.81 A40.75 40.75 0 1 1 78.81 78.81" pathLength="100" stroke="url(#dial-gradient)" />
-          </svg>
-          <span class="portrait-dial__knob" aria-hidden="true"></span>
-          <div class="portrait-dial__photo">
-            <img
-              src="assets/images/profile.jpg"
-              alt="Portrait of Mihir Koladiya"
-              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-            />
-            <div class="portrait-dial__fallback"><span data-icon="user"></span></div>
-          </div>
-        </div>
-      </div>
+      <div class="hero__card" id="hero-card" aria-label="Quick profile"></div>
     </div>
   </section>
 
@@ -93,62 +62,60 @@
     </div>
   </div>
 
-  <!-- ── INTRO + AT A GLANCE ── -->
-  <section class="section" aria-label="Professional summary">
-    <div class="container">
-      <div class="intro__grid">
-        <div class="reveal">
-          <span class="section-label">Engineering Profile</span>
-          <h2 class="section-title">Bridging highway engineering and <em>spatial research</em></h2>
-          <p class="intro__lead">
-            A transportation engineer with a dual focus on field practice and academic research — road safety, crash hotspot identification, and geospatial analysis of infrastructure risk.
-          </p>
-          <p class="intro__body">
-            With an M.E. in Highway &amp; Transportation Engineering from MSU Baroda, and currently a Project Engineer at SVNIT Surat, I apply QGIS, ArcGIS, Python, and AI/ML methods to analyse crash patterns, identify blackspots, and support data-driven highway safety decisions.
-          </p>
-          <div class="intro__actions">
-            <a href="about.html" class="btn btn-primary">Full Profile</a>
-            <a href="contact.html" class="btn btn-outline">Get in Touch</a>
+  <!-- ── ABOUT SNAPSHOT ── -->
+  <section class="about-summary section" aria-label="Professional summary">
+    <div class="about-summary__inner">
+      <div class="about-summary__image-wrap reveal">
+        <div class="about-summary__gold-block" aria-hidden="true"></div>
+        <div class="about-summary__image-box">
+          <img
+            src="assets/images/profile.jpg"
+            alt="Mihir Koladiya — Highway & Transportation Engineer"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+          />
+          <div class="about-summary__image-placeholder" style="display:none">
+            <span style="font-size:3rem">👤</span>
+            <span style="text-align:center;font-size:0.85rem;color:var(--gray)">Profile Photo<br><small>Add: assets/images/profile.jpg</small></span>
           </div>
         </div>
-        <aside class="glance reveal reveal-delay-2" aria-label="At a glance">
-          <div class="glance__title">At a glance</div>
-          <div id="glance-list"></div>
-        </aside>
+        <div class="about-summary__accent-block" aria-hidden="true"></div>
       </div>
-    </div>
-  </section>
-
-  <!-- ── RESEARCH SNAPSHOT (bento dashboard, rendered from data.js) ── -->
-  <section class="section section--alt" aria-label="Research snapshot">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="section-label">Research Snapshot</span>
-        <h2 class="section-title">The work, in <em>numbers</em></h2>
-        <p class="section-subtitle">Publications, career path, conference venues and the tools behind the analysis — all taken from my CV.</p>
+      <div class="about-summary__text reveal reveal-delay-2">
+        <span class="section-label">Engineering Profile</span>
+        <h2 class="section-title">Bridging highway engineering and spatial research</h2>
+        <div class="divider"></div>
+        <p style="color:var(--gray);line-height:1.85;margin-bottom:20px;font-size:0.97rem">
+          A transportation engineer with a dual focus in field practice and academic research. My work centres on road safety, crash hotspot identification, and geospatial analysis of transport infrastructure risk — with the goal of informing evidence-based engineering decisions.
+        </p>
+        <p style="color:var(--gray);line-height:1.85;margin-bottom:36px;font-size:0.97rem">
+          Trained at SVNIT Surat with an M.Tech in Transportation Engineering, I apply spatial tools such as ArcGIS, QGIS, and Python to analyse crash patterns, evaluate highway corridors, and develop GIS-integrated safety frameworks.
+        </p>
+        <div style="display:flex;gap:14px;flex-wrap:wrap">
+          <a href="about.html" class="btn btn-primary">Full Profile</a>
+          <a href="contact.html" class="btn btn-outline">Get in Touch</a>
+        </div>
       </div>
-      <div class="bento" id="bento"></div>
     </div>
   </section>
 
   <!-- ── FEATURED PROJECTS ── -->
-  <section class="section" aria-label="Featured projects">
+  <section class="section section--alt" aria-label="Featured projects">
     <div class="container">
       <div class="section-header reveal">
         <span class="section-label">Selected Work</span>
         <h2 class="section-title">Featured Projects</h2>
         <div class="divider"></div>
-        <p class="section-subtitle">Research and field projects in road safety, crash analytics, and GIS-based blackspot investigation.</p>
+        <p class="section-subtitle">A selection of engineering and research projects spanning road safety, GIS analysis, pavement evaluation, and traffic studies.</p>
       </div>
       <div class="projects-grid" id="featured-projects"></div>
-      <div class="section-actions">
+      <div style="margin-top:48px;text-align:center">
         <a href="projects.html" class="btn btn-outline">View All Projects</a>
       </div>
     </div>
   </section>
 
   <!-- ── RESEARCH AREAS ── -->
-  <section class="section section--alt" aria-label="Research areas">
+  <section class="section" aria-label="Research areas">
     <div class="container">
       <div class="section-header reveal">
         <span class="section-label">Research Focus</span>
@@ -161,23 +128,23 @@
   </section>
 
   <!-- ── PUBLICATIONS PREVIEW ── -->
-  <section class="section" aria-label="Publications preview">
+  <section class="section section--alt" aria-label="Publications preview">
     <div class="container">
       <div class="section-header reveal">
         <span class="section-label">Research Output</span>
         <h2 class="section-title">Recent Publications</h2>
         <div class="divider"></div>
-        <p class="section-subtitle">Peer-reviewed conference papers on road safety, travel behaviour, and sustainable mobility.</p>
+        <p class="section-subtitle">Peer-reviewed journal papers and conference contributions in transportation safety and GIS analytics.</p>
       </div>
       <div id="pubs-preview"></div>
-      <div class="section-actions section-actions--start">
+      <div style="margin-top:36px">
         <a href="publications.html" class="btn btn-primary">All Publications</a>
       </div>
     </div>
   </section>
 
   <!-- ── INSIGHTS PREVIEW ── -->
-  <section class="section section--alt" aria-label="Insights preview">
+  <section class="section" aria-label="Insights preview">
     <div class="container">
       <div class="section-header reveal">
         <span class="section-label">Knowledge Sharing</span>
@@ -186,7 +153,7 @@
         <p class="section-subtitle">In-depth articles on road safety methodologies, GIS practice, and transportation engineering.</p>
       </div>
       <div class="insights-grid" id="insights-preview"></div>
-      <div class="section-actions">
+      <div style="margin-top:48px;text-align:center">
         <a href="insights.html" class="btn btn-outline">All Insights</a>
         <a href="showcase.html" class="btn btn-ghost">View Showcase</a>
       </div>
@@ -213,7 +180,7 @@
     <div class="container">
       <div class="footer__grid">
         <div>
-          <div class="footer__brand-name"><span class="navbar__mark" aria-hidden="true">MK</span>Mihir Koladiya</div>
+          <div class="footer__brand-name">MK<span>.</span></div>
           <p class="footer__brand-desc">
             Highway &amp; Transportation Engineer focused on road safety research, GIS-based crash analysis, and evidence-based transport planning in India.
           </p>
@@ -234,15 +201,19 @@
         <div>
           <div class="footer__heading">Research Profiles</div>
           <div class="footer__links">
-            <a href="https://linkedin.com/in/mihir-koladiya" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://linkedin.com/in/mihirkoladiya" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://researchgate.net/profile/Mihir_Koladiya" target="_blank" rel="noopener">ResearchGate</a>
+            <a href="https://scholar.google.com/citations?user=XXXXXXXX" target="_blank" rel="noopener">Google Scholar</a>
+            <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener">ORCID</a>
           </div>
         </div>
       </div>
       <div class="footer__bottom">
-        <span>&copy; 2026 Mihir Koladiya. All rights reserved.</span>
+        <span>&copy; 2024 Mihir Koladiya. All rights reserved.</span>
         <div class="footer__social">
-          <a href="https://linkedin.com/in/mihir-koladiya" target="_blank" rel="noopener">LinkedIn</a>
-          <a href="mailto:koladiyamihir5212@gmail.com">Email</a>
+          <a href="https://linkedin.com/in/mihirkoladiya" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/mihirkoladiya" target="_blank" rel="noopener">GitHub</a>
+          <a href="mailto:mihir.koladiya@example.com">Email</a>
         </div>
       </div>
     </div>
