@@ -467,6 +467,7 @@ function renderInsightsPreview() {
    ═══════════════════════════════════════════ */
 
 function renderAbout() {
+  if (el('.ab-hero')) return renderAboutV2();
   renderAboutBio();
   renderAboutQuickFacts();
   renderEducation();
@@ -732,63 +733,6 @@ function renderInsights() {
   renderGrid();
 }
 
-function renderShowcase() {
-  const grid = el('#showcase-grid');
-  const filterBar = el('#showcase-filter');
-  const typeBar = el('#showcase-type-filter');
-  if (!grid) return;
-
-  const showcaseItems = DATA.INSIGHTS.filter(i => i.contentType);
-  let activeCat = 'All';
-  let activeType = 'All';
-
-  function renderGrid() {
-    const items = showcaseItems.filter(i => {
-      const typeMatch = activeType === 'All' || i.contentType === activeType;
-      const catMatch = activeCat === 'All' || i.category === activeCat;
-      return typeMatch && catMatch;
-    });
-
-    grid.innerHTML = items.length
-      ? items.map(i => insightCardHTML(i)).join('')
-      : `<p style="color:var(--gray);grid-column:1/-1;text-align:center;padding:32px 0">No showcase items in this selection.</p>`;
-    setTimeout(initReveal, 60);
-  }
-
-  const preferredContentTypes = ['report', 'presentation', 'poster', 'note', 'book'];
-  const contentTypes = ['All', ...preferredContentTypes.filter(type => showcaseItems.some(i => i.contentType === type) || ['note', 'book'].includes(type))];
-  if (typeBar) {
-    typeBar.innerHTML = contentTypes.map(type => {
-      const label = type === 'All' ? 'All' : getContentTypeMeta(type).label;
-      return `<button class="filter-btn${type === 'All' ? ' active' : ''}" data-type="${sanitize(type)}">${sanitize(label)}</button>`;
-    }).join('');
-    typeBar.addEventListener('click', e => {
-      const btn = e.target.closest('.filter-btn');
-      if (!btn) return;
-      els('.filter-btn', typeBar).forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      activeType = btn.dataset.type;
-      renderGrid();
-    });
-  }
-
-  const categories = ['All', ...new Set(showcaseItems.map(i => i.category))];
-  if (filterBar) {
-    filterBar.innerHTML = categories.map(c => `
-      <button class="filter-btn${c === 'All' ? ' active' : ''}" data-cat="${sanitize(c)}">${sanitize(c)}</button>
-    `).join('');
-    filterBar.addEventListener('click', e => {
-      const btn = e.target.closest('.filter-btn');
-      if (!btn) return;
-      els('.filter-btn', filterBar).forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      activeCat = btn.dataset.cat;
-      renderGrid();
-    });
-  }
-
-  renderGrid();
-}
 
 
 /* ═══════════════════════════════════════════
@@ -1176,4 +1120,288 @@ function renderHomeHero() {
         <dd><span class="stat-card__value" data-value="${h.value}" data-suffix="">${h.value}</span>${h.suffix ? `<em>${sanitize(h.suffix)}</em>` : ''}</dd>
       </div>`).join('');
   }
+}
+
+/* ═══════════════════════════════════════════
+   SHOWCASE PAGE — classification tabs, category chips, search, PDF modal
+   ═══════════════════════════════════════════ */
+const SC_ICON = {
+  all:          '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
+  report:       '<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>',
+  presentation: '<path d="M2 3h20"/><path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"/><path d="m7 21 5-5 5 5"/>',
+  poster:       '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/>',
+  note:         '<path d="M12 20h9"/><path d="M16.4 3.6a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4z"/>',
+  book:         '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',
+};
+const SC_TYPES = [
+  { key: 'all',          label: 'All Work' },
+  { key: 'report',       label: 'Reports' },
+  { key: 'presentation', label: 'Presentations' },
+  { key: 'poster',       label: 'Posters' },
+  { key: 'note',         label: 'Short Notes' },
+  { key: 'book',         label: 'Books' },
+];
+const scSvg = (k, cls = '') => `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${SC_ICON[k] || SC_ICON.report}</svg>`;
+
+function scCardHTML(item, i) {
+  const meta = getContentTypeMeta(item.contentType);
+  const units = item.slideCount ? `${item.slideCount} slides` : item.pageCount ? `${item.pageCount} pages` : '';
+  const hl = (item.highlights || []).slice(0, 2);
+  return `
+    <article class="sc-card sc-card--${sanitize(item.contentType)} reveal" style="--i:${i}">
+      <div class="sc-card__cover">
+        <span class="sc-card__type">${scSvg(item.contentType)}${sanitize(meta.label)}</span>
+        ${units ? `<span class="sc-card__units">${sanitize(units)}</span>` : ''}
+        <div class="sc-card__sheet" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span>
+          ${scSvg(item.contentType, 'sc-card__glyph')}
+        </div>
+      </div>
+      <div class="sc-card__body">
+        <div class="sc-card__meta"><span>${sanitize(item.category)}</span><span>${sanitize(item.date || '')}</span></div>
+        <h3 class="sc-card__title">${sanitize(item.title)}</h3>
+        <p class="sc-card__excerpt">${sanitize(item.excerpt)}</p>
+        ${hl.length ? `<ul class="sc-card__hl">${hl.map(h => `<li>${sanitize(h)}</li>`).join('')}</ul>` : ''}
+        <div class="sc-card__actions">
+          ${item.pdfSrc ? `<button type="button" class="btn btn-primary sc-open" data-id="${item.id}">View ${sanitize(meta.label.replace(/s$/, ''))}</button>` : ''}
+          <a class="btn-ghost" href="insight-detail.html?id=${item.id}">Details</a>
+        </div>
+      </div>
+    </article>`;
+}
+
+function renderShowcase() {
+  const grid = el('#sc-grid');
+  if (!grid) return;
+  const items = DATA.INSIGHTS.filter(i => i.contentType);
+  const typesEl = el('#sc-types');
+  const catsEl = el('#sc-cats');
+  const search = el('#sc-search');
+  const countEl = el('#sc-count');
+  const state = { type: 'all', cat: 'All', q: '' };
+
+  // classification buttons (with counts + sliding highlight)
+  typesEl.innerHTML = '<span class="sc-types__pill" aria-hidden="true"></span>' + SC_TYPES.map(t => {
+    const n = t.key === 'all' ? items.length : items.filter(i => i.contentType === t.key).length;
+    return `<button type="button" role="tab" class="sc-type${t.key === 'all' ? ' is-active' : ''}" data-type="${t.key}" aria-selected="${t.key === 'all'}"${n ? '' : ' disabled'}>
+      <span class="sc-type__icon">${scSvg(t.key)}</span>
+      <span class="sc-type__label">${t.label}</span>
+      <span class="sc-type__count">${n}</span>
+    </button>`;
+  }).join('');
+  const pill = el('.sc-types__pill', typesEl);
+  const movePill = (instant) => {
+    const b = el('.sc-type.is-active', typesEl);
+    if (!b) return;
+    if (instant) pill.style.transition = 'none';
+    pill.style.width = `${b.offsetWidth}px`;
+    pill.style.height = `${b.offsetHeight}px`;
+    pill.style.transform = `translate(${b.offsetLeft}px, ${b.offsetTop}px)`;
+    if (instant) requestAnimationFrame(() => requestAnimationFrame(() => { pill.style.transition = ''; }));
+  };
+
+  const renderCats = () => {
+    const pool = items.filter(i => state.type === 'all' || i.contentType === state.type);
+    const cats = ['All', ...new Set(pool.map(i => i.category))];
+    if (!cats.includes(state.cat)) state.cat = 'All';
+    catsEl.innerHTML = cats.map(c => `<button type="button" class="sc-cat${c === state.cat ? ' is-active' : ''}" data-cat="${attrSc(c)}">${sanitize(c)}</button>`).join('');
+  };
+
+  const renderGrid = () => {
+    const q = state.q.toLowerCase();
+    const list = items.filter(i =>
+      (state.type === 'all' || i.contentType === state.type) &&
+      (state.cat === 'All' || i.category === state.cat) &&
+      (!q || `${i.title} ${i.excerpt} ${i.category}`.toLowerCase().includes(q)));
+    countEl.textContent = `Showing ${list.length} of ${items.length} item${items.length === 1 ? '' : 's'}`;
+    grid.innerHTML = list.length
+      ? list.map(scCardHTML).join('')
+      : `<div class="sc-empty"><strong>Nothing here yet</strong><span>No items match this selection.</span><button type="button" class="btn btn-outline sc-reset">Show everything</button></div>`;
+    setTimeout(initReveal, 40);
+  };
+
+  typesEl.addEventListener('click', e => {
+    const b = e.target.closest('.sc-type');
+    if (!b || b.disabled) return;
+    els('.sc-type', typesEl).forEach(x => { x.classList.toggle('is-active', x === b); x.setAttribute('aria-selected', String(x === b)); });
+    state.type = b.dataset.type;
+    movePill();
+    renderCats(); renderGrid();
+  });
+  catsEl.addEventListener('click', e => {
+    const b = e.target.closest('.sc-cat');
+    if (!b) return;
+    state.cat = b.dataset.cat;
+    els('.sc-cat', catsEl).forEach(x => x.classList.toggle('is-active', x === b));
+    renderGrid();
+  });
+  search.addEventListener('input', () => { state.q = search.value.trim(); renderGrid(); });
+  grid.addEventListener('click', e => {
+    if (e.target.closest('.sc-reset')) {
+      state.cat = 'All'; state.q = ''; search.value = '';
+      el('.sc-type[data-type="all"]', typesEl).click();
+      return;
+    }
+    const o = e.target.closest('.sc-open');
+    if (o) scOpenModal(items.find(i => String(i.id) === o.dataset.id));
+  });
+  window.addEventListener('resize', () => movePill(true));
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => movePill(true));
+
+  renderCats(); renderGrid(); movePill(true);
+  scInitModal();
+}
+
+function attrSc(s) { return sanitize(s).replace(/"/g, '&quot;'); }
+
+function scInitModal() {
+  const m = el('#sc-modal');
+  if (!m) return;
+  const close = () => {
+    m.classList.remove('is-open');
+    setTimeout(() => { m.hidden = true; el('#sc-modal-frame').src = 'about:blank'; }, 250);
+    document.documentElement.style.overflow = '';
+    if (m._opener) m._opener.focus();
+  };
+  el('#sc-modal-close').addEventListener('click', close);
+  m.addEventListener('click', e => { if (e.target === m) close(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !m.hidden) close(); });
+}
+
+function scOpenModal(item) {
+  const m = el('#sc-modal');
+  if (!m || !item) return;
+  m._opener = document.activeElement;
+  const meta = getContentTypeMeta(item.contentType);
+  el('#sc-modal-type').innerHTML = `${scSvg(item.contentType)}${sanitize(meta.label)}`;
+  el('#sc-modal-title').textContent = item.title;
+  el('#sc-modal-open').href = item.pdfSrc;
+  el('#sc-modal-dl').href = item.pdfSrc;
+  el('#sc-modal-frame').src = `${item.pdfSrc}#toolbar=0&navpanes=0&view=FitH`;
+  m.hidden = false;
+  document.documentElement.style.overflow = 'hidden';
+  requestAnimationFrame(() => m.classList.add('is-open'));
+  el('#sc-modal-close').focus();
+}
+
+/* ═══════════════════════════════════════════
+   ABOUT PAGE (about.html .ab-hero) — intro, facts, tabbed journey, skills, areas, certificates
+   ═══════════════════════════════════════════ */
+function renderAboutV2() {
+  const p = DATA.PROFILE;
+  const pad = n => String(n).padStart(2, '0');
+  const jobs = DATA.EXPERIENCE || [];
+  const edus = DATA.EDUCATION || [];
+  const paras = String(p.longBio || p.shortBio || '').split('\n\n').map(t => t.trim()).filter(Boolean);
+
+  // intro lead + story
+  const lead = el('#ab-lead');
+  if (lead) lead.textContent = p.shortBio || paras[0] || '';
+  const story = el('#ab-story');
+  if (story) story.innerHTML = paras.map(t => `<p>${sanitize(t)}</p>`).join('');
+  const loc = el('#ab-photo-loc');
+  if (loc && p.location) loc.textContent = p.location.split(',').slice(0, 2).join(',');
+
+  // facts strip (taken from the data, so it stays in sync)
+  const facts = el('#ab-facts');
+  if (facts) {
+    const job = jobs[0], edu = edus[0];
+    const rows = [
+      job && ['Current role', job.role.split('–')[0].trim()],
+      edu && ['Highest degree', edu.degree.split('–')[0].trim()],
+      edu && edu.grade && ['Grade', edu.grade.replace(/^CGPA:\s*/i, 'CGPA ')],
+      p.location && ['Based in', p.location],
+      ['Focus', 'Road Safety · GIS · AI/ML'],
+    ].filter(Boolean);
+    facts.innerHTML = rows.map(([k, v]) => `<div class="ab-fact"><dt>${sanitize(k)}</dt><dd>${sanitize(v)}</dd></div>`).join('');
+  }
+
+  // journey: experience
+  const xp = el('#experience-timeline');
+  if (xp) {
+    xp.innerHTML = jobs.map(e => {
+      const current = /present/i.test(e.period || '');
+      return `
+      <li class="ab-tl${current ? ' is-current' : ''} reveal">
+        <div class="ab-tl__when">
+          <div class="ab-tl__period">${sanitize(e.period)}</div>
+          ${current ? '<span class="ab-tl__badge"><i></i>Current</span>' : ''}
+        </div>
+        <article class="ab-tl__card">
+          <h3 class="ab-tl__title">${sanitize(e.role)}</h3>
+          <p class="ab-tl__org">${sanitize(e.org)}</p>
+          <p class="ab-tl__desc">${sanitize(e.description)}</p>
+          ${(e.highlights || []).length ? `<div class="ab-tl__tags">${e.highlights.map(h => `<span>${sanitize(h)}</span>`).join('')}</div>` : ''}
+        </article>
+      </li>`;
+    }).join('');
+  }
+  // journey: education
+  const ed = el('#education-timeline');
+  if (ed) {
+    ed.innerHTML = edus.map(e => `
+      <li class="ab-tl reveal">
+        <div class="ab-tl__when"><div class="ab-tl__period">${sanitize(e.period)}</div></div>
+        <article class="ab-tl__card">
+          <h3 class="ab-tl__title">${sanitize(e.degree)}</h3>
+          <p class="ab-tl__org">${sanitize(e.institution)}${e.location ? ` · ${sanitize(e.location)}` : ''}</p>
+          ${e.grade ? `<span class="ab-tl__grade">${sanitize(e.grade)}</span>` : ''}
+          ${e.thesis ? `<p class="ab-tl__desc"><strong>Thesis:</strong> ${sanitize(e.thesis)}</p>` : ''}
+        </article>
+      </li>`).join('');
+  }
+  const ce = el('#ab-count-exp'), cd = el('#ab-count-edu');
+  if (ce) ce.textContent = jobs.length;
+  if (cd) cd.textContent = edus.length;
+
+  const tabs = el('#ab-tabs');
+  if (tabs) {
+    tabs.addEventListener('click', e => {
+      const b = e.target.closest('.ab-tab');
+      if (!b) return;
+      els('.ab-tab', tabs).forEach(t => { t.classList.toggle('is-active', t === b); t.setAttribute('aria-selected', String(t === b)); });
+      els('.ab-timeline').forEach(list => {
+        const show = list.dataset.panel === b.dataset.panel;
+        list.hidden = !show;
+        if (show) els('.reveal', list).forEach(r => { r.classList.remove('visible'); void r.offsetWidth; r.classList.add('visible'); });
+      });
+    });
+  }
+
+  // skills
+  const skills = el('#skills-grid');
+  if (skills) {
+    skills.innerHTML = Object.entries(DATA.SKILLS || {}).map(([cat, items], i) => `
+      <article class="ab-skill reveal reveal-delay-${(i % 3) + 1}">
+        <div class="ab-skill__head"><h3 class="ab-skill__title">${sanitize(cat)}</h3><span class="ab-skill__num">${pad(i + 1)}</span></div>
+        <div class="ab-skill__tags">${items.map(s => `<span>${sanitize(s)}</span>`).join('')}</div>
+      </article>`).join('');
+  }
+
+  // research interests
+  const areas = el('#research-interests');
+  if (areas) {
+    areas.innerHTML = (DATA.RESEARCH_AREAS || []).map((r, i) => `
+      <li class="ab-area reveal reveal-delay-${(i % 2) + 1}">
+        <span class="ab-area__num">${pad(i + 1)}</span>
+        <h3>${sanitize(r.title)}</h3>
+        <p>${sanitize(r.desc)}</p>
+      </li>`).join('');
+  }
+
+  // certifications
+  const certs = el('#certs-grid');
+  if (certs) {
+    const award = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="6"/><path d="m15.5 12.9 1.5 8.5a.5.5 0 0 1-.8.5l-3.6-2.7a1 1 0 0 0-1.2 0l-3.6 2.7a.5.5 0 0 1-.8-.5l1.5-8.5"/></svg>';
+    certs.innerHTML = (DATA.CERTIFICATIONS || []).map((c, i) => `
+      <article class="ab-cert reveal reveal-delay-${(i % 3) + 1}">
+        <span class="ab-cert__icon">${award}</span>
+        <div>
+          <h3 class="ab-cert__title">${sanitize(c.title)}</h3>
+          <p class="ab-cert__meta">${sanitize(c.org)}${c.year ? ` · ${sanitize(c.year)}` : ''}</p>
+        </div>
+      </article>`).join('');
+  }
+
+  renderProfileLinks();
 }

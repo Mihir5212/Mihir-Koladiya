@@ -6,6 +6,7 @@
   <meta name="description" content="Showcase by Mihir Koladiya — reports, posters, notes, books, and presentations in transportation engineering and GIS." />
   <title>Showcase — Mihir Koladiya</title>
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/showcase.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2314182B'/><text x='16' y='22' text-anchor='middle' font-family='serif' font-size='18' font-weight='bold' fill='%23C9A227'>M</text></svg>" />
@@ -40,25 +41,51 @@
         <div class="page-hero__eyebrow-line"></div>
         <span class="page-hero__label">Knowledge Showcase</span>
       </div>
-      <h1 class="page-hero__title">Posters, Reports, Short Notes, Books & Presentations</h1>
-      <p class="page-hero__desc">Browse visual and document-based work including technical reports, conference presentations, posters, short notes, books, and other reference material.</p>
+      <h1 class="page-hero__title">Showcase</h1>
+      <p class="page-hero__desc">Technical reports, conference presentations, posters, short notes and reference books — pick a type below and open any item in the viewer.</p>
     </div>
   </div>
 
   <!-- ── SHOWCASE ── -->
-  <section class="section" aria-label="Showcase listing">
+  <section class="section sc" aria-label="Showcase listing">
     <div class="container">
-      <div style="margin-bottom:12px">
-        <div style="font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray);margin-bottom:10px">Content Type</div>
-        <div class="filter-bar" id="showcase-type-filter" role="group" aria-label="Filter showcase by content type"></div>
+
+      <!-- Classification: content type -->
+      <div class="sc-types-wrap">
+        <div class="sc-types" id="sc-types" role="tablist" aria-label="Filter by content type"></div>
       </div>
-      <div style="margin-bottom:44px">
-        <div style="font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray);margin-bottom:10px">Category</div>
-        <div class="filter-bar" id="showcase-filter" role="group" aria-label="Filter showcase by category"></div>
+
+      <!-- Secondary: category + search -->
+      <div class="sc-tools">
+        <div class="sc-cats" id="sc-cats" role="group" aria-label="Filter by category"></div>
+        <label class="sc-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input type="search" id="sc-search" placeholder="Search titles…" aria-label="Search showcase" />
+        </label>
       </div>
-      <div class="insights-grid" id="showcase-grid"></div>
+      <p class="sc-count" id="sc-count" aria-live="polite"></p>
+
+      <div class="sc-grid" id="sc-grid"></div>
     </div>
   </section>
+
+  <!-- ── PDF VIEWER MODAL ── -->
+  <div class="sc-modal" id="sc-modal" role="dialog" aria-modal="true" aria-labelledby="sc-modal-title" hidden>
+    <div class="sc-modal__panel">
+      <div class="sc-modal__bar">
+        <div class="sc-modal__head">
+          <span class="sc-modal__type" id="sc-modal-type"></span>
+          <h2 class="sc-modal__title" id="sc-modal-title"></h2>
+        </div>
+        <div class="sc-modal__actions">
+          <a class="sc-modal__btn" id="sc-modal-open" target="_blank" rel="noopener">Open in new tab ↗</a>
+          <a class="sc-modal__btn" id="sc-modal-dl" download>Download</a>
+          <button type="button" class="sc-modal__close" id="sc-modal-close" aria-label="Close viewer">✕</button>
+        </div>
+      </div>
+      <iframe class="sc-modal__frame" id="sc-modal-frame" title="Document viewer"></iframe>
+    </div>
+  </div>
 
   <!-- ── CTA ── -->
   <section class="cta-section">

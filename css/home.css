@@ -230,3 +230,48 @@
 .mh-stat dd, .mh-stat dd * { font-style: normal; }
 .mh-road--main { stroke: rgba(201,162,39,0.12); }
 .mh-hero__text { position: relative; }
+
+/* ── Hero photo: framed card with a tilted backing card (reference style) ── */
+.mh-photo { position: relative; width: min(100%, 440px); margin: 0; }
+.mh-photo__back {
+  position: absolute; inset: -14px -16px -12px -14px; z-index: 0;
+  border-radius: 14px;
+  background: linear-gradient(135deg, rgba(28,42,90,0.30), rgba(201,162,39,0.22));
+  transform: rotate(2.2deg);
+  box-shadow: 0 30px 60px -30px rgba(20,24,43,0.45);
+}
+.mh-photo__card {
+  position: relative; z-index: 1;
+  padding: 12px 12px 0;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid var(--gray-lt);
+  box-shadow: 0 24px 50px -24px rgba(20,24,43,0.45);
+}
+.mh-photo__img {
+  position: relative; overflow: hidden;
+  aspect-ratio: 4 / 5;
+  border-radius: 8px;
+  background: linear-gradient(160deg, #252B48, #14182B);
+}
+.mh-photo__img img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; transition: transform 1.2s cubic-bezier(.22,1,.36,1); }
+.mh-photo:hover .mh-photo__img img { transform: scale(1.04); }
+.mh-photo__img::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, transparent 55%, rgba(20,24,43,0.88) 100%);
+}
+.mh-photo__fallback { display: none; place-items: center; width: 100%; height: 100%; font-family: var(--font-display); font-size: 5rem; color: var(--mh-gold); }
+.mh-photo__caption {
+  position: absolute; left: 16px; right: 16px; bottom: 14px; z-index: 1;
+  display: grid; gap: 2px; color: #fff; font-size: 0.8rem; line-height: 1.35;
+}
+.mh-photo__caption strong { color: var(--mh-gold); font-size: 0.95rem; font-weight: 600; }
+.mh-photo__foot {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 12px 6px 14px;
+  font-size: 0.85rem; color: var(--dark);
+}
+.mh-photo__place { display: inline-flex; align-items: center; gap: 8px; }
+.mh-photo__place svg { width: 16px; height: 16px; color: var(--mh-gold); }
+.mh-photo__degree { font-size: 0.78rem; color: var(--gray); }
+@media (max-width: 960px) { .mh-photo { width: min(82vw, 360px); } }
