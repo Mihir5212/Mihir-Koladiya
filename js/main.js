@@ -523,6 +523,7 @@ function renderInsightsPreview() {
    ═══════════════════════════════════════════ */
 
 function renderAbout() {
+  if (el('#ab-story')) return renderAboutStory();
   if (el('#ab-facts')) return renderAboutV2();
   renderAboutBio();
   renderAboutQuickFacts();
@@ -1633,3 +1634,95 @@ function initAboutNav() {
   els('.ar-block').forEach(s => io.observe(s));
 }
 document.addEventListener('DOMContentLoaded', initAboutNav);
+
+
+
+
+
+/* ═══════════ ABOUT — profile page layout ═══════════ */
+function renderAboutStory() {
+  const root = el('#ab-story');
+  if (!root) return;
+  const D = DATA, P = D.PROFILE, s = sanitize;
+  const job = (D.EXPERIENCE || [])[0];
+  const bio = P.longBio.split(/\n\s*\n/).map(t => t.trim()).filter(t => !/^Languages:/i.test(t));
+  const CV = P.cvFile || 'assets/docs/Mihir_Koladiya_CV.pdf';
+  const short = org => /SVNIT/.test(org) ? 'SVNIT Surat' : org.split(',')[0];
+  const ini = t => s(t.replace(/[^A-Za-z ]/g, ' ').split(/\s+/).filter(w => w.length > 2 && !/^(of|and|the|for|pvt|ltd)$/i.test(w)).map(w => w[0]).slice(0, 2).join('').toUpperCase());
+  const tags = l => (l || []).length ? `<div class="pf-tags">${l.map(t => `<span>${s(t)}</span>`).join('')}</div>` : '';
+  const I = {
+    cv: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16"/></svg>',
+    pin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>',
+    work: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>',
+    cap: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>',
+    award: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="m8.5 14-1.5 8 5-3 5 3-1.5-8"/></svg>',
+    cert: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg>',
+  };
+  const card = (id, title, count, body) => `
+    <section class="pf-card reveal ar-block" id="${id}">
+      <header class="pf-card__head"><h2>${title}</h2>${count ? `<span>${count}</span>` : ''}</header>
+      ${body}
+    </section>`;
+  const edu0 = (D.EDUCATION || [])[0] || {};
+
+  root.innerHTML = `
+  <div class="pf">
+    <div class="container pf-wrap">
+
+      <section class="pf-top reveal">
+        <div class="pf-cover" aria-hidden="true"><span class="pf-cover__word">Road Safety &middot; Crash Analytics &middot; GIS</span></div>
+        <div class="pf-id">
+          <div class="pf-av"><img src="assets/images/profile.jpg" alt="Portrait of Mihir Koladiya" onerror="this.style.visibility='hidden'"></div>
+          <div class="pf-id__actions">
+            <a href="${s(CV)}" download class="btn pf-btn pf-btn--solid">${I.cv} Download CV</a>
+            <a href="contact.html" class="btn pf-btn pf-btn--line">Contact</a>
+          </div>
+          <h1 class="pf-name">Mihir Koladiya</h1>
+          <p class="pf-role">${s(P.title)}</p>
+          <ul class="pf-meta">
+            <li>${I.pin}${s(P.location)}</li>
+            ${job ? `<li>${I.work}${s(job.role.split('–')[0].trim())} at ${s(short(job.org))}</li>` : ''}
+            ${edu0.degree ? `<li>${I.cap}${s(edu0.degree.split('–')[0].trim())}, MSU Baroda</li>` : ''}
+          </ul>
+          <dl class="pf-stats">${(D.HIGHLIGHTS || []).map(x => `<div><dd>${x.value}<i>${s(x.suffix || '')}</i></dd><dt>${s(x.label)}</dt></div>`).join('')}</dl>
+        </div>
+      </section>
+
+      ${card('summary', 'About', '', `
+        <div class="pf-about">${bio.map(t => `<p>${s(t)}</p>`).join('')}<p class="pf-muted">Languages: Gujarati (native), Hindi and English.</p></div>
+        <div class="pf-aims">
+          <div><span>Career Objective</span><p>To apply crash analytics, GIS and AI/ML methods to road safety problems, and grow as a researcher who turns transport data into evidence-based decisions.</p></div>
+          <div><span>Mission &amp; Direction</span><p>To advance transportation infrastructure through sustainable solutions that enhance safety, efficiency and evidence-based decision-making.</p></div>
+        </div>`)}
+
+      ${card('experience', 'Experience', (D.EXPERIENCE || []).length + ' roles', `<ul class="pf-rows">${(D.EXPERIENCE || []).map(e => {
+        const cur = /present/i.test(e.period || '');
+        return `<li><span class="pf-logo">${ini(e.org)}</span><div>
+          <h3>${s(e.role)}${cur ? '<b class="pf-cur">Current</b>' : ''}</h3>
+          <p class="pf-org">${s(e.org)}</p>
+          <p class="pf-when">${s(e.period)} &middot; ${s(e.type || '')}</p>
+          ${e.description ? `<p class="pf-desc">${s(e.description)}</p>` : ''}${tags(e.highlights)}</div></li>`; }).join('')}</ul>`)}
+
+      ${card('education', 'Education', '', `<ul class="pf-rows">${(D.EDUCATION || []).map(e => `
+        <li><span class="pf-logo pf-logo--gold">${I.cap}</span><div>
+          <h3>${s(e.institution)}</h3>
+          <p class="pf-org">${s(e.degree)}</p>
+          <p class="pf-when">${s(e.period)}${e.location ? ` &middot; ${s(e.location)}` : ''} &middot; <strong>${s(e.grade)}</strong></p>
+          ${e.thesis ? `<p class="pf-desc"><em>Dissertation:</em> ${s(e.thesis)}</p>` : ''}</div></li>`).join('')}</ul>`)}
+
+      ${card('skills', 'Skills &amp; Tools', '', `<div class="pf-skills">${Object.entries(D.SKILLS || {}).map(([g, l]) => `<div><h3>${s(g)}</h3>${tags(l)}</div>`).join('')}</div>`)}
+
+      ${card('competencies', 'Core Competencies', '', `<div class="pf-comp">${(D.RESEARCH_AREAS || []).map((r, i) => `<div><span>${String(i + 1).padStart(2, '0')}</span><h3>${s(r.title)}</h3><p>${s(r.desc)}</p></div>`).join('')}</div>`)}
+
+      ${card('certifications', 'Licences &amp; Certifications', '', `<ul class="pf-rows pf-rows--sm">${(D.CERTIFICATIONS || []).map(c => `<li><span class="pf-logo">${I.cert}</span><div><h3>${s(c.title)}</h3><p class="pf-org">${s(c.org)}</p><p class="pf-when">${s(c.year || '')}</p></div></li>`).join('')}</ul>`)}
+
+      ${card('workshops', 'Workshops &amp; Training', '', `<ul class="pf-rows pf-rows--sm">${(D.WORKSHOPS || []).map(w => `<li><span class="pf-logo">${ini(w.org)}</span><div><h3>${s(w.title)}</h3><p class="pf-org">${s(w.org)}${w.mode ? ` &middot; ${s(w.mode)}` : ''}</p><p class="pf-when">${s(w.date || '')}</p></div></li>`).join('')}</ul>`)}
+
+      ${card('awards', 'Honours &amp; Awards', '', `<ul class="pf-rows pf-rows--sm">${(D.AWARDS || []).map(a => `<li><span class="pf-logo pf-logo--gold">${I.award}</span><div><h3>${s(a.title)}</h3><p class="pf-org">${s(a.org)}</p><p class="pf-when">${s(a.outcome)} &middot; ${s(a.date)}</p></div></li>`).join('')}</ul>`)}
+
+      ${card('references', 'References', '', `<div class="pf-refs">${(D.REFERENCES || []).map(r => `<div><span class="pf-logo pf-logo--round">${ini(r.name.replace(/^(Prof|Dr)\.?\s*/i, ''))}</span><div><h3>${s(r.name)}</h3><p class="pf-org">${s(r.title)}, ${s(r.org)}</p><p class="pf-when">${s(r.relation)}</p></div></div>`).join('')}</div><p class="pf-muted pf-note">Contact details shared on request.</p>`)}
+
+    </div>
+  </div>`;
+  setTimeout(initReveal, 60);
+}
