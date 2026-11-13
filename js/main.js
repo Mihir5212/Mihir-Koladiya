@@ -1,3 +1,24 @@
+/* Newest-first ordering for publications, projects and insights */
+const MONTHS = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+function dateVal(s) {
+  s = String(s || '').toLowerCase();
+  const years = s.match(/(19|20)\d{2}/g);
+  if (!years) return 0;
+  const m = MONTHS.findIndex(x => s.includes(x));
+  return Number(years[years.length - 1]) * 100 + (m < 0 ? 0 : m + 1);
+}
+function newestFirst(list, get) {
+  return (list || []).map((x, i) => [x, i])
+    .sort((a, b) => dateVal(get(b[0])) - dateVal(get(a[0])) || b[1] - a[1])
+    .map(a => a[0]);
+}
+if (typeof DATA !== 'undefined') {
+  const P = DATA.PUBLICATIONS || {};
+  ['journal', 'conference', 'inProgress', 'peerReview'].forEach(k => { if (P[k]) P[k] = newestFirst(P[k], x => x.year); });
+  if (DATA.PROJECTS) DATA.PROJECTS = newestFirst(DATA.PROJECTS, x => x.year);
+  if (DATA.INSIGHTS) DATA.INSIGHTS = newestFirst(DATA.INSIGHTS, x => x.date);
+}
+
 /**
  * main.js — Mihir Koladiya Portfolio
  * Handles: rendering, filtering, animations, navbar, form validation.
@@ -378,13 +399,33 @@ function insightCardHTML(item) {
    ═══════════════════════════════════════════ */
 
 function renderHome() {
-  if (el('#hp-journey')) renderHomeV3();
+  if (el('#hp-journey') || el('#hp-work')) renderHomeV3();
   if (el('.mh-hero')) renderHomeHero(); else { renderHero(); renderStats(); }
   renderFeaturedProjects();
   renderResearchAreas();
   renderPubsPreview();
   renderInsightsPreview();
+  renderHomeProfile();
   initCounters();
+}
+
+function renderHomeProfile() {
+  const p = DATA.PROFILE;
+  const bio = el('#h5-bio');
+  if (bio) bio.innerHTML = p.longBio.split(/\n\s*\n/).map(t => `<p>${sanitize(t.trim())}</p>`).join('');
+  const facts = el('#h5-facts');
+  if (!facts) return;
+  const job = (DATA.EXPERIENCE || [])[0];
+  const edu = (DATA.EDUCATION || [])[0];
+  const rows = [
+    ['Current role', job && `${job.role.split('–')[0].trim()}, ${/SVNIT/.test(job.org) ? 'SVNIT Surat' : job.org}`],
+    ['Education', edu && (edu.degree || edu.title)],
+    ['Location', p.location],
+    ['Email', p.email && `<a href="mailto:${sanitize(p.email)}">${sanitize(p.email)}</a>`, true],
+    ['Phone', p.phone],
+    ['Languages', 'Gujarati, Hindi, English'],
+  ].filter(r => r[1]);
+  facts.innerHTML = rows.map(([k, v, raw]) => `<div><dt>${k}</dt><dd>${raw ? v : sanitize(v)}</dd></div>`).join('');
 }
 
 function renderHero() {
@@ -457,7 +498,7 @@ function renderResearchAreas() {
 function renderPubsPreview() {
   const container = el('#pubs-preview');
   if (!container) return;
-  const pubs = DATA.PUBLICATIONS.journal.slice(0, 2);
+  const pubs = newestFirst([...(DATA.PUBLICATIONS.journal || []), ...(DATA.PUBLICATIONS.conference || [])].filter(p => /^published$/i.test(p.status || '')), x => x.year).slice(0, 4);
   container.innerHTML = `<div class="pub-cards">${pubs.map(p => pubCardHTML(p)).join('')}</div>`;
 }
 
@@ -465,7 +506,16 @@ function renderInsightsPreview() {
   const grid = el('#insights-preview');
   if (!grid) return;
   const items = DATA.INSIGHTS.filter(i => !i.contentType).slice(0, 3);
-  grid.innerHTML = items.map(i => insightCardHTML(i)).join('');
+  grid.className = 'h8-ins';
+  grid.innerHTML = items.map((i, n) => `
+    <a class="h8-card${n === 0 ? ' h8-card--lead' : ''} reveal${n ? ' reveal-delay-' + n : ''}" href="insight-detail.html?id=${i.id}">
+      <span class="h8-card__num" aria-hidden="true">${String(n + 1).padStart(2, '0')}</span>
+      <span class="h8-card__top"><b class="h8-card__tag">${sanitize(i.category)}</b>${n === 0 ? '<span class="h8-card__flag">Featured</span>' : ''}</span>
+      <span class="h8-card__meta">${sanitize(i.date)}${i.readTime ? ' &middot; ' + sanitize(i.readTime) : ''}</span>
+      <h3 class="h8-card__title">${sanitize(i.title)}</h3>
+      ${n === 0 ? `<p class="h8-card__excerpt">${sanitize(i.excerpt)}</p>` : ''}
+      <span class="h8-card__more">Read article <i aria-hidden="true">&rarr;</i></span>
+    </a>`).join('');
 }
 
 /* ═══════════════════════════════════════════
