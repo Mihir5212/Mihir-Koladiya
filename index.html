@@ -88,87 +88,114 @@
     <a href="#mh-about" class="mh-scroll" aria-label="Scroll to the next section"><span></span></a>
   </section>
 
-  <!-- ── KEYWORD RIBBON ── -->
-  <div class="mh-ribbon mh-ribbon--gold" aria-hidden="true">
-    <div class="mh-ribbon__track">
-      <span>Road Safety Audits</span><i>✦</i><span>Crash Data Analytics</span><i>✦</i><span>GIS Hotspot Mapping</span><i>✦</i><span>Blackspot Investigation</span><i>✦</i><span>AI / ML Modelling</span><i>✦</i><span>Transport Planning</span><i>✦</i>
-      <span>Road Safety Audits</span><i>✦</i><span>Crash Data Analytics</span><i>✦</i><span>GIS Hotspot Mapping</span><i>✦</i><span>Blackspot Investigation</span><i>✦</i><span>AI / ML Modelling</span><i>✦</i><span>Transport Planning</span><i>✦</i>
-    </div>
-  </div>
-
-  <!-- ── AT A GLANCE (tile grid) ── -->
-  <section class="section mh-bento-wrap" id="mh-about" aria-label="At a glance">
-    <div class="container">
-      <div class="mh-bento">
-
-        <article class="mh-tile mh-tile--about reveal">
-          <span class="section-label">Engineering Profile</span>
-          <h2 class="mh-tile__title">Bridging highway engineering and <em>spatial research</em></h2>
-          <p class="mh-tile__text">A transportation engineer with a dual focus on field practice and academic research — road safety, crash hotspot identification, and geospatial analysis of infrastructure risk.</p>
-          <div class="mh-tile__actions">
-            <a href="about.html" class="btn btn-primary">Full Profile</a>
-            <a href="contact.html" class="btn btn-outline">Get in Touch</a>
-          </div>
-        </article>
-
-        <article class="mh-tile mh-tile--now reveal reveal-delay-1" id="mh-now-tile"></article>
-
-        <article class="mh-tile mh-tile--areas reveal">
-          <div class="mh-tile__head">
-            <span class="section-label">Research Focus</span>
-            <a href="about.html" class="btn-ghost">Full profile</a>
-          </div>
-          <ol class="mh-areas" id="mh-areas"></ol>
-        </article>
-
-        <article class="mh-tile mh-tile--tools reveal reveal-delay-1">
-          <span class="section-label">Toolkit</span>
-          <div class="mh-tools" id="mh-tools"></div>
-        </article>
-
-      </div>
+  <!-- ── INSTITUTIONS STRIP ── -->
+  <section class="hp-inst" aria-label="Institutions">
+    <div class="container hp-inst__inner">
+      <span class="hp-inst__label">Worked, studied &amp; presented at</span>
+      <ul class="hp-inst__list">
+        <li><strong>SVNIT</strong> Surat</li>
+        <li><strong>MSU</strong> Baroda</li>
+        <li><strong>IIT</strong> Bombay</li>
+        <li><strong>IIT</strong> Roorkee</li>
+        <li><strong>NIT</strong> Bhopal</li>
+        <li><strong>GRSA</strong> Gujarat</li>
+      </ul>
     </div>
   </section>
 
-  <!-- ── FEATURED PROJECTS ── -->
-  <section class="section section--alt" aria-label="Featured projects">
+  <!-- ── HOW I WORK ── -->
+  <section class="section hp-process" id="mh-about" aria-labelledby="hp-process-title">
     <div class="container">
-      <div class="mh-head reveal">
+      <div class="hp-head hp-head--center reveal">
+        <span class="section-label">How I work</span>
+        <h2 class="section-title" id="hp-process-title">From crash records to <em>safer roads</em></h2>
+        <p class="hp-head__sub">A four-step, evidence-based approach I apply on highway safety projects.</p>
+      </div>
+      <ol class="hp-steps">
+        <li class="hp-step reveal">
+          <span class="hp-step__num">01</span>
+          <span class="hp-step__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></span>
+          <h3>Collect &amp; clean</h3>
+          <p>Crash data cleaning, frequency and severity analysis, and contributing-factor identification.</p>
+          <span class="hp-step__tools">Python · SPSS · Jamovi</span>
+        </li>
+        <li class="hp-step reveal reveal-delay-1">
+          <span class="hp-step__num">02</span>
+          <span class="hp-step__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15M15 6v15"/></svg></span>
+          <h3>Map hotspots</h3>
+          <p>Crash mapping, KDE-based heatmaps, spatial clustering and corridor-level safety interpretation.</p>
+          <span class="hp-step__tools">QGIS · ArcGIS · Earth Engine</span>
+        </li>
+        <li class="hp-step reveal reveal-delay-2">
+          <span class="hp-step__num">03</span>
+          <span class="hp-step__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="m7 15 4-5 4 3 5-7"/></svg></span>
+          <h3>Model the risk</h3>
+          <p>Count models (Poisson, Negative Binomial, Zero-Inflated, Hurdle), GWR, and AI/ML with XGBoost, Random Forest and ANN.</p>
+          <span class="hp-step__tools">R · Python · XGBoost</span>
+        </li>
+        <li class="hp-step reveal reveal-delay-3">
+          <span class="hp-step__num">04</span>
+          <span class="hp-step__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.7 9a1 1 0 0 1-.6 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.2-2.7a1.2 1.2 0 0 1 1.6 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></span>
+          <h3>Audit &amp; recommend</h3>
+          <p>Road safety audits, field validation and IRC-guided countermeasures for blackspot treatment.</p>
+          <span class="hp-step__tools">IRC:SP-88 · IRC:SP-84 · AutoCAD</span>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ── CAREER SNAPSHOT ── -->
+  <section class="section section--alt" aria-labelledby="hp-journey-title">
+    <div class="container">
+      <div class="hp-head reveal">
         <div>
-          <span class="section-label">Selected Work</span>
-          <h2 class="section-title">Featured Projects</h2>
+          <span class="section-label">Career snapshot</span>
+          <h2 class="section-title" id="hp-journey-title">Where I have worked</h2>
+        </div>
+        <a href="about.html#experience" class="btn-ghost">Full experience</a>
+      </div>
+      <ol class="hp-journey" id="hp-journey"></ol>
+    </div>
+  </section>
+
+  <!-- ── SELECTED WORK ── -->
+  <section class="section" aria-labelledby="hp-work-title">
+    <div class="container">
+      <div class="hp-head reveal">
+        <div>
+          <span class="section-label">Selected work</span>
+          <h2 class="section-title" id="hp-work-title">Research &amp; projects</h2>
         </div>
         <a href="projects.html" class="btn-ghost">All projects</a>
       </div>
-      <div class="projects-grid" id="featured-projects"></div>
+      <div class="hp-work" id="hp-work"></div>
     </div>
   </section>
 
-  <!-- ── PUBLICATIONS PREVIEW ── -->
-  <section class="section" aria-label="Publications preview">
-    <div class="container">
-      <div class="mh-head reveal">
-        <div>
-          <span class="section-label">Research Output</span>
-          <h2 class="section-title">Recent Publications</h2>
-        </div>
-        <a href="publications.html" class="btn-ghost">All publications</a>
+  <!-- ── PUBLICATIONS BAND ── -->
+  <section class="section section--alt" aria-labelledby="hp-pubs-title">
+    <div class="container hp-pubs">
+      <div class="hp-pubs__side reveal">
+        <span class="section-label">Research output</span>
+        <h2 class="section-title" id="hp-pubs-title">Publications</h2>
+        <dl class="hp-pubstats" id="hp-pubstats"></dl>
+        <a href="publications.html" class="btn btn-primary">All publications</a>
       </div>
-      <div id="pubs-preview"></div>
+      <ol class="hp-publist" id="hp-pubs"></ol>
     </div>
   </section>
 
-  <!-- ── INSIGHTS PREVIEW ── -->
-  <section class="section section--alt" aria-label="Insights preview">
+  <!-- ── RECOGNITION ── -->
+  <section class="section" aria-labelledby="hp-awards-title">
     <div class="container">
-      <div class="mh-head reveal">
+      <div class="hp-head reveal">
         <div>
-          <span class="section-label">Knowledge Sharing</span>
-          <h2 class="section-title">Technical Insights</h2>
+          <span class="section-label">Recognition</span>
+          <h2 class="section-title" id="hp-awards-title">Awards &amp; achievements</h2>
         </div>
-        <a href="insights.html" class="btn-ghost">All insights</a>
+        <a href="about.html#awards" class="btn-ghost">See all</a>
       </div>
-      <div class="insights-grid" id="insights-preview"></div>
+      <div class="hp-awards" id="hp-awards"></div>
     </div>
   </section>
 
@@ -213,19 +240,16 @@
         <div>
           <div class="footer__heading">Research Profiles</div>
           <div class="footer__links">
-            <a href="https://linkedin.com/in/mihirkoladiya" target="_blank" rel="noopener">LinkedIn</a>
-            <a href="https://researchgate.net/profile/Mihir_Koladiya" target="_blank" rel="noopener">ResearchGate</a>
-            <a href="https://scholar.google.com/citations?user=XXXXXXXX" target="_blank" rel="noopener">Google Scholar</a>
-            <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener">ORCID</a>
+            <a href="https://linkedin.com/in/mihir-koladiya" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="mailto:koladiyamihir5212@gmail.com">Email</a>
           </div>
         </div>
       </div>
       <div class="footer__bottom">
         <span>&copy; 2024 Mihir Koladiya. All rights reserved.</span>
         <div class="footer__social">
-          <a href="https://linkedin.com/in/mihirkoladiya" target="_blank" rel="noopener">LinkedIn</a>
-          <a href="https://github.com/mihirkoladiya" target="_blank" rel="noopener">GitHub</a>
-          <a href="mailto:mihir.koladiya@example.com">Email</a>
+          <a href="https://linkedin.com/in/mihir-koladiya" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="mailto:koladiyamihir5212@gmail.com">Email</a>
         </div>
       </div>
     </div>

@@ -152,12 +152,17 @@ const EXT_SVG = '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="curre
 const CHECK_SVG = '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg>';
 
 function pubAuthors(authors) {
-  const list = String(authors || '')
-    .split(/\s*,?\s*&\s*|(?<=\.)\s*,\s*|\s*,\s*(?=\[)/)
+  const raw = String(authors || '');
+  const fullNames = !/,\s*[A-Z]\.(,|\s|$)/.test(raw);   // "Mihir Koladiya, …" vs "Koladiya, M., …"
+  const list = (fullNames ? raw.split(/\s*,\s*|\s+and\s+/) : raw.split(/\s*,?\s*&\s*|(?<=\.)\s*,\s*|\s*,\s*(?=\[)/))
     .map(a => a.trim()).filter(Boolean);
   const me = a => /koladiya/i.test(a);
   const initials = a => {
     if (/^\[/.test(a)) return '+';
+    if (fullNames) {
+      const parts = a.replace(/^(Prof\.|Dr\.)\s+/i, '').split(/\s+/);
+      return ((parts[0] || '')[0] + (parts.length > 1 ? parts[parts.length - 1][0] : '')).toUpperCase();
+    }
     const surname = a.split(',')[0];
     const rest = a.slice(surname.length).replace(/[^A-Za-z]/g, '');
     return ((surname[0] || '') + (rest[0] || '')).toUpperCase();
@@ -373,6 +378,7 @@ function insightCardHTML(item) {
    ═══════════════════════════════════════════ */
 
 function renderHome() {
+  if (el('#hp-journey')) renderHomeV3();
   if (el('.mh-hero')) renderHomeHero(); else { renderHero(); renderStats(); }
   renderFeaturedProjects();
   renderResearchAreas();
@@ -599,7 +605,7 @@ function renderProfileLinks() {
     { name: 'Google Scholar',  url: L.googleScholar, icon: '🎓' },
     { name: 'ORCID',           url: L.orcid,         icon: '🔬' },
     { name: 'GitHub',          url: L.github,        icon: '💻' },
-  ];
+  ].filter(l => l.url);
   container.innerHTML = links.map(l => `
     <a href="${sanitize(l.url)}" target="_blank" rel="noopener" class="profile-link">
       <span class="profile-link__icon">${l.icon}</span>${sanitize(l.name)}
@@ -652,6 +658,18 @@ function renderProjectCards(grid, cat) {
 function renderPublications() {
   const pub = DATA.PUBLICATIONS;
 
+  const statsEl = el('#pub-stats');
+  if (statsEl) {
+    const all = [...pub.journal, ...pub.conference];
+    const tiles = [
+      [all.filter(p => /published/i.test(p.status)).length, 'Papers published'],
+      [all.filter(p => /presented/i.test(p.status)).length, 'Papers presented'],
+      [pub.inProgress.length, 'Under publication'],
+      [pub.peerReview.length, 'Peer reviews'],
+    ];
+    statsEl.innerHTML = tiles.map(([n, label]) => `<div class="pub-stat"><div class="pub-stat__value">${n}</div><div class="pub-stat__label">${label}</div></div>`).join('');
+  }
+
   const journal = el('#pub-journal');
   if (journal && pub.journal.length) {
     journal.innerHTML = pubSectionHTML('Journal Papers', pub.journal, '');
@@ -664,7 +682,7 @@ function renderPublications() {
 
   const inprog = el('#pub-inprogress');
   if (inprog && pub.inProgress.length) {
-    inprog.innerHTML = pubSectionHTML('Under Review / In Progress', pub.inProgress, '');
+    inprog.innerHTML = pubSectionHTML('Under Publication Process', pub.inProgress, '');
   }
 
   const pr = el('#pub-peerreview');
@@ -845,7 +863,7 @@ function renderContactProfileLinks() {
     { name: 'ResearchGate',   url: L.researchgate,  icon: '📚' },
     { name: 'Google Scholar', url: L.googleScholar, icon: '🎓' },
     { name: 'ORCID',          url: L.orcid,         icon: '🔬' },
-  ];
+  ].filter(l => l.url);
   linksEl.innerHTML = links.map(l => `
     <a href="${sanitize(l.url)}" target="_blank" rel="noopener" class="contact-link">
       ${l.icon} ${sanitize(l.name)} ↗
@@ -1449,5 +1467,119 @@ function renderAboutV2() {
       </article>`).join('');
   }
 
+  const ws = el('#ab-workshops');
+  if (ws) ws.innerHTML = (DATA.WORKSHOPS || []).map(w => `
+    <li class="ab-row reveal"><span class="ab-row__when">${sanitize(w.date)}</span>
+      <div><h3>${sanitize(w.title)}</h3><p>${sanitize(w.org)} · ${sanitize(w.mode)}</p></div></li>`).join('');
+  const aw = el('#ab-awards');
+  if (aw) aw.innerHTML = (DATA.AWARDS || []).map(a => `
+    <li class="ab-row reveal"><span class="ab-row__when">${sanitize(a.date)}</span>
+      <div><h3>${sanitize(a.title)}</h3><p>${sanitize(a.org)}</p></div><span class="ab-row__tag">${sanitize(a.outcome)}</span></li>`).join('');
+  const refs = el('#ab-refs');
+  if (refs) refs.innerHTML = (DATA.REFERENCES || []).map(r => {
+    const ini = r.name.replace(/^(Prof\.|Dr\.)\s+/i, '').split(/\s+/);
+    return `
+    <article class="ab-ref reveal">
+      <span class="ab-ref__avatar" aria-hidden="true">${sanitize((ini[0][0] + ini[ini.length - 1][0]).toUpperCase())}</span>
+      <div><h3>${sanitize(r.name)}</h3><p>${sanitize(r.title)} · ${sanitize(r.org)}</p><span class="ab-ref__rel">${sanitize(r.relation)}</span></div>
+    </article>`; }).join('');
+
   renderProfileLinks();
 }
+
+/* ═══════════════════════════════════════════
+   HOME v3 — sections below the hero
+   ═══════════════════════════════════════════ */
+function renderHomeV3() {
+  const pad = n => String(n).padStart(2, '0');
+  const me = s => sanitize(s).replace(/Mihir Koladiya/g, '<strong>Mihir Koladiya</strong>');
+
+  const journey = el('#hp-journey');
+  if (journey) {
+    journey.innerHTML = (DATA.EXPERIENCE || []).slice(0, 4).map(e => {
+      const current = /present/i.test(e.period || '');
+      return `
+      <li class="hp-job${current ? ' is-current' : ''} reveal">
+        <span class="hp-job__period">${sanitize(e.period)}</span>
+        <h3 class="hp-job__role">${sanitize(e.role.split('–')[0].trim())}</h3>
+        <p class="hp-job__org">${sanitize(e.org)}</p>
+        <span class="hp-job__type">${current ? 'Current · ' : ''}${sanitize(e.type || '')}</span>
+      </li>`;
+    }).join('');
+  }
+
+  const work = el('#hp-work');
+  if (work) {
+    const list = (DATA.PROJECTS || []).filter(p => p.featured);
+    work.innerHTML = (list.length ? list : DATA.PROJECTS || []).slice(0, 3).map((p, i) => `
+      <a class="hp-case reveal" href="project-detail.html?id=${p.id}">
+        <span class="hp-case__num" aria-hidden="true">${pad(i + 1)}</span>
+        <div>
+          <div class="hp-case__meta"><span>${sanitize(p.category)}</span><span>${sanitize(p.year)}</span><span>${sanitize(p.status || '')}</span></div>
+          <h3 class="hp-case__title">${sanitize(p.title)}</h3>
+          <p class="hp-case__desc">${sanitize(p.description)}</p>
+          <div class="hp-case__tools">${(p.tools || []).slice(0, 6).map(t => `<span>${sanitize(t)}</span>`).join('')}</div>
+        </div>
+        <div class="hp-case__side">
+          <ul class="hp-case__out">${(p.outcomes || []).slice(0, 3).map(o => `<li>${sanitize(o)}</li>`).join('')}</ul>
+          <span class="hp-case__more">View case study <i>→</i></span>
+        </div>
+      </a>`).join('');
+  }
+
+  const P = DATA.PUBLICATIONS || {};
+  const all = [...(P.journal || []), ...(P.conference || [])];
+  const ps = el('#hp-pubstats');
+  if (ps) {
+    const rows = [
+      [all.filter(p => /published/i.test(p.status)).length, 'Papers published'],
+      [all.filter(p => /presented/i.test(p.status)).length, 'Paper presented'],
+      [(P.inProgress || []).length, 'Under publication'],
+      [(P.peerReview || []).length, 'Peer review'],
+    ];
+    ps.innerHTML = rows.map(([n, l]) => `<div><dd>${n}</dd><dt>${l}</dt></div>`).join('');
+  }
+  const pl = el('#hp-pubs');
+  if (pl) {
+    const ext = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>';
+    pl.innerHTML = all.slice(0, 4).map(p => `
+      <li class="hp-pub reveal">
+        <span class="hp-pub__year">${sanitize(p.year)}</span>
+        <div>
+          <h3>${sanitize(p.title)}</h3>
+          <p>${me(p.authors)}</p>
+          <p class="hp-pub__venue">${sanitize(p.journal || p.conference || '')}</p>
+        </div>
+        ${p.link ? `<a class="hp-pub__link" href="${sanitize(p.link)}" target="_blank" rel="noopener" aria-label="Read paper: ${sanitize(p.title)}">${ext}</a>` : `<span class="hp-pub__tag">${sanitize(p.status)}</span>`}
+      </li>`).join('');
+  }
+
+  const aw = el('#hp-awards');
+  if (aw) {
+    aw.innerHTML = (DATA.AWARDS || []).slice(0, 6).map((a, i) => `
+      <article class="hp-award reveal reveal-delay-${(i % 3) + 1}">
+        <div class="hp-award__top"><span class="hp-award__tag">${sanitize(a.outcome)}</span><span class="hp-award__date">${sanitize(a.date)}</span></div>
+        <h3>${sanitize(a.title)}</h3>
+        <p>${sanitize(a.org)}</p>
+      </article>`).join('');
+  }
+}
+
+
+/* About v3: highlight the section being read in the sidebar nav */
+function initAboutNav() {
+  const nav = el('#ar-nav');
+  if (!nav || !('IntersectionObserver' in window)) return;
+  const links = els('a', nav);
+  const byId = Object.fromEntries(links.map(a => [a.getAttribute('href').slice(1), a]));
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      links.forEach(a => a.classList.remove('is-active'));
+      const a = byId[e.target.id];
+      if (a) { a.classList.add('is-active'); if (nav.scrollWidth > nav.clientWidth) a.scrollIntoView({ block: 'nearest', inline: 'center' }); }
+    });
+  }, { rootMargin: '-25% 0px -65% 0px' });
+  els('.ar-block').forEach(s => io.observe(s));
+}
+document.addEventListener('DOMContentLoaded', initAboutNav);

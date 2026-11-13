@@ -46,136 +46,108 @@
     </div>
   </div>
 
-  <!-- ── INTRO: photo + summary ── -->
-  <section class="section ab-intro" aria-label="Profile summary">
-    <div class="container">
-      <div class="ab-intro__grid">
-        <figure class="ab-photo reveal">
-          <span class="ab-photo__back" aria-hidden="true"></span>
-          <div class="ab-photo__card">
-            <div class="ab-photo__img">
-              <img src="assets/images/profile.jpg" alt="Portrait of Mihir Koladiya"
-                onerror="this.style.display='none';this.nextElementSibling.style.display='grid';" />
-              <span class="ab-photo__fallback" aria-hidden="true">MK</span>
-              <figcaption class="ab-photo__caption">
-                <strong>Mihir Koladiya</strong>
-                <span>Highway &amp; Transportation Engineer</span>
-              </figcaption>
-            </div>
-            <div class="ab-photo__foot">
-              <span class="ab-photo__status"><i aria-hidden="true"></i>Open to opportunities</span>
-              <span id="ab-photo-loc">Surat, Gujarat</span>
-            </div>
+  <!-- ── RÉSUMÉ LAYOUT: sticky profile sidebar + sections ── -->
+  <section class="section ar" aria-label="Profile">
+    <div class="container ar-layout">
+
+      <aside class="ar-side">
+        <div class="ar-card reveal">
+          <div class="ar-card__photo">
+            <img src="assets/images/profile.jpg" alt="Portrait of Mihir Koladiya"
+              onerror="this.style.display='none';this.nextElementSibling.style.display='grid';" />
+            <span class="ar-card__fallback" aria-hidden="true">MK</span>
           </div>
-        </figure>
-        <div class="ab-intro__text reveal reveal-delay-1">
-          <span class="section-label">Professional Summary</span>
-          <h2 class="section-title">Engineering practice <em>grounded in research</em></h2>
-          <p class="ab-intro__lead" id="ab-lead"></p>
-          <div class="ab-intro__actions">
+          <h2 class="ar-card__name">Mihir Koladiya</h2>
+          <p class="ar-card__role">Highway &amp; Transportation Engineer</p>
+          <p class="ar-card__status"><i aria-hidden="true"></i>Open to opportunities · <span id="ab-photo-loc">Surat, Gujarat</span></p>
+
+          <dl class="ar-facts" id="ab-facts" aria-label="Quick facts"></dl>
+
+          <div class="ar-card__actions">
             <a href="assets/docs/Mihir_Koladiya_CV.pdf" download class="btn btn-primary">Download CV</a>
             <a href="contact.html" class="btn btn-outline">Get in Touch</a>
-            <a href="publications.html" class="btn-ghost">View publications</a>
           </div>
+          <div class="ar-card__links" id="profile-links"></div>
         </div>
-      </div>
-      <dl class="ab-facts reveal" id="ab-facts" aria-label="Quick facts"></dl>
-    </div>
-  </section>
 
-  <!-- ── STORY ── -->
-  <section class="section ab-story" aria-labelledby="ab-story-title">
-    <div class="container ab-split">
-      <header class="ab-split__head reveal">
-        <span class="section-label">Biography</span>
-        <h2 class="section-title" id="ab-story-title">The full picture</h2>
-      </header>
-      <div class="ab-story__body reveal reveal-delay-1" id="ab-story"></div>
-    </div>
-  </section>
+        <nav class="ar-nav reveal" aria-label="On this page" id="ar-nav">
+          <a href="#summary" class="is-active">Summary</a>
+          <a href="#experience">Experience</a>
+          <a href="#education">Education</a>
+          <a href="#skills">Skills</a>
+          <a href="#competencies">Competencies</a>
+          <a href="#certifications">Certifications</a>
+          <a href="#workshops">Workshops</a>
+          <a href="#awards">Awards</a>
+          <a href="#references">References</a>
+        </nav>
+      </aside>
 
-  <!-- ── JOURNEY (Experience / Education) ── -->
-  <section class="section section--alt" aria-labelledby="ab-journey-title">
-    <div class="container">
-      <div class="ab-head reveal">
-        <div>
-          <span class="section-label">Career Journey</span>
-          <h2 class="section-title" id="ab-journey-title">Experience &amp; Education</h2>
-        </div>
-        <div class="ab-tabs" id="ab-tabs" role="tablist" aria-label="Journey sections">
-          <button type="button" role="tab" class="ab-tab is-active" data-panel="experience" aria-selected="true">Experience <span id="ab-count-exp"></span></button>
-          <button type="button" role="tab" class="ab-tab" data-panel="education" aria-selected="false">Education <span id="ab-count-edu"></span></button>
-        </div>
-      </div>
-      <ol class="ab-timeline" id="experience-timeline" data-panel="experience"></ol>
-      <ol class="ab-timeline" id="education-timeline" data-panel="education" hidden></ol>
-    </div>
-  </section>
+      <div class="ar-main">
 
-  <!-- ── SKILLS ── -->
-  <section class="section" aria-labelledby="ab-skills-title">
-    <div class="container">
-      <div class="ab-head reveal">
-        <div>
-          <span class="section-label">Technical Competencies</span>
-          <h2 class="section-title" id="ab-skills-title">Skills &amp; Tools</h2>
-        </div>
-        <p class="ab-head__note">Engineering software, GIS platforms, data analysis and research methods.</p>
-      </div>
-      <div class="ab-skills" id="skills-grid"></div>
-    </div>
-  </section>
+        <section class="ar-block" id="summary" aria-labelledby="ar-t-summary">
+          <header class="ar-block__head reveal"><span class="ar-block__num">01</span><h2 id="ar-t-summary">Professional summary</h2></header>
+          <p class="ar-lead reveal" id="ab-lead"></p>
+          <div class="ar-story reveal" id="ab-story"></div>
+          <blockquote class="ar-quote reveal">
+            <p>To engineer transportation systems that are safer, smarter, and more equitable — through field engineering expertise, spatial data science, and evidence-based research.</p>
+          </blockquote>
+        </section>
 
-  <!-- ── RESEARCH INTERESTS ── -->
-  <section class="section section--alt" aria-labelledby="ab-research-title">
-    <div class="container ab-split">
-      <header class="ab-split__head reveal">
-        <span class="section-label">Academic Focus</span>
-        <h2 class="section-title" id="ab-research-title">Research Interests</h2>
-        <p class="ab-split__note">The domains that define my research agenda and engineering practice.</p>
-      </header>
-      <ol class="ab-areas" id="research-interests"></ol>
-    </div>
-  </section>
+        <section class="ar-block" id="experience" aria-labelledby="ar-t-exp">
+          <header class="ar-block__head reveal"><span class="ar-block__num">02</span><h2 id="ar-t-exp">Experience</h2></header>
+          <ol class="ab-timeline" id="experience-timeline"></ol>
+        </section>
 
-  <!-- ── CERTIFICATIONS ── -->
-  <section class="section" aria-labelledby="ab-certs-title">
-    <div class="container">
-      <div class="ab-head reveal">
-        <div>
-          <span class="section-label">Professional Development</span>
-          <h2 class="section-title" id="ab-certs-title">Certifications</h2>
-        </div>
-      </div>
-      <div class="ab-certs" id="certs-grid"></div>
-    </div>
-  </section>
+        <section class="ar-block" id="education" aria-labelledby="ar-t-edu">
+          <header class="ar-block__head reveal"><span class="ar-block__num">03</span><h2 id="ar-t-edu">Education</h2></header>
+          <ol class="ab-timeline ar-edu" id="education-timeline"></ol>
+        </section>
 
-  <!-- ── MISSION ── -->
-  <section class="section section--alt" aria-label="Career objective">
-    <div class="container">
-      <div class="ab-mission reveal">
-        <span class="ab-mission__mark" aria-hidden="true">“</span>
-        <p class="ab-mission__quote">To engineer transportation systems that are safer, smarter, and more equitable — through the integration of field engineering expertise, spatial data science, and evidence-based research.</p>
-        <p class="ab-mission__sig">Mihir Koladiya · Mission &amp; Direction</p>
-        <div class="ab-mission__actions">
-          <a href="contact.html" class="btn btn-white">Discuss Opportunities</a>
-          <a href="publications.html" class="btn btn-outline-white">View Research</a>
-        </div>
+        <section class="ar-block" id="skills" aria-labelledby="ar-t-skills">
+          <header class="ar-block__head reveal"><span class="ar-block__num">04</span><h2 id="ar-t-skills">Skills &amp; tools</h2></header>
+          <div class="ab-skills" id="skills-grid"></div>
+        </section>
+
+        <section class="ar-block" id="competencies" aria-labelledby="ar-t-comp">
+          <header class="ar-block__head reveal"><span class="ar-block__num">05</span><h2 id="ar-t-comp">Core competencies</h2></header>
+          <ol class="ab-areas" id="research-interests"></ol>
+        </section>
+
+        <section class="ar-block" id="certifications" aria-labelledby="ar-t-cert">
+          <header class="ar-block__head reveal"><span class="ar-block__num">06</span><h2 id="ar-t-cert">Certifications</h2></header>
+          <div class="ab-certs" id="certs-grid"></div>
+        </section>
+
+        <section class="ar-block" id="workshops" aria-labelledby="ar-t-ws">
+          <header class="ar-block__head reveal"><span class="ar-block__num">07</span><h2 id="ar-t-ws">Workshops &amp; training</h2></header>
+          <ul class="ab-list" id="ab-workshops"></ul>
+        </section>
+
+        <section class="ar-block" id="awards" aria-labelledby="ar-t-aw">
+          <header class="ar-block__head reveal"><span class="ar-block__num">08</span><h2 id="ar-t-aw">Awards &amp; achievements</h2></header>
+          <ul class="ab-list" id="ab-awards"></ul>
+        </section>
+
+        <section class="ar-block" id="references" aria-labelledby="ar-t-ref">
+          <header class="ar-block__head reveal"><span class="ar-block__num">09</span><h2 id="ar-t-ref">References</h2><span class="ar-block__note">Contact details shared on request</span></header>
+          <div class="ab-refs" id="ab-refs"></div>
+        </section>
+
       </div>
     </div>
   </section>
 
-  <!-- ── EXTERNAL PROFILES ── -->
-  <section class="section" aria-labelledby="ab-links-title">
-    <div class="container">
-      <div class="ab-head reveal">
-        <div>
-          <span class="section-label">Professional Presence</span>
-          <h2 class="section-title" id="ab-links-title">Find Me Online</h2>
-        </div>
+  <!-- ── CTA ── -->
+  <section class="cta-section" aria-label="Call to action">
+    <div class="cta-section__inner">
+      <span class="cta-section__label">Let's Connect</span>
+      <h2 class="cta-section__title">Open to research, consulting, and PhD opportunities</h2>
+      <p class="cta-section__desc">Looking for a road safety analyst, a GIS researcher, or a transportation engineering collaborator? I would welcome the conversation.</p>
+      <div class="cta-section__actions">
+        <a href="contact.html" class="btn btn-white">Discuss Opportunities</a>
+        <a href="publications.html" class="btn btn-outline-white">View Research</a>
       </div>
-      <div class="profile-links" id="profile-links"></div>
     </div>
   </section>
 
@@ -205,19 +177,16 @@
         <div>
           <div class="footer__heading">Research Profiles</div>
           <div class="footer__links">
-            <a href="https://linkedin.com/in/mihirkoladiya" target="_blank" rel="noopener">LinkedIn</a>
-            <a href="https://researchgate.net/profile/Mihir_Koladiya" target="_blank" rel="noopener">ResearchGate</a>
-            <a href="https://scholar.google.com/citations?user=XXXXXXXX" target="_blank" rel="noopener">Google Scholar</a>
-            <a href="https://orcid.org/0000-0000-0000-0000" target="_blank" rel="noopener">ORCID</a>
+            <a href="https://linkedin.com/in/mihir-koladiya" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="mailto:koladiyamihir5212@gmail.com">Email</a>
           </div>
         </div>
       </div>
       <div class="footer__bottom">
         <span>&copy; 2024 Mihir Koladiya. All rights reserved.</span>
         <div class="footer__social">
-          <a href="https://linkedin.com/in/mihirkoladiya" target="_blank" rel="noopener">LinkedIn</a>
-          <a href="https://github.com/mihirkoladiya" target="_blank" rel="noopener">GitHub</a>
-          <a href="mailto:mihir.koladiya@example.com">Email</a>
+          <a href="https://linkedin.com/in/mihir-koladiya" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="mailto:koladiyamihir5212@gmail.com">Email</a>
         </div>
       </div>
     </div>
