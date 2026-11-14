@@ -835,8 +835,13 @@ async function loadGalleryList() {
   } catch (e) { /* keep local list */ }
 }
 
+// Newest first; photos with the same date keep their order from data.js
+// (so the reference numbers stay stable). New photos go first in their date group.
+let GALLERY_LOCAL_ORDER = null;
 function sortGallery() {
-  DATA.GALLERY.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  if (!GALLERY_LOCAL_ORDER) GALLERY_LOCAL_ORDER = DATA.GALLERY.map(g => g.src);
+  const pos = src => { const i = GALLERY_LOCAL_ORDER.indexOf(src); return i < 0 ? -1 : i; };
+  DATA.GALLERY.sort((a, b) => (b.date || '').localeCompare(a.date || '') || pos(a.src) - pos(b.src));
 }
 
 function formatGalleryDate(d) {
@@ -879,14 +884,14 @@ const GALLERY_SHOW_NUMBERS = true;
 
 function galleryColumnCount() {
   const w = window.innerWidth;
-  return w <= 600 ? 2 : w <= 900 ? 3 : 4;
+  return w <= 700 ? 2 : 3;
 }
 
 // Row-wise masonry: photo 1,2,3,4 go across the top row (newest first),
 // then the next ones continue below, each keeping its natural shape.
 function renderGalleryItems(grid, items) {
   const card = (item, idx) => `
-    <div class="gallery-item reveal" data-idx="${idx}">
+    <div class="gallery-item gx-anim" data-idx="${idx}" style="--d:${(idx % galleryColumnCount()) * 90}ms">
       ${GALLERY_SHOW_NUMBERS ? `<span class="gallery-item__num">${idx + 1}</span>` : ''}
       <img
         src="${sanitize(item.src)}"
@@ -898,10 +903,12 @@ function renderGalleryItems(grid, items) {
         <span style="font-size:2.2rem">🖼</span>
         <span>${sanitize(item.caption)}</span>
       </div>
-      <div class="gallery-item__overlay">
-        ${item.date ? `<span class="gallery-item__date">${formatGalleryDate(item.date)}</span>` : ''}
-        ${item.caption ? `<div class="gallery-item__caption">${sanitize(item.caption)}</div>` : ''}
-      </div>
+      ${item.caption || item.date ? `<div class="gallery-item__overlay">
+        <div class="gallery-item__bar">
+          ${item.caption ? `<span class="gallery-item__caption">${sanitize(item.caption)}</span>` : ''}
+          ${item.date ? `<span class="gallery-item__date">${formatGalleryDate(item.date)}</span>` : ''}
+        </div>
+      </div>` : ''}
     </div>
   `;
   const n = galleryColumnCount();
@@ -910,6 +917,14 @@ function renderGalleryItems(grid, items) {
   grid.innerHTML = cols.map(c => `<div class="gallery-col">${c.join('')}</div>`).join('');
   grid._galleryItems = items;
   grid._galleryCols = n;
+  // Gentle staggered fade/slide-in as photos scroll into view
+  const cards = grid.querySelectorAll('.gx-anim');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => entries.forEach(en => {
+      if (en.isIntersecting) { en.target.classList.add('gx-in'); io.unobserve(en.target); }
+    }), { rootMargin: '0px 0px -40px 0px', threshold: 0.08 });
+    cards.forEach(c => io.observe(c));
+  } else cards.forEach(c => c.classList.add('gx-in'));
   if (!grid._galleryResize) {
     grid._galleryResize = true;
     window.addEventListener('resize', () => {
