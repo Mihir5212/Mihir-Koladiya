@@ -874,8 +874,8 @@ async function renderGallery() {
   renderGalleryItems(grid, DATA.GALLERY);
 }
 
-// Photo numbers are for the owner only: visible just with gallery.html?numbers
-const GALLERY_SHOW_NUMBERS = new URLSearchParams(location.search).has('numbers');
+// Tiny photo numbers (bottom-right) for reference. Set to false to hide.
+const GALLERY_SHOW_NUMBERS = true;
 
 function galleryColumnCount() {
   const w = window.innerWidth;
