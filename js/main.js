@@ -874,6 +874,9 @@ async function renderGallery() {
   renderGalleryItems(grid, DATA.GALLERY);
 }
 
+// Temporary: show a number on each photo so you can refer to it. Set to false to hide.
+const GALLERY_SHOW_NUMBERS = true;
+
 function galleryColumnCount() {
   const w = window.innerWidth;
   return w <= 600 ? 2 : w <= 900 ? 3 : 4;
@@ -884,6 +887,7 @@ function galleryColumnCount() {
 function renderGalleryItems(grid, items) {
   const card = (item, idx) => `
     <div class="gallery-item reveal" data-idx="${idx}">
+      ${GALLERY_SHOW_NUMBERS ? `<span class="gallery-item__num">${idx + 1}</span>` : ''}
       <img
         src="${sanitize(item.src)}"
         alt="${sanitize(item.caption || 'Gallery photo ' + (idx + 1))}"
