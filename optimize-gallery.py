@@ -15,6 +15,11 @@ backup.mkdir(exist_ok=True)
 for f in sorted(folder.iterdir()):
     if f.suffix.lower() not in (".jpg", ".jpeg") or f.stat().st_size <= MIN_BYTES:
         continue
+    with Image.open(f) as probe:
+        w, h = ImageOps.exif_transpose(probe).size if probe.getexif().get(0x0112, 1) != 1 else probe.size
+    # Already web-sized and not huge: leave it alone (re-saving only loses quality)
+    if max(w, h) <= MAX_SIDE and f.stat().st_size <= 2.5 * 1024 * 1024:
+        continue
     if not (backup / f.name).exists():
         shutil.copy2(f, backup / f.name)
     before = f.stat().st_size
@@ -25,7 +30,7 @@ for f in sorted(folder.iterdir()):
         im.thumbnail((MAX_SIDE, MAX_SIDE), Image.LANCZOS)
         tmp = f.with_name(f.name + ".tmp")
         im.convert("RGB").save(tmp, "JPEG", quality=QUALITY, subsampling=0, optimize=True, progressive=True, exif=exif.tobytes())
-    if tmp.stat().st_size < 20 * 1024 or tmp.stat().st_size >= before:
+    if tmp.stat().st_size < 20 * 1024 or tmp.stat().st_size > before * 0.9:
         tmp.unlink(); print(f"Skipped {f.name}"); continue
     tmp.replace(f)
     print(f"Optimized {f.name}: {before/1e6:.1f} MB -> {f.stat().st_size/1e6:.2f} MB")
