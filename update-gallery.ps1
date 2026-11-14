@@ -1,11 +1,16 @@
 # Rebuilds the gallery photo list in js/data.js from assets/images/gallery/.
 # Reads each photo's date (camera EXIF, else from the filename, else file date)
 # and sorts newest first. Captions already typed in data.js are kept.
+# Also shrinks big new photos for fast loading (originals saved in ..\gallery-originals).
 # Run after adding/removing photos: right-click > Run with PowerShell.
 Add-Type -AssemblyName System.Drawing
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
 $dataPath = Join-Path $root 'js\data.js'
 $data = [IO.File]::ReadAllText($dataPath)
+
+# Shrink big photos for the web (needs Python + Pillow; originals saved to ..\gallery-originals)
+$py = Get-Command python -ErrorAction SilentlyContinue
+if ($py) { & $py.Source (Join-Path $root 'optimize-gallery.py') } else { Write-Host 'Python not found - skipping photo shrinking' }
 
 function Get-ExifDate($f, $ids) {
   try {
