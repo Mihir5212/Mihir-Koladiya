@@ -1297,3 +1297,25 @@ html { scroll-padding-top: 110px; }
   .wt__side { grid-column: 2; flex-direction: row; align-items: center; gap: 10px; }
 }
 #awards .is-rank .ce__kind { color: #9A7B14; background: none; padding: 0; border-radius: 0; }
+
+/* ═══ About — lead text + objective/mission panel ═══ */
+.ab { display: grid; grid-template-columns: 1.55fr 1fr; gap: 28px; align-items: start; }
+.ab__text p { margin: 0 0 12px; font-size: .94rem; line-height: 1.7; color: var(--gray); }
+.ab__text .ab__lead { font-family: var(--font-display); font-size: 1.22rem; line-height: 1.5; color: var(--dark); }
+.ab__label { display: block; margin-bottom: 8px; font-family: var(--font-mono); font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: #9A7B14; }
+.ab__meta { display: grid; grid-template-columns: 1fr auto; gap: 20px; margin-top: 18px; padding-top: 16px; border-top: 1px solid #ECE8DE; }
+.ab__chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.ab__chips li { font-size: .78rem; font-weight: 500; color: var(--accent); background: rgba(28,42,90,.07); padding: 4px 11px; border-radius: 999px; }
+.ab__chips--plain li { color: var(--dark); background: var(--light); }
+.ab__chips i { font-style: normal; font-family: var(--font-mono); font-size: .6rem; color: #9A7B14; margin-left: 4px; }
+.ab__aims { display: flex; flex-direction: column; gap: 14px; }
+.ab__aim { padding: 18px 20px; border-radius: 16px; background: var(--light); border-left: 3px solid #C9A227; }
+.ab__aim p { margin: 0; font-size: .9rem; line-height: 1.6; color: var(--dark); }
+.ab__aim--dark { background: linear-gradient(135deg, #1C2A5A, #14182B); border-left-color: #E9C95A; }
+.ab__aim--dark .ab__label { color: #E9C95A; }
+.ab__aim--dark p { color: rgba(255,255,255,.88); }
+@media (max-width: 860px) { .ab { grid-template-columns: 1fr; } .ab__meta { grid-template-columns: 1fr; } }
+/* About — single column */
+.ab { grid-template-columns: 1fr; gap: 20px; }
+.ab__aims { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 700px) { .ab__aims { grid-template-columns: 1fr; } }

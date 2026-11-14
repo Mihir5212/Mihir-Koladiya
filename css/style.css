@@ -3336,3 +3336,15 @@ a.cx-item:hover { background: rgba(255,255,255,0.75); }
 /* Typography consistency: contact headline uses the site heading font */
 .cx-title { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.01em; }
 .cx-title b { font-weight: 400; }
+
+/* ═══ Mobile nav — compact bar + compact menu ═══ */
+@media (max-width: 900px) {
+  .navbar { top: 8px; margin-top: 8px; padding: 0 10px; }
+  .navbar__inner { height: 54px; padding: 0 4px 0 6px; }
+  .navbar__mark { width: 38px; height: 38px; font-size: .85rem; }
+  .navbar__wordmark { font-size: .9rem; }
+  .navbar__toggle { margin-right: 8px; }
+  .navbar__links { top: calc(54px + 16px); left: 10px; right: 10px; padding: 8px; max-height: calc(100vh - 90px); overflow-y: auto; }
+  .navbar__links a { padding: 9px 14px; font-size: .92rem; }
+  .navbar__links a.nav-cta { margin: 6px 0 0; padding: 10px 14px; }
+}

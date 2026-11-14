@@ -1927,10 +1927,15 @@ function renderAboutStory() {
       </section>
 
       ${card('summary', 'About', '', `
-        <div class="pf-about">${bio.map(t => `<p>${s(t)}</p>`).join('')}<p class="pf-muted">Languages: Gujarati (native), Hindi and English.</p></div>
-        <div class="pf-aims">
-          <div><span>Career Objective</span><p>To apply crash analytics, GIS and AI/ML methods to road safety problems, and grow as a researcher who turns transport data into evidence-based decisions.</p></div>
-          <div><span>Mission &amp; Direction</span><p>To advance transportation infrastructure through sustainable solutions that enhance safety, efficiency and evidence-based decision-making.</p></div>
+        <div class="ab">
+          <div class="ab__text">
+            <p class="ab__lead">${s(bio[0] || '')}</p>
+            ${bio.slice(1).map(t => `<p>${s(t)}</p>`).join('')}
+          </div>
+          <div class="ab__aims">
+            <div class="ab__aim"><span class="ab__label">01 · Career Objective</span><p>To apply crash analytics, GIS and AI/ML methods to road safety problems, and grow as a researcher who turns transport data into evidence-based decisions.</p></div>
+            <div class="ab__aim ab__aim--dark"><span class="ab__label">02 · Mission &amp; Direction</span><p>To advance transportation infrastructure through sustainable solutions that enhance safety, efficiency and evidence-based decision-making.</p></div>
+          </div>
         </div>`)}
 
       ${(() => {
@@ -2087,3 +2092,4 @@ function certViewer(file, title) {
   m.classList.add('open'); document.body.style.overflow = 'hidden';
   m.querySelector('.cm__close').focus();
 }
+
