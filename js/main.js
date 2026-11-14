@@ -759,6 +759,7 @@ function renderProfileLinks() {
     { name: 'ResearchGate',    url: L.researchgate,  icon: '📚' },
     { name: 'Google Scholar',  url: L.googleScholar, icon: '🎓' },
     { name: 'ORCID',           url: L.orcid,         icon: '🔬' },
+    { name: 'Scopus',          url: L.scopus,        icon: '📑' },
     { name: 'GitHub',          url: L.github,        icon: '💻' },
   ].filter(l => l.url);
   container.innerHTML = links.map(l => `
@@ -1104,6 +1105,8 @@ function renderContactProfileLinks() {
     { name: 'ResearchGate',   url: L.researchgate,  icon: '📚' },
     { name: 'Google Scholar', url: L.googleScholar, icon: '🎓' },
     { name: 'ORCID',          url: L.orcid,         icon: '🔬' },
+    { name: 'Scopus',         url: L.scopus,        icon: '📑' },
+    { name: 'GitHub',         url: L.github,        icon: '💻' },
   ].filter(l => l.url);
   linksEl.innerHTML = links.map(l => `
     <a href="${sanitize(l.url)}" target="_blank" rel="noopener" class="contact-link">
@@ -1151,18 +1154,27 @@ function initContactForm() {
 
     const feedback = el('#form-feedback');
     if (valid) {
+      // Nothing is stored or sent by this website: the visitor's own email app
+      // opens with the message pre-filled, and they send it themselves.
+      const v = id => (el(`#form-${id}`) ? el(`#form-${id}`).value.trim() : '');
+      const org = v('organisation');
+      const to = (DATA.CONTACT && DATA.CONTACT.email) || 'koladiyamihir5212@gmail.com';
+      const body = `${v('message')}
+
+— ${v('name')}${org ? ', ' + org : ''}
+${v('email')}`;
+      window.location.href = `mailto:${to}?subject=${encodeURIComponent(v('subject'))}&body=${encodeURIComponent(body)}`;
       if (feedback) {
         feedback.className = 'form-feedback success';
         feedback.innerHTML = `
           <div class="form-feedback__icon">✓</div>
           <div>
-            <strong>Message received.</strong><br>
-            Thank you for reaching out. I will respond within 24–48 hours.
+            <strong>Your email app should now open.</strong><br>
+            The message is ready — just press send. If nothing opened, write to <a href="mailto:${to}">${to}</a>.
           </div>
         `;
         feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
-      form.reset();
     } else {
       if (feedback) {
         feedback.className = 'form-feedback error';

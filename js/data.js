@@ -721,10 +721,11 @@ The study received an Appreciation Letter from the Gujarat Road Safety Authority
   // ─────────────────────────────────────────
   LINKS: {
     linkedin:      "https://linkedin.com/in/mihir-koladiya",
-    researchgate:  "",
-    googleScholar: "",
-    orcid:         "",
-    github:        "",
+    googleScholar: "https://scholar.google.com/citations?user=Jq_YwNsAAAAJ&hl=en",
+    orcid:         "https://orcid.org/0009-0006-7006-9283",
+    scopus:        "https://www.scopus.com/authid/detail.uri?authorId=60175628300",
+    researchgate:  "https://www.researchgate.net/profile/Mihir-Koladiya",
+    github:        "https://github.com/Mihir5212",
   },
 
 };
