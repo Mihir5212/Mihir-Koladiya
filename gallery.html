@@ -239,7 +239,7 @@
         if (!item) return;
         lbImg.src = item.src;
         lbImg.alt = item.caption || 'Gallery photo';
-        lbCaption.textContent = ['#' + (currentIdx + 1), item.caption, item.date ? formatGalleryDate(item.date) : ''].filter(Boolean).join(' — ');
+        lbCaption.textContent = [(typeof GALLERY_SHOW_NUMBERS !== 'undefined' && GALLERY_SHOW_NUMBERS ? '#' + (currentIdx + 1) : ''), item.caption, item.date ? formatGalleryDate(item.date) : ''].filter(Boolean).join(' — ');
         lightbox.classList.add('open');
         document.body.style.overflow = 'hidden';
         lbImg.onerror = function() {
