@@ -1416,7 +1416,7 @@ function renderHomeHero() {
   }
   const rot = el('#hx2-rotate');
   if (rot && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const words = ['Road Safety', 'Crash Analytics', 'GIS Hotspot Mapping', 'AI / ML Modelling', 'Blackspot Studies'];
+    const words = ['Highway Design & Road Safety', 'Transportation Planning & Traffic Engineering', 'GIS, Python & Data Analytics'];
     let w = 0, c = words[0].length, del = true;
     const tick = () => {
       const word = words[w];
@@ -1872,15 +1872,15 @@ function renderAboutStory() {
     <div class="container pf-wrap">
 
       <section class="pf-top reveal">
-        <div class="pf-cover" aria-hidden="true"><span class="pf-cover__word">Road Safety &middot; Crash Analytics &middot; GIS</span></div>
+        <div class="pf-cover"><div class="pf-cover__text"><p class="pf-cover__line">Working Towards <em>Safer and Smarter</em> Roads</p><p class="pf-cover__keys">Road Safety <i>|</i> Crash Analytics <i>|</i> Transportation Planning <i>|</i> GIS</p></div></div>
         <div class="pf-id">
           <div class="pf-av"><img src="assets/images/profile.jpg" alt="Portrait of Mihir Koladiya" onerror="this.style.visibility='hidden'"></div>
-          <div class="pf-id__actions">
+          
+          <div class="pf-head"><div class="pf-head__text"><h1 class="pf-name">Mihir Koladiya</h1>
+          <p class="pf-role">${s(P.title)}</p></div><div class="pf-id__actions">
             <a href="${s(CV)}" download class="btn pf-btn pf-btn--solid">${I.cv} Download CV</a>
             <a href="contact.html" class="btn pf-btn pf-btn--line">Contact</a>
-          </div>
-          <h1 class="pf-name">Mihir Koladiya</h1>
-          <p class="pf-role">${s(P.title)}</p>
+          </div></div>
           <ul class="pf-meta">
             <li>${I.pin}${s(P.location)}</li>
             ${job ? `<li>${I.work}${s(job.role.split('–')[0].trim())} at ${s(short(job.org))}</li>` : ''}
@@ -1897,34 +1897,56 @@ function renderAboutStory() {
           <div><span>Mission &amp; Direction</span><p>To advance transportation infrastructure through sustainable solutions that enhance safety, efficiency and evidence-based decision-making.</p></div>
         </div>`)}
 
-      ${card('experience', 'Experience', (D.EXPERIENCE || []).length + ' roles', `<ul class="pf-rows">${(D.EXPERIENCE || []).map(e => {
+      ${card('experience', 'Experience', (D.EXPERIENCE || []).length + ' roles', `<ol class="pf-tl">${(D.EXPERIENCE || []).map((e, i) => {
         const cur = /present/i.test(e.period || '');
-        return `<li><span class="pf-logo">${ini(e.org)}</span><div>
-          <h3>${s(e.role)}${cur ? '<b class="pf-cur">Current</b>' : ''}</h3>
-          <p class="pf-org">${s(e.org)}</p>
-          <p class="pf-when">${s(e.period)} &middot; ${s(e.type || '')}</p>
-          ${e.description ? `<p class="pf-desc">${s(e.description)}</p>` : ''}${tags(e.highlights)}</div></li>`; }).join('')}</ul>`)}
+        const type = (e.type || '').trim();
+        const tk = /intern/i.test(type) ? 'intern' : /teach/i.test(type) ? 'teach' : /lead/i.test(type) ? 'lead' : 'pro';
+        return `<li class="pf-tl__item${cur ? ' is-current' : ''}${i >= 4 ? ' is-extra' : ''}">
+          <span class="pf-tl__dot" aria-hidden="true"></span>
+          <div class="pf-tl__body">
+            <div class="pf-tl__top"><span class="pf-tl__when">${s(e.period)}</span>${type ? `<span class="pf-type pf-type--${tk}">${s(type)}</span>` : ''}${cur ? '<b class="pf-cur">Current</b>' : ''}</div>
+            <h3>${s(e.role)}</h3>
+            <p class="pf-org">${s(e.org)}</p>
+            ${e.description ? `<p class="pf-desc">${s(e.description)}</p>` : ''}${tags(e.highlights)}
+          </div></li>`; }).join('')}</ol>
+        ${(D.EXPERIENCE || []).length > 4 ? `<button type="button" class="pf-more" data-more="experience" aria-expanded="false">Show all ${(D.EXPERIENCE || []).length} roles <span aria-hidden="true">&darr;</span></button>` : ''}`)}
 
-      ${card('education', 'Education', '', `<ul class="pf-rows">${(D.EDUCATION || []).map(e => `
-        <li><span class="pf-logo pf-logo--gold">${I.cap}</span><div>
-          <h3>${s(e.institution)}</h3>
-          <p class="pf-org">${s(e.degree)}</p>
-          <p class="pf-when">${s(e.period)}${e.location ? ` &middot; ${s(e.location)}` : ''} &middot; <strong>${s(e.grade)}</strong></p>
-          ${e.thesis ? `<p class="pf-desc"><em>Dissertation:</em> ${s(e.thesis)}</p>` : ''}</div></li>`).join('')}</ul>`)}
+      ${card('education', 'Education', '', `<div class="pf-edu">${(D.EDUCATION || []).map((e, i) => `
+        <article class="pf-edu__card${i === 0 ? ' is-top' : ''}">
+          <span class="pf-edu__ico">${I.cap}</span>
+          <p class="pf-edu__when">${s(e.period)}</p>
+          <h3>${s(e.degree)}</h3>
+          <p class="pf-org">${s(e.institution)}${e.location ? ` &middot; ${s(e.location)}` : ''}</p>
+          <p class="pf-edu__grade">${s(e.grade)}</p>
+          ${e.thesis ? `<p class="pf-desc"><em>Dissertation:</em> ${s(e.thesis)}</p>` : ''}
+        </article>`).join('')}</div>`)}
 
-      ${card('skills', 'Skills &amp; Tools', '', `<div class="pf-skills">${Object.entries(D.SKILLS || {}).map(([g, l]) => `<div><h3>${s(g)}</h3>${tags(l)}</div>`).join('')}</div>`)}
+      ${card('skills', 'Skills &amp; Tools', '', `<div class="pf-skill-grid">${Object.entries(D.SKILLS || {}).map(([g, l]) => {
+        const ic = /spatial|gis/i.test(g) ? '<path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/>'
+          : /stat|ai|ml/i.test(g) ? '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>'
+          : /software|program/i.test(g) ? '<path d="m8 9-4 3 4 3M16 9l4 3-4 3M13 6l-2 12"/>'
+          : /research|report/i.test(g) ? '<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>'
+          : '<path d="M3 21h18M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6"/>';
+        return `<div class="pf-skill"><div class="pf-skill__head"><span class="pf-skill__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ic}</svg></span><h3>${s(g)}</h3><em>${(l || []).length}</em></div>${tags(l)}</div>`; }).join('')}</div>`)}
 
       ${card('competencies', 'Core Competencies', '', `<div class="pf-comp">${(D.RESEARCH_AREAS || []).map((r, i) => `<div><span>${String(i + 1).padStart(2, '0')}</span><h3>${s(r.title)}</h3><p>${s(r.desc)}</p></div>`).join('')}</div>`)}
 
-      ${card('certifications', 'Licences &amp; Certifications', '', `<ul class="pf-rows pf-rows--sm">${(D.CERTIFICATIONS || []).map(c => `<li><span class="pf-logo">${I.cert}</span><div><h3>${s(c.title)}</h3><p class="pf-org">${s(c.org)}</p><p class="pf-when">${s(c.year || '')}</p></div></li>`).join('')}</ul>`)}
+      <div class="pf-pair">
+      ${card('certifications', 'Licences &amp; Certifications', (D.CERTIFICATIONS || []).length, `<ul class="pf-rows pf-rows--sm">${(D.CERTIFICATIONS || []).map(c => `<li><span class="pf-logo">${I.cert}</span><div><h3>${s(c.title)}</h3><p class="pf-org">${s(c.org)}</p><p class="pf-when">${s(c.year || '')}</p></div></li>`).join('')}</ul>`)}
+      ${card('workshops', 'Workshops &amp; Training', (D.WORKSHOPS || []).length, `<ul class="pf-rows pf-rows--sm">${(D.WORKSHOPS || []).map(w => `<li><span class="pf-logo">${ini(w.org)}</span><div><h3>${s(w.title)}</h3><p class="pf-org">${s(w.org)}${w.mode ? ` &middot; ${s(w.mode)}` : ''}</p><p class="pf-when">${s(w.date || '')}</p></div></li>`).join('')}</ul>`)}
+      </div>
 
-      ${card('workshops', 'Workshops &amp; Training', '', `<ul class="pf-rows pf-rows--sm">${(D.WORKSHOPS || []).map(w => `<li><span class="pf-logo">${ini(w.org)}</span><div><h3>${s(w.title)}</h3><p class="pf-org">${s(w.org)}${w.mode ? ` &middot; ${s(w.mode)}` : ''}</p><p class="pf-when">${s(w.date || '')}</p></div></li>`).join('')}</ul>`)}
+      ${card('awards', 'Honours &amp; Awards', (D.AWARDS || []).length, `<div class="pf-awards">${(D.AWARDS || []).map(a => `<article class="pf-award"><span class="pf-award__ico">${I.award}</span><span class="pf-award__tag">${s(a.outcome)}</span><h3>${s(a.title)}</h3><p class="pf-org">${s(a.org)}</p><p class="pf-when">${s(a.date)}</p></article>`).join('')}</div>`)}
 
-      ${card('awards', 'Honours &amp; Awards', '', `<ul class="pf-rows pf-rows--sm">${(D.AWARDS || []).map(a => `<li><span class="pf-logo pf-logo--gold">${I.award}</span><div><h3>${s(a.title)}</h3><p class="pf-org">${s(a.org)}</p><p class="pf-when">${s(a.outcome)} &middot; ${s(a.date)}</p></div></li>`).join('')}</ul>`)}
-
-      ${card('references', 'References', '', `<div class="pf-refs">${(D.REFERENCES || []).map(r => `<div><span class="pf-logo pf-logo--round">${ini(r.name.replace(/^(Prof|Dr)\.?\s*/i, ''))}</span><div><h3>${s(r.name)}</h3><p class="pf-org">${s(r.title)}, ${s(r.org)}</p><p class="pf-when">${s(r.relation)}</p></div></div>`).join('')}</div><p class="pf-muted pf-note">Contact details shared on request.</p>`)}
 
     </div>
   </div>`;
+  const more = root.querySelector('[data-more="experience"]');
+  if (more) more.addEventListener('click', () => {
+    const open = root.querySelector('.pf-tl').classList.toggle('show-all');
+    more.setAttribute('aria-expanded', open);
+    more.innerHTML = open ? 'Show fewer <span aria-hidden="true">&uarr;</span>' : `Show all ${(D.EXPERIENCE || []).length} roles <span aria-hidden="true">&darr;</span>`;
+    if (!open) root.querySelector('#experience').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
   setTimeout(initReveal, 60);
 }
