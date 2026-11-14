@@ -238,8 +238,8 @@
         const item = currentItems[idx];
         if (!item) return;
         lbImg.src = item.src;
-        lbImg.alt = item.caption;
-        lbCaption.textContent = item.caption + ' — ' + item.category;
+        lbImg.alt = item.caption || 'Gallery photo';
+        lbCaption.textContent = [item.caption, item.date ? formatGalleryDate(item.date) : ''].filter(Boolean).join(' — ');
         lightbox.classList.add('open');
         document.body.style.overflow = 'hidden';
         lbImg.onerror = function() {

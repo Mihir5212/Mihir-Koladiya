@@ -675,7 +675,8 @@ function renderProjects() {
 
   const categories = ['All', ...new Set(DATA.PROJECTS.map(p => p.category))];
 
-  if (filterBar) {
+  if (filterBar && categories.length <= 2) filterBar.style.display = 'none';
+  if (filterBar && categories.length > 2) {
     filterBar.innerHTML = categories.map(c => `
       <button class="filter-btn${c === 'All' ? ' active' : ''}" data-cat="${sanitize(c)}">${sanitize(c)}</button>
     `).join('');
@@ -785,7 +786,8 @@ function renderInsights() {
   }
 
   const categories = ['All', ...new Set(articleItems.map(i => i.category))];
-  if (filterBar) {
+  if (filterBar && categories.length <= 2) filterBar.style.display = 'none';
+  if (filterBar && categories.length > 2) {
     filterBar.innerHTML = categories.map(c => `
       <button class="filter-btn${c === 'All' ? ' active' : ''}" data-cat="${sanitize(c)}">${sanitize(c)}</button>
     `).join('');
@@ -808,14 +810,52 @@ function renderInsights() {
    GALLERY PAGE
    ═══════════════════════════════════════════ */
 
-function renderGallery() {
+// Live photo list: reads assets/images/gallery/ from the GitHub repo, so
+// adding/deleting a photo there (and pushing) updates the gallery automatically.
+// Falls back to DATA.GALLERY (rebuilt by update-gallery.ps1) when offline/local.
+const GALLERY_REPO = 'Mihir5212/Mihir-Koladiya';
+const GALLERY_DIR  = 'assets/images/gallery';
+
+async function loadGalleryList() {
+  try {
+    const res = await fetch(`https://api.github.com/repos/${GALLERY_REPO}/contents/${GALLERY_DIR}`);
+    if (!res.ok) return;
+    const files = (await res.json()).filter(f => f.type === 'file' && /\.(jpe?g|png|webp|gif)$/i.test(f.name));
+    if (!files.length) return;
+    const known = {};
+    (DATA.GALLERY || []).forEach(g => { known[g.src.split('/').pop()] = g; });
+    const today = new Date().toISOString().slice(0, 10);
+    DATA.GALLERY = files.map(f => {
+      if (known[f.name]) return known[f.name];
+      // New photo not yet in data.js: date from filename, else treat as newest
+      const m = f.name.match(/(20\d{2})(\d{2})(\d{2})/);
+      return { src: `${GALLERY_DIR}/${f.name}`, date: m ? `${m[1]}-${m[2]}-${m[3]}` : today, caption: '', category: 'Moments' };
+    });
+    sortGallery();
+  } catch (e) { /* keep local list */ }
+}
+
+function sortGallery() {
+  DATA.GALLERY.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+}
+
+function formatGalleryDate(d) {
+  if (!d) return '';
+  const [y, m] = d.split('-');
+  return new Date(+y, +m - 1, 1).toLocaleString('en-US', { month: 'short', year: 'numeric' });
+}
+
+async function renderGallery() {
   const grid = el('#gallery-grid');
   const filterBar = el('#gallery-filter');
   if (!grid) return;
+  sortGallery();
+  await loadGalleryList();
 
   // Build filter bar
   const categories = ['All', ...new Set(DATA.GALLERY.map(g => g.category))];
-  if (filterBar) {
+  if (filterBar && categories.length <= 2) filterBar.style.display = 'none';
+  if (filterBar && categories.length > 2) {
     filterBar.innerHTML = categories.map(c => `
       <button class="filter-btn${c === 'All' ? ' active' : ''}" data-cat="${sanitize(c)}">${sanitize(c)}</button>
     `).join('');
@@ -839,7 +879,7 @@ function renderGalleryItems(grid, items) {
     <div class="gallery-item reveal" data-idx="${idx}">
       <img
         src="${sanitize(item.src)}"
-        alt="${sanitize(item.caption)}"
+        alt="${sanitize(item.caption || 'Gallery photo ' + (idx + 1))}"
         loading="lazy"
         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
       />
@@ -848,8 +888,8 @@ function renderGalleryItems(grid, items) {
         <span>${sanitize(item.caption)}</span>
       </div>
       <div class="gallery-item__overlay">
-        <span class="tag tag--dark">${sanitize(item.category)}</span>
-        <div class="gallery-item__caption">${sanitize(item.caption)}</div>
+        ${item.date ? `<span class="gallery-item__date">${formatGalleryDate(item.date)}</span>` : ''}
+        ${item.caption ? `<div class="gallery-item__caption">${sanitize(item.caption)}</div>` : ''}
       </div>
     </div>
   `).join('');

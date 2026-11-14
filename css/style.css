@@ -2941,3 +2941,12 @@ body { background: #F8F7F4; }
   .cta-section__actions { grid-column: 1; grid-row: auto; flex-direction: row; flex-wrap: wrap; margin-top: 26px !important; }
   .cta-section__actions .btn { flex: 1 1 auto; min-width: 0; }
 }
+
+/* ── Gallery: free-style masonry (natural photo shapes) ── */
+.gallery-grid { display: block; columns: 4 240px; column-gap: 16px; }
+.gallery-item { aspect-ratio: auto; break-inside: avoid; margin-bottom: 16px; display: block; }
+.gallery-item img { height: auto; }
+.gallery-item__placeholder { display: none; aspect-ratio: 4/3; }
+.gallery-item__overlay { opacity: 0; }
+@media (max-width: 600px) { .gallery-grid { columns: 2; column-gap: 10px; } .gallery-item { margin-bottom: 10px; } }
+.gallery-item__date { color: rgba(255,255,255,0.85); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
