@@ -884,7 +884,7 @@ const GALLERY_SHOW_NUMBERS = true;
 
 function galleryColumnCount() {
   const w = window.innerWidth;
-  return w <= 700 ? 2 : 3;
+  return w <= 600 ? 2 : w <= 1000 ? 3 : 4;
 }
 
 // Row-wise masonry: photo 1,2,3,4 go across the top row (newest first),

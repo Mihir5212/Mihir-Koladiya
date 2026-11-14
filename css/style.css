@@ -2995,3 +2995,7 @@ body { background: #F8F7F4; }
 .gx-anim.gx-in:hover { transform: translateY(-6px); transition: transform .4s cubic-bezier(.2,.7,.2,1), box-shadow .4s ease; }
 @media (prefers-reduced-motion: reduce) { .gx-anim { opacity: 1; transform: none; transition: none; } }
 @media (max-width: 700px) { .gallery-grid, .gallery-col { gap: 12px; } }
+/* 4-column free style */
+.gallery-grid, .gallery-col { gap: 20px; }
+.gallery-item { cursor: zoom-in; }
+@media (max-width: 600px) { .gallery-grid, .gallery-col { gap: 10px; } }

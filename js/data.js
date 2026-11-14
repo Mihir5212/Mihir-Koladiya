@@ -667,6 +667,11 @@ The study received an Appreciation Letter from the Gujarat Road Safety Authority
   ],
 
   // ─────────────────────────────────────────
+  // Gallery photos (newest first; rebuilt by update-gallery.ps1).
+  // Optional per photo, shown in the photo modal instead of caption/desc:
+  //   title:   "Professional title"  e.g. "Crash-factor ANN model — TIPCE 2025, IIT Roorkee"
+  //   details: "Technical description: project constraints, competition/event details,
+  //             and your specific technical contribution"
   GALLERY: [
     { src: "assets/images/gallery/SU_07826.jpg", date: "2026-11-14", caption: "Safety Squad", desc: "Road safety awareness booth — promoting safe practices with a fun photo frame.", category: "Moments" },
     { src: "assets/images/gallery/SAM_0549(1).jpg", date: "2026-02-19", caption: "Award with the team", desc: "Receiving the award and trophy on stage with fellow team members.", category: "Moments" },
