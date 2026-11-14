@@ -32,7 +32,7 @@ Languages: Gujarati (native), Hindi and English (full professional proficiency).
   // HIGHLIGHTS / STATS
   // ─────────────────────────────────────────
   HIGHLIGHTS: [
-    { value: 4,  suffix: "+", label: "Years Experience",     icon: "⚙" },
+    { value: 3,  suffix: "+", label: "Years Experience",     icon: "⚙" },
     { value: 3,  suffix: "",  label: "Published Papers",     icon: "📄" },
     { value: 4,  suffix: "",  label: "Papers Under Process", icon: "✍" },
     { value: 4,  suffix: "",  label: "Conferences",          icon: "🎤" },
@@ -54,7 +54,7 @@ Languages: Gujarati (native), Hindi and English (full professional proficiency).
       role: "Lecturer – Civil Engineering",
       org: "Sigma University, Vadodara",
       period: "Aug 2025 – Mar 2026",
-      type: "Teaching",
+      type: "Professional",
       description: "Taught undergraduate courses in traffic, transportation, surveying, AutoCAD, and infrastructure planning. Conducted practical sessions and software-based learning, guided student projects on road safety, traffic studies, pavement design, and GIS analysis, and mentored students in technical report writing.",
       highlights: ["Traffic & transportation", "Surveying & AutoCAD", "Student project guidance"],
     },
@@ -122,7 +122,7 @@ Languages: Gujarati (native), Hindi and English (full professional proficiency).
     },
     {
       degree: "B.E. – Civil Engineering",
-      institution: "SSASIT",
+      institution: "Shree Swami Atmanand Saraswati Institute of Technology (SSASIT)",
       location: "Surat, Gujarat",
       period: "2019 – 2022",
       grade: "CGPA: 8.92 / 10",
@@ -164,7 +164,8 @@ Languages: Gujarati (native), Hindi and English (full professional proficiency).
     ],
     "Software & Programming": [
       "Python", "R", "SPSS", "Jamovi", "SmartPLS",
-      "AutoCAD", "IITPave", "MS Excel"
+      "AutoCAD", "IITPave", "MS Excel", "MS Word / PowerPoint",
+      "Power BI", "Tableau", "MATLAB", "VISSIM", "SUMO"
     ],
     "Research & Reporting": [
       "Research Paper Writing", "Technical Reports", "Mode Choice Analysis",
@@ -176,22 +177,22 @@ Languages: Gujarati (native), Hindi and English (full professional proficiency).
   // CERTIFICATIONS
   // ─────────────────────────────────────────
   CERTIFICATIONS: [
-    { title: "Paper Presentation Certificate – TIPCE 2025", org: "IIT Roorkee", year: "18–21 Sep 2025", photo: "" },
-    { title: "Paper Presentation Certificate – CTSEM 2025", org: "MANIT Bhopal & CSIR-CRRI", year: "04–05 Jul 2025", photo: "" },
-    { title: "Certificate of Reviewing – Journal of Engineering Research & Reviews", org: "eJManager", year: "12 Apr 2025", photo: "" },
-    { title: "Paper Presentation Certificate – TPMDC 2024", org: "IIT Bombay", year: "18–20 Dec 2024", photo: "" },
+    { title: "Paper Presentation Certificate – TIPCE 2025", org: "IIT Roorkee", year: "18–21 Sep 2025", photo: "", file: "assets/images/certificates/tipce-2025.jpg" },
+    { title: "Paper Presentation Certificate – CTSEM 2025", org: "MANIT Bhopal & CSIR-CRRI", year: "04–05 Jul 2025", photo: "", file: "assets/images/certificates/ctsem-2025.jpg" },
+    { title: "Certificate of Reviewing – Journal of Engineering Research & Reviews", org: "eJManager", year: "12 Apr 2025", photo: "", file: "assets/images/certificates/reviewing-jerr-2025.jpg" },
+    { title: "Paper Presentation Certificate – TPMDC 2024", org: "IIT Bombay", year: "18–20 Dec 2024", photo: "", file: "assets/images/certificates/tpmdc-2024.jpg" },
   ],
 
   // ─────────────────────────────────────────
   // WORKSHOPS & TRAINING
   // ─────────────────────────────────────────
   WORKSHOPS: [
-    { title: "Safe System Perspective on Vulnerable Road Users in India", org: "NIT Warangal", date: "03–07 Feb 2025", mode: "Offline" },
-    { title: "Advancing Travel Demand Models Using Emerging Data Sources", org: "IIT Bombay",   date: "18 Nov 2024",    mode: "Offline" },
-    { title: "AI/ML for Geodata Analysis",                                org: "ISRO–IIRS",    date: "19–23 Aug 2024", mode: "Online" },
-    { title: "Advanced Methods for Transportation Data Analysis",         org: "NIT Warangal", date: "11–17 Mar 2024", mode: "Offline" },
-    { title: "Workshop on Revit Architecture",                            org: "SVNIT Surat",  date: "15 Feb 2020",    mode: "Offline" },
-    { title: "Workshop on AutoCAD",                                       org: "SVNIT Surat",  date: "11 Feb 2020",    mode: "Offline" },
+    { title: "Safe System Perspective on Vulnerable Road Users in India", org: "NIT Warangal", date: "03–07 Feb 2025", mode: "Offline", file: "assets/images/certificates/nitw-safe-system-2025.jpg" },
+    { title: "Advancing Travel Demand Models Using Emerging Data Sources", org: "IIT Bombay",   date: "18 Nov 2024",    mode: "Offline", file: "assets/images/certificates/iitb-travel-demand-2024.jpg" },
+    { title: "AI/ML for Geodata Analysis",                                org: "ISRO–IIRS",    date: "19–23 Aug 2024", mode: "Online", file: "assets/images/certificates/iirs-aiml-geodata-2024.jpg" },
+    { title: "Advanced Methods for Transportation Data Analysis",         org: "NIT Warangal", date: "11–17 Mar 2024", mode: "Offline", file: "assets/images/certificates/nitw-transport-data-2024.jpg" },
+    { title: "Workshop on Revit Architecture",                            org: "SVNIT Surat",  date: "15 Feb 2020",    mode: "Offline", file: "assets/images/certificates/svnit-revit-2020.jpg" },
+    { title: "Workshop on AutoCAD",                                       org: "SVNIT Surat",  date: "11 Feb 2020",    mode: "Offline", file: "assets/images/certificates/svnit-autocad-2020.jpg" },
   ],
 
   // ─────────────────────────────────────────
@@ -202,7 +203,7 @@ Languages: Gujarati (native), Hindi and English (full professional proficiency).
     { title: "Mentor Appreciation Certificate",          org: "Concrete Catalyst",                       date: "2026",           outcome: "Appreciation" },
     { title: "Appreciation Letter – Road Safety Study",  org: "Gujarat Road Safety Authority",           date: "27 Jun 2025",    outcome: "Appreciation" },
     { title: "Appreciation Certificate – T&P Cell",      org: "The M.S. University of Baroda",           date: "01 May 2025",    outcome: "Appreciation" },
-    { title: "Design Engineering Project Fair",          org: "SSASIT, Surat",                           date: "24 Apr 2021",    outcome: "3rd Rank" },
+    { title: "Design Engineering Project Fair",          org: "Shree Swami Atmanand Saraswati Institute of Technology (SSASIT), Surat",date: "24 Apr 2021",    outcome: "3rd Rank" },
     { title: "Project/Model Presentation",               org: "Tapi Diploma Engineering College, Surat", date: "07–08 Mar 2019", outcome: "2nd Rank" },
   ],
 

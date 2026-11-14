@@ -657,7 +657,7 @@ function renderAboutQuickFacts() {
     { label: 'Degree',         value: 'M.Tech, SVNIT Surat',        accent: false },
     { label: 'Specialization', value: 'Transportation Eng.',         accent: false },
     { label: 'CGPA',           value: '8.8 / 10',                   accent: false },
-    { label: 'Experience',     value: '4+ Years',                   accent: false },
+    { label: 'Experience',     value: '3+ Years',                   accent: false },
     { label: 'Status',         value: 'Open to Opportunities',      accent: true  },
   ];
   factsEl.innerHTML = items.map(item => `
@@ -1842,6 +1842,9 @@ document.addEventListener('DOMContentLoaded', initAboutNav);
 
 
 /* ═══════════ ABOUT — profile page layout ═══════════ */
+// Tool logos: Simple Icons (CC0, simpleicons.org); lettered badge when no logo exists
+const SKILL_TOOLS = [{"n": "QGIS", "c": "#589632", "d": "M12.879 13.006v3.65l-3.004-3.048v-3.495h3.582l2.852 2.893h-3.43zm10.886 7.606V24h-3.654l-5.73-5.9v-3.55h3.354l6.03 6.062zm-10.828-1.448l3.372 3.371c-1.309.442-2.557.726-4.325.726C5.136 23.26 0 18.243 0 11.565 0 4.92 5.136 0 11.984 0 18.864 0 24 4.952 24 11.565c0 2.12-.523 4.076-1.457 5.759l-3.625-3.725a8.393 8.393 0 0 0 .24-2.005c0-4.291-3.148-7.527-7.1-7.527-3.954 0-7.248 3.236-7.248 7.527s3.33 7.6 7.247 7.6c.548 0 .661.017.88-.03z", "m": null}, {"n": "ArcGIS", "c": "#2C7AC3", "d": "M12 0a.84923.84923 0 0 0-.33766.07031l-8.5183 3.69444C2.1458 4.19776 1.4997 5.1816 1.4997 6.2697v13.2521l10.16264 4.40783c.21517.09333.46015.09407.67532.00073l8.5183-3.6959c.99824-.43301 1.64434-1.41685 1.64434-2.50495V4.47814L12.33766.06958C12.23007.02291 12.11516-.00005 12 0Zm0 4.83705c4.16294 0 7.53757 3.3746 7.53757 7.53757S16.163 19.91218 12 19.91218c-4.163 0-7.53757-3.37462-7.53757-7.53756S7.837 4.83705 12 4.83705zm-.3501 1.38871c-.89685-.02267-2.32742.2409-3.74645 1.6143.34958.55454.64544.97782.49 1.41801-.23127.65503-.5139.51378-1.07083.99466-.39567.34169.2067 1.01292-.31275 1.30595-.51945.29306-1.21315.6636-.94925 1.17557.2639.51196 1.4691.83013 1.95929 1.07522.49018.2451.92812.70605.6072 1.2371-.31403.51948-.53713 1.13083-.60134 1.60917 1.0549.94423 2.44706 1.51909 3.97423 1.51909 3.2928 0 5.81772-2.71048 5.96208-6.00017.04062-.92531-.93924-.93972-1.53447-.93972 0 0 .34061.92356.01831 1.43632-.3223.51278-.84968.76166-.83498 1.37699.01464.61533-.93743 1.5967-1.2598 1.9483-.32223.35163-.9228.74718-1.12796-.0586-.2051-.80579-.12596-1.47799.1084-2.04938.23442-.57136-.2174-.74707-.92068-.76174-.7032-.01463-1.0798-.10795-1.18656-1.19315-.08787-.89369 1.2429-1.84356 1.81426-1.84356.33406 0 1.45485.21963 1.50737-.34058.08056-.8593-.8204-1.04164-1.03934-1.60185C13.2877 7.58747 14.98596 6.60707 12 6.24993c-.10475-.01253-.22199-.02093-.3501-.02417z", "m": null}, {"n": "Google Earth Engine", "c": "#4285F4", "d": "M7.853.717a1.19 1.19 0 00-.65.17L4.53 2.49c-.53.317-.732.984-.467 1.543l.93 1.958a9.217 9.217 0 00-1.745 3.076l-2.124.135A1.198 1.198 0 000 10.399v3.116a1.2 1.2 0 001.084 1.194l2.171.21a9.207 9.207 0 001.748 3.066l-.941 1.982a1.198 1.198 0 00.467 1.543l2.673 1.603a1.2 1.2 0 001.605-.347l1.22-1.771a9.22 9.22 0 001.971.216c.032 0 .064-.004.096-.004a9.245 9.245 0 001.876-.212l1.22 1.77a1.2 1.2 0 001.606.348l2.673-1.603c.53-.317.732-.984.467-1.543l-.941-1.982c.022-.025.048-.049.07-.076.066-.077.125-.159.188-.238a9.225 9.225 0 001.484-2.736l2.138-.137A1.198 1.198 0 0024 13.601v-3.116a1.2 1.2 0 00-1.084-1.194V9.29l-2.16-.21a9.182 9.182 0 00-1.501-2.786c-.063-.08-.124-.16-.19-.238-.018-.022-.039-.043-.058-.065l.93-1.958a1.198 1.198 0 00-.467-1.543L16.797.887a1.2 1.2 0 00-1.605.347L13.99 2.976a9.169 9.169 0 00-1.896-.219c-.033 0-.064-.004-.096-.004a9.2 9.2 0 00-1.992.223L8.808 1.234a1.2 1.2 0 00-.955-.517zm4.148 3.882c.574 0 1.13.072 1.668.197a7.41 7.41 0 015.384 4.993 7.36 7.36 0 01.332 2.193c0 .764-.116 1.5-.332 2.193a7.407 7.407 0 01-5.384 4.992 7.393 7.393 0 01-1.668.199c-4.071 0-7.384-3.313-7.384-7.384 0-4.07 3.313-7.383 7.384-7.383zM11.907 6C9.558 6 8.429 7.207 8.429 7.207c3.501-1.577 5.23 2.986 6.702 4.386 1.472 1.4 2.887.203 2.887.203-.012-.787-.252-1.533-.252-1.533-.968.168-1.398-.494-1.97-1.252C15.224 8.253 13.561 6 11.907 6zm-3.84 3.228c-.705.015-1.3.35-1.653 1-.868 1.601-.096 3.64-.096 3.64s.3-1.532 1.537-1.309c1.238.224 1.754 1.208 2.504 1.985.75.776 1.895 2.064 3.978 2.064 2.082 0 3.018-1.516 3.435-2.937v-.002l-.053.04c-1.265.98-3.335.882-4.548-.275-.89-.846-1.403-1.908-2.135-2.68-.981-1.038-2.065-1.545-2.97-1.526z", "m": null}, {"n": "Python", "c": "#3776AB", "d": "M14.25.18l.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98l-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95l.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25l-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z", "m": null}, {"n": "R", "c": "#276DC3", "d": "M12 2.746c-6.627 0-12 3.599-12 8.037 0 3.897 4.144 7.144 9.64 7.88V16.26c-2.924-.915-4.925-2.755-4.925-4.877 0-3.035 4.084-5.494 9.12-5.494 5.038 0 8.757 1.683 8.757 5.494 0 1.976-.999 3.379-2.662 4.272.09.066.174.128.258.216.169.149.25.363.372.544 2.128-1.45 3.44-3.437 3.44-5.631 0-4.44-5.373-8.038-12-8.038zm-2.111 4.99v13.516l4.093-.002-.002-5.291h1.1c.225 0 .321.066.549.25.272.22.715.982.715.982l2.164 4.063 4.627-.002-2.864-4.826s-.086-.193-.265-.383a2.22 2.22 0 00-.582-.416c-.422-.214-1.149-.434-1.149-.434s3.578-.264 3.578-3.826c0-3.562-3.744-3.63-3.744-3.63zm4.127 2.93l2.478.002s1.149-.062 1.149 1.127c0 1.165-1.149 1.17-1.149 1.17h-2.478zm1.754 6.119c-.494.049-1.012.079-1.54.088v1.807a16.622 16.622 0 002.37-.473l-.471-.891s-.108-.183-.248-.394c-.039-.054-.08-.098-.111-.137z", "m": null}, {"n": "SPSS", "c": "#052FAD", "d": "M23.544 15.993c.038 0 .06-.017.06-.053v-.036c0-.035-.022-.052-.06-.052h-.09v.14zm-.09.262h-.121v-.498h.225c.112 0 .169.066.169.157 0 .079-.036.129-.09.15l.111.19h-.133l-.092-.17h-.07zm.434-.222v-.062c0-.2-.157-.357-.363-.357a.355.355 0 00-.363.357v.062c0 .2.156.358.363.358a.355.355 0 00.363-.358zm-.838-.03c0-.28.212-.492.475-.492.264 0 .475.213.475.491 0 .279-.211.491-.475.491a.477.477 0 01-.475-.49zM16.21 8.13l-.216-.624h-3.56v.624zm.413 1.19l-.216-.623h-3.973v.624zm2.65 7.147h3.107v-.624h-3.108zm0-1.192h3.107v-.623h-3.108zm0-1.19h1.864v-.624h-1.865zm0-1.191h1.864v-.624h-1.865zm0-1.191h1.864v-.624h-3.555l-.175.504-.175-.504h-3.555v.624h1.865v-.574l.2.574h3.33l.2-.574zm1.864-1.815h-3.142l-.217.624h3.359zm-7.46 3.006h1.865v-.624h-1.865zm0 1.19h1.865v-.623h-1.865zm-1.243 1.191h3.108v-.623h-3.108zm0 1.192h3.108v-.624h-3.108zm6.386-8.961l-.216.624h3.776v-.624zm-.629 1.815h4.19v-.624h-3.974zm-4.514 1.19h3.359l-.216-.623h-3.143zm2.482 2.383h2.496l.218-.624h-2.932zm.417 1.19h1.662l.218-.623h-2.098zm.416 1.191h.83l.218-.623h-1.266zm.414 1.192l.217-.624h-.432zm-12.433-.006l4.578.006c.622 0 1.18-.237 1.602-.624h-6.18zm4.86-3v.624h2.092c0-.216-.03-.425-.083-.624zm-3.616.624h1.865v-.624H6.217zm3.617-3.573h2.008c.053-.199.083-.408.083-.624H9.834zm-3.617 0h1.865v-.624H6.217zM9.55 7.507H4.973v.624h6.18a2.36 2.36 0 00-1.602-.624zm2.056 1.191H4.973v.624h6.884a2.382 2.382 0 00-.25-.624zm-5.39 2.382v.624h4.87c.207-.176.382-.387.519-.624zm4.87 1.191h-4.87v.624h5.389a2.39 2.39 0 00-.519-.624zm-6.114 3.006h6.634c.11-.193.196-.402.25-.624H4.973zM0 8.13h4.352v-.624H0zm0 1.191h4.352v-.624H0zm1.243 1.191h1.865v-.624H1.243zm0 1.191h1.865v-.624H1.243zm0 1.19h1.865v-.623H1.243zm0 1.192h1.865v-.624H1.243zM0 15.276h4.352v-.623H0zm0 1.192h4.352v-.624H0Z", "m": null}, {"n": "Jamovi", "c": "#3E6DA9", "d": null, "m": "Ja"}, {"n": "SmartPLS", "c": "#0F7A73", "d": null, "m": "PLS"}, {"n": "AutoCAD", "c": "#E51050", "d": "M3.8672 1.0527v.0157L0 3.3848v17.914l3.8965-2.332h18.3398V2.3301c0-.702-.5773-1.2774-1.2793-1.2774H3.8672zm7.5058 4.0098h3.3008l2.9844 9.9512h-2.5879l-.5683-2.1895h-2.9844l-.5703 2.1621h-2.416l2.8417-9.9238zm11.8633.0273v14.877H4.172l-2.0684 1.2383v.4648c0 .702.5793 1.2774 1.2813 1.2774H24V5.0898h-.7637zM12.9668 6.6816l-.9941 4.3243h2.0468l-1.0527-4.3243z", "m": null}, {"n": "IITPave", "c": "#1C2A5A", "d": null, "m": "IIT"}, {"n": "MS Excel", "c": "#217346", "d": "M23 1.5q.41 0 .7.3.3.29.3.7v19q0 .41-.3.7-.29.3-.7.3H7q-.41 0-.7-.3-.3-.29-.3-.7V18H1q-.41 0-.7-.3-.3-.29-.3-.7V7q0-.41.3-.7Q.58 6 1 6h5V2.5q0-.41.3-.7.29-.3.7-.3zM6 13.28l1.42 2.66h2.14l-2.38-3.87 2.34-3.8H7.46l-1.3 2.4-.05.08-.04.09-.64-1.28-.66-1.29H2.59l2.27 3.82-2.48 3.85h2.16zM14.25 21v-3H7.5v3zm0-4.5v-3.75H12v3.75zm0-5.25V7.5H12v3.75zm0-5.25V3H7.5v3zm8.25 15v-3h-6.75v3zm0-4.5v-3.75h-6.75v3.75zm0-5.25V7.5h-6.75v3.75zm0-5.25V3h-6.75v3Z", "m": null}, {"n": "LaTeX", "c": "#008080", "d": "M2.176 2.814c.233.42.476.78.73 1.09.247-.013 1.132.456 1.312.523.508.282 1.063.63 1.567.966.505.337.96.662 1.272.9.156.12.278.218.352.286a.483.483 0 01.078.082.08.08 0 01.01.021.06.06 0 01-.004.047.057.057 0 01-.04.03.077.077 0 01-.028 0c-.057 0-.203-.163-.497-.415a23.474 23.474 0 00-2.759-1.827c-.504-.28-.956-.542-1.264-.613a2.322 2.322 0 00-.36-.025 2.706 2.706 0 00-.788.133c.494.414.91.716 1.28.949-.57-.182-1.182-.21-1.902.133.526.329.967.567 1.354.745 1.103.156 2.258.696 3.224 1.309.483.307.904.615 1.219.867.157.125.29.237.39.328.098.091.174.154.197.21.03.073-.019.104-.084.058-.032-.022-.088-.102-.184-.191a7.35 7.35 0 00-.384-.327c-.312-.25-.729-.552-1.209-.857-.893-.562-2.232-1.013-3.173-1.397-.602-.11-1.225-.06-1.906.39.449.2.837.349 1.182.463.812 0 1.892.365 2.935.922 1.042.556 2.04 1.214 2.523 1.774.066.077-.016.126-.074.07-.52-.495-1.463-1.204-2.498-1.756-.639-.337-2.153-1.01-2.886-1.01l.004.002c-.567.02-1.13.195-1.679.716.477.118.885.196 1.244.249-.44.088-.87.3-1.289.722.324.07.616.122.882.162-.328.159-.639.404-.923.78.373.03.703.042 1 .044-.36.166-.696.43-.996.85.533.027.98.025 1.364.003-.422.172-.812.464-1.145.968.662.01 1.188-.022 1.628-.076l-.006.002c.99-.073 2.297.127 2.962.847.052.057-.024.118-.072.074-.648-.58-1.493-.827-2.89-.921h-.002c-.543.149-1.046.446-1.46 1.074.536.008.982-.013 1.366-.05-.469.257-.873.644-1.139 1.306.483-.092.888-.19 1.237-.292-.363.265-.668.636-.873 1.194.324-.072.612-.146.871-.221a2.519 2.519 0 00-.513 1.095c.352-.13.655-.254.926-.377-.257.3-.453.681-.55 1.19.495-.199.899-.388 1.238-.568-.31.333-.543.76-.635 1.356a11.816 11.816 0 001.442-.744c-.433.362-.764.843-.879 1.587.788-.348 1.339-.663 1.767-.955-.184.372-.282.806-.235 1.348.762-.584 1.243-1.056 1.602-1.473-.024.269-.003.56.077.884.546-.939 1.089-1.212 1.65-1.526-.895.451-.762.79-.762 1.184.683-.72 1.635-1.482 1.927-1.96-.39.585-.547 1.14-.65 1.63-1.993 1.054-3.207 1.329-4.568 1.75.528.194 1.093.383.859.652l-.624.622c.399-.124.805-.3 1.158-.059-.035.327-.447.492-.8.683.621-.224.756-.172.92-.12.081.393-.203.603-.388.862 1.565-1.19 3.606-2.13 5.044-2.522 2.022-.681 4.63-1.389 5.339-3.115l.712-2.847-.004.004c-.111-.034-.246-.063-.35-.133a.651.651 0 01-.235-.297c-.252.065-.44.03-.56-.088-.117-.117-.167-.296-.203-.491-.203.041-.362.016-.467-.077-.116-.101-.17-.26-.198-.444l-.008-.039.037-.015a.842.842 0 00.302-.194.257.257 0 00.07-.225l-.006-.037.03-.016c.163-.093.345-.169.428-.28a.274.274 0 00.053-.21.88.88 0 00-.155-.357l-.027-.04.04-.027c.118-.09.244-.179.308-.26.032-.04.048-.076.047-.11 0-.033-.015-.07-.064-.117l-.098-.094.135.006c.213.01.395-.007.538-.053a.504.504 0 00.274-.197c-.007-.033-.02-.063-.02-.098a.484.484 0 01.967 0c0 .044-.015.084-.026.125.177.014.347.01.507-.06l.002.001.035-.013c.236-.085.334.045.72-.456-1.69-2.19-4.157-.635-4.977 1.622-.21.576-1.405.578-1.751 0-1.37-2.95-5.53-6.068-9.07-7.218zm.86 2.145c.906.293 1.913.782 2.77 1.328.43.273.813.543 1.114.779.301.236.566.473.62.575.054.102 0 .14-.082.06-.081-.078-.303-.32-.6-.553-.298-.234-.68-.505-1.106-.777-.775-.49-1.982-.958-2.716-1.412zm-1.7 2.7c1.116.014 2.35.447 3.434.997.541.275 1.023.567 1.395.83.372.263.672.524.734.657.061.134-.02.13-.087.055a4.401 4.401 0 00-.704-.626 11.47 11.47 0 00-1.385-.826C3.76 8.264 2.439 7.82 1.336 7.66zm14.916.772a.381.381 0 100 .762.381.381 0 000-.762zM1.7 8.478c.822.072 1.72.368 2.534.75 1.086.509 2.035 1.158 2.434 1.667.035.045-.014.131-.08.062-.428-.44-1.322-1.131-2.397-1.635-.913-.421-2.282-.87-3.262-.78.251-.03.497-.088.771-.064zm16.339.01c-.366.475-.53.423-.703.464.094.43.35.586.585.77l-.06.012c2.315-.447 4.186-.286 6.139-.236l-5.961-1.01zm-.178 1.246h-.002l-.004.016.006-.016zm-.625-.757c-.183.074-.373.076-.563.059a.477.477 0 01-.42.26.483.483 0 01-.435-.278.609.609 0 01-.274.188c-.139.045-.308.057-.493.055.02.035.054.068.055.104a.273.273 0 01-.069.174c-.073.092-.189.17-.295.248.087.141.137.26.149.362a.39.39 0 01-.07.284c-.106.14-.288.21-.439.293a.374.374 0 01-.09.268.89.89 0 01-.297.198c.027.156.074.283.154.354.086.076.211.103.425.047l.055-.014.01.055c.033.207.088.385.187.483.1.099.244.135.503.055l.049-.015.016.048c.05.142.12.223.209.282.087.06.247.112.358.147.798-.869 1.525-1.772 1.884-2.86-.225-.177-.506-.338-.609-.797zm-16.23.386c1.165-.08 2.283.196 3.202.626.92.43 1.658.939 1.974 1.307.075.087-.019.12-.072.072a8.187 8.187 0 00-1.947-1.29c-.904-.414-2.193-.644-3.157-.715zm.864.802c.61.02 1.24.155 1.806.352.756.262 1.421.614 1.747.98.045.05-.007.127-.074.069-.349-.304-.961-.693-1.706-.951-.574-.195-1.613-.369-2.268-.397.197-.022.292-.06.495-.053zm1.05 1.788c.423.034.886.133 1.341.407.043.026.049.136-.049.09-.856-.402-1.326-.49-2.457-.31.386-.128.74-.221 1.164-.187zm-.04.788c.4-.035.784-.002 1.297.204.044.018.08.126-.033.094-.857-.243-1.167-.328-2.287.104.28-.229.622-.366 1.023-.402zm1.285.687c.317-.023.635-.026.934.006.052.006.055.105-.006.102a7.87 7.87 0 00-1.837.115c-.243.046-.423.043-1.405.458.287-.233.794-.452 1.385-.56a8.91 8.91 0 01.93-.12zm1.28.49c.099.003.062.104.006.103-.728-.01-1.304.132-1.875.295a9.78 9.78 0 00-1.318.525c.283-.23.713-.457 1.291-.622.579-.166 1.248-.326 1.896-.302zm.528.398c.036-.005.105.084.018.1-.73.137-1.244.267-1.794.454-.216.074-.58.207-1.243.587.26-.269.656-.492 1.213-.68.558-.19 1.196-.37 1.806-.46zm.311.507c.075-.012.097.087.02.102-1.217.241-1.76.556-2.54 1.144.504-.523 1.297-1.051 2.52-1.246zm.595.448c.087-.013.11.087.021.1-.872.13-1.477.553-2.255 1.33.295-.493 1.004-1.24 2.234-1.43zm.372.39c.046-.006.114.073.023.1a2.634 2.634 0 00-.669.3c-.182.118-.3.2-.597.507.111-.245.296-.434.542-.59.247-.157.509-.293.7-.317z", "m": null}, {"n": "MS Word / PowerPoint", "c": "#2B579A", "d": "M23.004 1.5q.41 0 .703.293t.293.703v19.008q0 .41-.293.703t-.703.293H6.996q-.41 0-.703-.293T6 21.504V18H.996q-.41 0-.703-.293T0 17.004V6.996q0-.41.293-.703T.996 6H6V2.496q0-.41.293-.703t.703-.293zM6.035 11.203l1.442 4.735h1.64l1.57-7.876H9.036l-.937 4.653-1.325-4.5H5.38l-1.406 4.523-.938-4.675H1.312l1.57 7.874h1.641zM22.5 21v-3h-15v3zm0-4.5v-3.75H12v3.75zm0-5.25V7.5H12v3.75zm0-5.25V3h-15v3Z", "m": null}, {"n": "Power BI", "c": "#C99A00", "d": "M10 12a1 1 0 0 1 1 1v11H4a1 1 0 0 1-1-1V13a1 1 0 0 1 1-1h6Zm-2-.5V7a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v17h-4.5V13a1.5 1.5 0 0 0-1.5-1.5H8Zm5-6V1a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v22a1 1 0 0 1-1 1h-3.5V7A1.5 1.5 0 0 0 15 5.5h-2Z", "m": null}, {"n": "Tableau", "c": "#E97627", "d": "M11.654.174V2.377H9.682v.58h1.972V5.16h.696V2.957h1.97v-.58h-1.97V.174h-.348zm6.03 2.262l-.002 1.623v1.623h-2.957v.927h2.957v3.188H18.725l.011-1.582.02-1.576 1.465-.02 1.46-.01v-.927H18.728V2.436h-.522zm-12.407.06V5.686H2.291v.925H5.277V9.801h.985V6.61h3.013v-.925H6.262V2.496H5.77zm6.086 5.27v3.593H8.06v1.188h3.304v3.596h1.28v-3.596H15.953v-1.188H12.643V7.766h-.637zm9.721 1.55v2.221h-2.012v.811h2.012v2.261h.887v-2.261H24v-.811h-2.029V9.317h-.422zm-19.111.131V11.621H0v.621H1.973v2.194H2.64v-2.194h2v-.62H2.609V9.446h-.318zm15.709 4.516v3.254h-3.016v.927h3.016v3.217h1.072v-3.216H21.74v-.928H18.754v-3.254h-.533zm-12.463.008v3.246H2.262v.928h2.957v3.189H6.32v-3.189h2.955v-.928H6.32V13.97h-.55zm6.316 4.578l.002 1.103v1.1H9.566v.812h1.971v2.262h.928l.012-1.119.017-1.143H14.463v-.812h-2V18.549h-.465z", "m": null}, {"n": "MATLAB", "c": "#E16737", "d": null, "m": "ML"}, {"n": "VISSIM", "c": "#1C2A5A", "d": null, "m": "VS"}, {"n": "SUMO", "c": "#2C2255", "d": null, "m": "SU"}];
+
 function renderAboutStory() {
   const root = el('#ab-story');
   if (!root) return;
@@ -1858,7 +1861,29 @@ function renderAboutStory() {
     work: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>',
     cap: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>',
     award: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="m8.5 14-1.5 8 5-3 5 3-1.5-8"/></svg>',
+    org: '<svg class="pf-org-ph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-4 7 4v13"/><path d="M9 21v-5h6v5M9 11h.01M12 11h.01M15 11h.01"/></svg>',
     cert: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg>',
+    book: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+  };
+  const eduBadge = deg => {
+    if (/M\.?E|Master/i.test(deg)) return 'M.E.';
+    if (/B\.?E|Bachelor/i.test(deg)) return 'B.E.';
+    if (/Diploma/i.test(deg)) return 'DIP';
+    if (/Secondary|10th|SSC/i.test(deg)) return '10th';
+    return s(deg.split('–')[0].trim().slice(0, 3).toUpperCase());
+  };
+  // Organisation logos: put files in assets/images/logos/ named as below (.png/.jpg/.webp/.svg).
+  // If a file is missing, the old icon/initials show automatically.
+  const LOGO = {
+    svnit: /SVNIT|Sardar Vallabhbhai/i, sigma: /Sigma University/i, msu: /MSU|Maharaja Sayajirao|M\.S\. University/i,
+    mattest: /Mattest/i, tdpatel: /TD Patel/i, pramukh: /Pramukh/i, kkb: /KKB/i,
+    ssasit: /SSASIT/i, tapi: /Tapi Diploma/i, vivekanand: /Vivekanand/i,
+    nitw: /NIT Warangal/i, iitb: /IIT Bombay/i, iirs: /IIRS|ISRO/i, iitr: /IIT Roorkee/i, manit: /MANIT/i,
+  };
+  const logoImg = (org, fallbackHtml) => {
+    const k = Object.keys(LOGO).find(x => LOGO[x].test(org || ''));
+    if (!k) return fallbackHtml;
+    return `<img class="pf-orglogo" src="assets/images/logos/${k}.png" alt="" loading="lazy" data-k="${k}" onerror="pfLogoFallback(this)"><span class="pf-orglogo-fb" hidden>${fallbackHtml}</span>`;
   };
   const card = (id, title, count, body) => `
     <section class="pf-card reveal ar-block" id="${id}">
@@ -1908,56 +1933,157 @@ function renderAboutStory() {
           <div><span>Mission &amp; Direction</span><p>To advance transportation infrastructure through sustainable solutions that enhance safety, efficiency and evidence-based decision-making.</p></div>
         </div>`)}
 
-      ${card('experience', 'Experience', (D.EXPERIENCE || []).length + ' roles', `<ol class="pf-tl">${(D.EXPERIENCE || []).map((e, i) => {
-        const cur = /present/i.test(e.period || '');
-        const type = (e.type || '').trim();
-        const tk = /intern/i.test(type) ? 'intern' : /teach/i.test(type) ? 'teach' : /lead/i.test(type) ? 'lead' : 'pro';
-        return `<li class="pf-tl__item${cur ? ' is-current' : ''}${i >= 4 ? ' is-extra' : ''}">
-          <span class="pf-tl__dot" aria-hidden="true"></span>
-          <div class="pf-tl__body">
-            <div class="pf-tl__top"><span class="pf-tl__when">${s(e.period)}</span>${type ? `<span class="pf-type pf-type--${tk}">${s(type)}</span>` : ''}${cur ? '<b class="pf-cur">Current</b>' : ''}</div>
-            <h3>${s(e.role)}</h3>
-            <p class="pf-org">${s(e.org)}</p>
-            ${e.description ? `<p class="pf-desc">${s(e.description)}</p>` : ''}${tags(e.highlights)}
-          </div></li>`; }).join('')}</ol>
-        ${(D.EXPERIENCE || []).length > 4 ? `<button type="button" class="pf-more" data-more="experience" aria-expanded="false">Show all ${(D.EXPERIENCE || []).length} roles <span aria-hidden="true">&darr;</span></button>` : ''}`)}
+      ${(() => {
+        const all = D.EXPERIENCE || [];
+        const startYear = p => { const m = /(\d{4})/.exec(p || ''); return m ? m[1] : ''; };
+        let lastYear = '';
+        const rows = all.map(e => {
+          const intern = /intern/i.test(e.type || '');
+          const cur = /present/i.test(e.period || '');
+          const y = startYear(e.period);
+          const showYear = y !== lastYear; lastYear = y;
+          const type = (e.type || '').trim();
+          return `<li class="tl${intern ? ' tl--intern' : ''}${cur ? ' is-current' : ''}">
+            <div class="tl__year">${showYear ? s(y) : ''}</div>
+            <div class="tl__rail"><span class="tl__dot"></span></div>
+            <div class="tl__card">
+              <span class="pf-logo pf-logo--org">${logoImg(e.org, I.org)}</span>
+              <div class="tl__main">
+                <div class="tl__top"><h3>${s(e.role)}</h3>${cur ? '<b class="pf-cur">Current</b>' : `<span class="tl__type">${s(type)}</span>`}</div>
+                <p class="pf-org">${s(e.org)}<span class="tl__when">${s(e.period)}</span></p>
+                ${e.description || (e.highlights || []).length ? `<details class="xp-more"><summary>Responsibilities</summary>
+                  ${e.description ? `<p class="pf-desc">${s(e.description)}</p>` : ''}${tags(e.highlights)}</details>` : ''}
+              </div>
+            </div>
+          </li>`; }).join('');
+        const pro = all.filter(e => !/intern/i.test(e.type || '')).length;
+        const nInt = all.length - pro;
+        return card('experience', 'Experience', `${pro} professional &middot; ${nInt} internships`, `<ol class="tls">${rows}</ol>`);
+      })()}
 
-      ${card('education', 'Education', '', `<div class="pf-edu">${(D.EDUCATION || []).map((e, i) => `
-        <article class="pf-edu__card${i === 0 ? ' is-top' : ''}">
-          <span class="pf-edu__ico">${I.cap}</span>
-          <p class="pf-edu__when">${s(e.period)}</p>
-          <h3>${s(e.degree)}</h3>
-          <p class="pf-org">${s(e.institution)}${e.location ? ` &middot; ${s(e.location)}` : ''}</p>
-          <p class="pf-edu__grade">${s(e.grade)}</p>
-          ${e.thesis ? `<p class="pf-desc"><em>Dissertation:</em> ${s(e.thesis)}</p>` : ''}
-        </article>`).join('')}</div>`)}
+      ${card('education', 'Education', '', (() => {
+        const list = D.EDUCATION || [];
+        if (!list.length) return '';
+        const short = d => /Secondary School/i.test(d || '') ? 'SSC (10th)' : (d || '').split(/[–-]/)[0].trim();
+        const field = d => { if (/Secondary School/i.test(d || '')) return 'Secondary School Certificate'; const p = (d || '').split(/[–-]/); return p.length > 1 ? p.slice(1).join('–').trim() : ''; };
+        const thesis = list.find(e => e.thesis);
+        return `
+        <div class="ed-grid">${list.map((e, i) => `
+          <article class="ed-card${i === 0 ? ' is-top' : ''}">
+            <div class="ed-card__head">
+              <span class="pf-logo pf-logo--org">${logoImg(e.institution, /Vivekanand/i.test(e.institution) ? 'VV' : I.cap)}</span>
+              <span class="ed-card__years">${s(e.period)}</span>
+            </div>
+            <h3 class="ed-card__deg">${s(short(e.degree))}</h3>
+            ${field(e.degree) ? `<p class="ed-card__field">${s(field(e.degree))}</p>` : ''}
+            <p class="ed-card__inst">${s(e.institution)}${e.location ? `<span>${s(e.location)}</span>` : ''}</p>
+            <div class="ed-card__foot">${e.grade ? (() => { const m = /^\s*([A-Za-z]+)\s*:\s*([\d.]+)\s*(\/\s*\d+)?/.exec(e.grade); return m
+                ? `<span class="ed-score"><small>${s(m[1])}</small><b>${s(m[2])}</b>${m[3] ? `<i>${s(m[3].replace(/\s+/g, ' '))}</i>` : ''}</span>`
+                : `<span class="ed-score"><small>Score</small><b>${s(e.grade)}</b></span>`; })() : ''}</div>
+          </article>`).join('')}
+        </div>
+`;
+      })())}
 
-      ${card('skills', 'Skills &amp; Tools', '', `<div class="pf-skill-grid">${Object.entries(D.SKILLS || {}).map(([g, l]) => {
-        const ic = /spatial|gis/i.test(g) ? '<path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/>'
-          : /stat|ai|ml/i.test(g) ? '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>'
-          : /software|program/i.test(g) ? '<path d="m8 9-4 3 4 3M16 9l4 3-4 3M13 6l-2 12"/>'
-          : /research|report/i.test(g) ? '<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>'
-          : '<path d="M3 21h18M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6"/>';
-        return `<div class="pf-skill"><div class="pf-skill__head"><span class="pf-skill__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ic}</svg></span><h3>${s(g)}</h3><em>${(l || []).length}</em></div>${tags(l)}</div>`; }).join('')}</div>`)}
+      ${card('skills', 'Skills &amp; Tools', '', (() => {
+        const toolNames = new Set(SKILL_TOOLS.map(t => t.n));
+        const tools = SKILL_TOOLS.map(t => `<li class="sk-tool" title="${s(t.n)}">
+            <span class="sk-tool__ico" style="--c:${t.c}">${t.d ? `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${t.d}"/></svg>` : `<b>${s(t.m)}</b>`}</span>
+            <span class="sk-tool__name">${s(t.n)}</span></li>`).join('');
+        const groups = Object.entries(D.SKILLS || {}).map(([g, l]) => [g, (l || []).filter(x => !toolNames.has(x))]).filter(([, l]) => l.length);
+        return `<div class="sk-sub"><h3>Tools &amp; Software</h3></div>
+          <ul class="sk-tools">${tools}</ul>
+          <div class="sk-sub sk-sub--gap"><h3>Methods &amp; Expertise</h3></div>
+          <div class="sk-groups">${groups.map(([g, l]) => `<div class="sk-group"><h4>${s(g.replace(/\s*&\s*Programming/i, ''))}</h4>${tags(l)}</div>`).join('')}</div>`;
+      })())}
 
-      ${card('competencies', 'Core Competencies', '', `<div class="pf-comp">${(D.RESEARCH_AREAS || []).map((r, i) => `<div><span>${String(i + 1).padStart(2, '0')}</span><h3>${s(r.title)}</h3><p>${s(r.desc)}</p></div>`).join('')}</div>`)}
 
-      <div class="pf-pair">
-      ${card('certifications', 'Licences &amp; Certifications', (D.CERTIFICATIONS || []).length, `<ul class="pf-rows pf-rows--sm">${(D.CERTIFICATIONS || []).map(c => `<li><span class="pf-logo">${I.cert}</span><div><h3>${s(c.title)}</h3><p class="pf-org">${s(c.org)}</p><p class="pf-when">${s(c.year || '')}</p></div></li>`).join('')}</ul>`)}
-      ${card('workshops', 'Workshops &amp; Training', (D.WORKSHOPS || []).length, `<ul class="pf-rows pf-rows--sm">${(D.WORKSHOPS || []).map(w => `<li><span class="pf-logo">${ini(w.org)}</span><div><h3>${s(w.title)}</h3><p class="pf-org">${s(w.org)}${w.mode ? ` &middot; ${s(w.mode)}` : ''}</p><p class="pf-when">${s(w.date || '')}</p></div></li>`).join('')}</ul>`)}
-      </div>
+      ${card('certifications', 'Licences &amp; Certifications', (D.CERTIFICATIONS || []).length, `<ul class="ws-grid">${(D.CERTIFICATIONS || []).map(c => {
+        const kind = /review/i.test(c.title) ? 'Reviewing' : /present/i.test(c.title) ? 'Presentation' : 'Certificate';
+        const title = c.title.replace(/^Paper Presentation Certificate\s*[–-]\s*/i, '').replace(/^Certificate of Reviewing\s*[–-]\s*/i, '');
+        return `<li class="ws ws--cert ws--${kind.toLowerCase()}${c.file ? ' is-clickable' : ''}"${c.file ? ` data-cert-card data-file="${s(c.file)}" data-title="${s(c.title)}" tabindex="0" role="button" aria-label="View certificate: ${s(c.title)}"` : ''}>
+          <span class="pf-logo pf-logo--org">${logoImg(c.org, I.cert)}</span>
+          <div class="ws__main">
+            <div class="ce__top"><span class="ce__kind">${kind === 'Presentation' ? 'Paper Presentation' : kind === 'Reviewing' ? 'Peer Reviewing' : kind}</span><span class="ce__date">${s(c.year || '')}</span></div>
+            <h3 class="ce__title">${s(title)}</h3>
+            <p class="pf-org ce__orgline"><span>${s(c.org)}</span>${c.file ? `<span class="ce__view" data-cert-link data-href="${s(c.file)}" hidden>View <span aria-hidden="true">&#8599;</span></span>` : ''}</p>
+          </div>
+        </li>`; }).join('')}</ul>`)}
+      ${card('workshops', 'Workshops &amp; Training', (D.WORKSHOPS || []).length, (() => {
+        const ws = D.WORKSHOPS || []; let last = '';
+        return `<ol class="wt">${ws.map(w => {
+          const y = (/(\d{4})/.exec(w.date || '') || [])[1] || '';
+          const showY = y !== last; last = y;
+          const online = /online/i.test(w.mode || '');
+          return `<li class="wt__item${showY ? ' is-first' : ''}">
+            <div class="wt__year">${showY ? s(y) : ''}</div>
+            <div class="wt__rail"><span class="wt__dot"></span></div>
+            <div class="wt__row${w.file ? ' is-clickable' : ''}"${w.file ? ` data-cert-card data-file="${s(w.file)}" data-title="${s(w.title)}" tabindex="0" role="button" aria-label="View certificate: ${s(w.title)}"` : ''}>
+              <span class="pf-logo pf-logo--org wt__logo">${logoImg(w.org, ini(w.org))}</span>
+              <div class="wt__main"><h3>${s(w.title)}</h3><p>${s(w.org)}${w.mode ? ` <i class="${online ? 'is-online' : ''}">${s(w.mode)}</i>` : ''}</p></div>
+              <div class="wt__side"><span class="wt__date">${s(w.date || '')}</span>${w.file ? `<span class="ce__view" data-cert-link data-href="${s(w.file)}" hidden>View <span aria-hidden="true">&#8599;</span></span>` : ''}</div>
+            </div>
+          </li>`; }).join('')}</ol>`;
+      })())}
 
-      ${card('awards', 'Honours &amp; Awards', (D.AWARDS || []).length, `<div class="pf-awards">${(D.AWARDS || []).map(a => `<article class="pf-award"><span class="pf-award__ico">${I.award}</span><span class="pf-award__tag">${s(a.outcome)}</span><h3>${s(a.title)}</h3><p class="pf-org">${s(a.org)}</p><p class="pf-when">${s(a.date)}</p></article>`).join('')}</div>`)}
+      ${card('awards', 'Honours &amp; Awards', (D.AWARDS || []).length, `<ul class="ws-grid">${(D.AWARDS || []).map(a => {
+        const rank = /rank/i.test(a.outcome || '');
+        return `<li class="ws ws--cert ws--award${rank ? ' is-rank' : ''}">
+          <span class="pf-logo pf-logo--org pf-logo--medal">${logoImg(a.org, I.award)}</span>
+          <div class="ws__main">
+            <div class="ce__top"><span class="ce__kind">${s(a.outcome || 'Award')}</span><span class="ce__date">${s(a.date || '')}</span></div>
+            <h3 class="ce__title">${s(a.title)}</h3>
+            <p class="pf-org">${s(a.org)}</p>
+          </div>
+        </li>`; }).join('')}</ul>`)}
 
 
     </div>
   </div>`;
-  const more = root.querySelector('[data-more="experience"]');
-  if (more) more.addEventListener('click', () => {
-    const open = root.querySelector('.pf-tl').classList.toggle('show-all');
-    more.setAttribute('aria-expanded', open);
-    more.innerHTML = open ? 'Show fewer <span aria-hidden="true">&uarr;</span>' : `Show all ${(D.EXPERIENCE || []).length} roles <span aria-hidden="true">&darr;</span>`;
-    if (!open) root.querySelector('#experience').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Certificates: show link + make card clickable only when the PDF exists
+  root.querySelectorAll('[data-cert-link]').forEach(l => {
+    const cardEl = l.closest('[data-cert-card]');
+    fetch(l.dataset.href, { method: 'HEAD' }).then(r => { if (r.ok) l.hidden = false; else if (cardEl) cardEl.classList.remove('is-clickable'); }).catch(() => {});
   });
+  const openCert = cardEl => { if (cardEl && cardEl.classList.contains('is-clickable')) certViewer(cardEl.dataset.file, cardEl.dataset.title); };
+  root.addEventListener('click', e => { const c = e.target.closest('[data-cert-card]'); if (c) { window.__certByPointer = e.detail > 0; openCert(c); } });
+  root.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('[data-cert-card]')) { e.preventDefault(); openCert(e.target); } });
   setTimeout(initReveal, 60);
+}
+
+// Try other extensions for an org logo, then fall back to the icon/initials.
+function pfLogoFallback(img) {
+  const exts = ['webp', 'jpg', 'jpeg', 'svg'];
+  const i = +(img.dataset.t || 0);
+  if (i < exts.length) { img.dataset.t = i + 1; img.src = 'assets/images/logos/' + img.dataset.k + '.' + exts[i]; return; }
+  const fb = img.nextElementSibling;
+  img.remove();
+  if (fb) { fb.hidden = false; fb.parentNode.classList.remove('pf-logo--img'); }
+}
+
+// Certificate PDF viewer (modal)
+function certViewer(file, title) {
+  let m = document.getElementById('cert-modal');
+  if (!m) {
+    m = document.createElement('div');
+    m.id = 'cert-modal'; m.className = 'cm'; m.setAttribute('role', 'dialog'); m.setAttribute('aria-modal', 'true');
+    m.innerHTML = `<div class="cm__box">
+        <div class="cm__bar"><h2 class="cm__title" id="cm-title"></h2>
+          <div class="cm__actions"><button type="button" class="cm__close" aria-label="Close">&#10005;</button></div></div>
+        <div class="cm__frame"><img id="cm-img" alt="" draggable="false"></div>
+      </div>`;
+    document.body.appendChild(m);
+    m.addEventListener('contextmenu', e => { if (e.target.closest('.cm__frame')) e.preventDefault(); });
+    m.addEventListener('dragstart', e => e.preventDefault());
+    const close = () => { m.classList.remove('open'); document.body.style.overflow = '';  if (m._last) { if (window.__certByPointer) m._last.blur(); else m._last.focus(); } window.__certByPointer = false; };
+    m.querySelector('.cm__close').addEventListener('click', close);
+    m.addEventListener('click', e => { if (e.target === m) close(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && m.classList.contains('open')) close(); });
+  }
+  m._last = document.activeElement;
+  m.setAttribute('aria-labelledby', 'cm-title');
+  m.querySelector('#cm-title').textContent = title || 'Certificate';
+  const img = m.querySelector('#cm-img'); img.src = file; img.alt = title || 'Certificate';
+  m.classList.add('open'); document.body.style.overflow = 'hidden';
+  m.querySelector('.cm__close').focus();
 }

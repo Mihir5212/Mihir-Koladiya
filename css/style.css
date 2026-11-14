@@ -3201,19 +3201,105 @@ a.cx-item:hover { background: rgba(255,255,255,0.75); }
 .pf-more { display: inline-flex; align-items: center; gap: 8px; margin: 4px 0 0 46px; padding: 10px 20px; border-radius: 999px; border: 1px solid var(--gray-lt); background: var(--white); color: var(--accent); font: inherit; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: border-color .2s, background .2s; }
 .pf-more:hover { border-color: var(--accent); background: var(--light); }
 
-/* Education cards */
-.pf-edu { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-.pf-edu__card { position: relative; padding: 20px; border-radius: 18px; background: var(--light); border: 1px solid var(--gray-lt); }
-.pf-edu__card.is-top { background: linear-gradient(145deg, #1C2A5A, #14182B); border-color: transparent; color: #fff; }
-.pf-edu__card.is-top h3, .pf-edu__card.is-top .pf-org, .pf-edu__card.is-top .pf-desc { color: rgba(255,255,255,0.9); }
-.pf-edu__card.is-top .pf-edu__when { color: rgba(255,255,255,0.6); }
-.pf-edu__ico { width: 38px; height: 38px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: rgba(201,162,39,0.16); color: #9a7b14; margin-bottom: 12px; }
-.pf-edu__card.is-top .pf-edu__ico { color: var(--gold); background: rgba(201,162,39,0.18); }
-.pf-edu__ico svg { width: 18px; height: 18px; }
-.pf-edu__when { font-size: 0.74rem; font-weight: 700; color: var(--gray); margin: 0 0 4px; }
-.pf-edu__card h3 { font-size: 0.98rem; margin: 0 0 4px; color: var(--dark); }
-.pf-edu__grade { display: inline-block; margin: 10px 0 0; padding: 4px 10px; border-radius: 999px; font-size: 0.74rem; font-weight: 700; background: rgba(201,162,39,0.16); color: #7a5f0c; }
-.pf-edu__card.is-top .pf-edu__grade { background: var(--gold); color: #14182B; }
+/* ═══════════ EDUCATION REDESIGN (Featured Spotlight + Sleek Academic Rows) ═══════════ */
+.pf-edu-wrap { display: flex; flex-direction: column; gap: 16px; }
+
+/* Featured Master's Spotlight */
+.pf-edu-spotlight {
+  position: relative; overflow: hidden; padding: 24px 26px;
+  background: linear-gradient(145deg, #FFFFFF 0%, #F9F8F5 100%);
+  border: 1.5px solid rgba(201, 162, 39, 0.35); border-radius: 20px;
+  box-shadow: 0 12px 30px -18px rgba(20, 24, 43, 0.15);
+  transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+}
+.pf-edu-spotlight::before {
+  content: ''; position: absolute; left: 0; right: 0; top: 0; height: 3.5px;
+  background: linear-gradient(90deg, var(--gold), #E8C85A 45%, var(--accent) 100%);
+}
+.pf-edu-spotlight:hover {
+  transform: translateY(-2px); border-color: rgba(201, 162, 39, 0.6);
+  box-shadow: 0 18px 36px -18px rgba(20, 24, 43, 0.22);
+}
+.pf-edu-spotlight__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.pf-edu-tag {
+  display: inline-flex; align-items: center; gap: 7px; padding: 4px 12px;
+  border-radius: 999px; background: rgba(201, 162, 39, 0.13); color: #8A6D12;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.pf-edu-tag__dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.25); }
+.pf-edu-spotlight__period {
+  font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; color: var(--accent);
+  background: rgba(28, 42, 90, 0.06); padding: 4px 12px; border-radius: 999px; letter-spacing: 0.02em;
+}
+.pf-edu-spotlight__main { display: flex; align-items: center; gap: 16px; }
+.pf-edu-spotlight__icon {
+  flex-shrink: 0; width: 52px; height: 52px; border-radius: 16px;
+  background: linear-gradient(135deg, var(--accent), #252B48); color: var(--gold);
+  display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 18px -6px rgba(28, 42, 90, 0.4);
+}
+.pf-edu-spotlight__icon svg { width: 24px; height: 24px; }
+.pf-edu-spotlight__body { flex: 1; min-width: 0; }
+.pf-edu-spotlight__title { font-size: 1.15rem; font-weight: 700; color: var(--dark); margin: 0 0 4px; line-height: 1.3; }
+.pf-edu-spotlight__inst { margin: 0; font-size: 0.92rem; color: #3E4A5E; line-height: 1.4; font-weight: 500; }
+.pf-edu-loc { color: var(--gray); font-weight: 400; }
+.pf-edu-spotlight__grade { flex-shrink: 0; }
+.pf-grade-pill {
+  display: inline-flex; align-items: center; padding: 5px 12px; border-radius: 999px;
+  font-size: 0.76rem; font-weight: 700; letter-spacing: 0.02em; background: var(--light);
+  border: 1px solid var(--gray-lt); color: var(--dark); white-space: nowrap;
+}
+.pf-grade-pill--gold {
+  background: linear-gradient(135deg, #FDF7E7 0%, #F8EBCC 100%);
+  border: 1px solid rgba(201, 162, 39, 0.45); color: #7A5F0C; font-weight: 800;
+  box-shadow: 0 2px 8px rgba(201, 162, 39, 0.12);
+}
+.pf-edu-thesis {
+  margin-top: 18px; padding: 14px 18px; border-radius: 14px;
+  background: rgba(28, 42, 90, 0.035); border: 1px solid rgba(28, 42, 90, 0.08); border-left: 3.5px solid var(--gold);
+}
+.pf-edu-thesis__head { display: flex; align-items: center; gap: 7px; margin-bottom: 6px; }
+.pf-edu-thesis__icon { display: flex; color: #8A6D12; }
+.pf-edu-thesis__icon svg { width: 15px; height: 15px; }
+.pf-edu-thesis__label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #8A6D12; }
+.pf-edu-thesis__title { margin: 0; font-size: 0.94rem; font-weight: 600; line-height: 1.55; color: var(--dark); }
+
+/* Subhead */
+.pf-edu-subhead { display: flex; align-items: center; gap: 14px; margin: 8px 0 2px; }
+.pf-edu-subhead span { font-size: 0.74rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gray); }
+.pf-edu-subhead::after { content: ''; flex: 1; height: 1px; background: var(--gray-lt); }
+
+/* Prior rows */
+.pf-edu-rows { display: flex; flex-direction: column; gap: 10px; }
+.pf-edu-row {
+  display: grid; grid-template-columns: 46px 1fr auto; align-items: center; gap: 16px;
+  padding: 14px 18px; background: var(--white); border: 1px solid var(--gray-lt); border-radius: 16px;
+  transition: transform .25s cubic-bezier(.22,1,.36,1), border-color .25s ease, box-shadow .25s ease;
+}
+.pf-edu-row:hover {
+  transform: translateX(4px); border-color: rgba(201, 162, 39, 0.45);
+  box-shadow: 0 10px 24px -14px rgba(20, 24, 43, 0.18); background: #FCFBF9;
+}
+.pf-edu-row__badge {
+  width: 46px; height: 46px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  background: rgba(28, 42, 90, 0.05); color: var(--accent); font-weight: 700; font-size: 0.82rem;
+  font-family: var(--font-mono); letter-spacing: 0.02em; border: 1px solid rgba(28, 42, 90, 0.06);
+}
+.pf-edu-row:hover .pf-edu-row__badge { background: rgba(201, 162, 39, 0.12); color: #8A6D12; border-color: rgba(201, 162, 39, 0.25); }
+.pf-edu-row__body { min-width: 0; }
+.pf-edu-row__title { margin: 0 0 2px; font-size: 0.98rem; font-weight: 600; color: var(--dark); line-height: 1.35; }
+.pf-edu-row__inst { margin: 0; font-size: 0.86rem; color: #4A5568; }
+.pf-edu-row__meta { display: flex; align-items: center; gap: 14px; text-align: right; justify-content: flex-end; }
+.pf-edu-row__period { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; color: var(--gray); white-space: nowrap; }
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .pf-edu-spotlight { padding: 20px 18px; }
+  .pf-edu-spotlight__main { flex-wrap: wrap; }
+  .pf-edu-spotlight__grade { width: 100%; margin-top: 4px; }
+  .pf-edu-row { grid-template-columns: 42px 1fr; gap: 12px; padding: 14px 14px; }
+  .pf-edu-row__badge { width: 42px; height: 42px; font-size: 0.76rem; }
+  .pf-edu-row__meta { grid-column: 2 / -1; justify-content: space-between; margin-top: 2px; padding-top: 8px; border-top: 1px dashed var(--gray-lt); }
+}
 
 /* Skills tiles */
 .pf-skill-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
@@ -3246,3 +3332,7 @@ a.cx-item:hover { background: rgba(255,255,255,0.75); }
   .pf-more { margin-left: 0; }
   .pf-tl__item { gap: 12px; }
 }
+
+/* Typography consistency: contact headline uses the site heading font */
+.cx-title { font-family: var(--font-display); font-weight: 400; letter-spacing: -0.01em; }
+.cx-title b { font-weight: 400; }
