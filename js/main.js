@@ -874,8 +874,15 @@ async function renderGallery() {
   renderGalleryItems(grid, DATA.GALLERY);
 }
 
+function galleryColumnCount() {
+  const w = window.innerWidth;
+  return w <= 600 ? 2 : w <= 900 ? 3 : 4;
+}
+
+// Row-wise masonry: photo 1,2,3,4 go across the top row (newest first),
+// then the next ones continue below, each keeping its natural shape.
 function renderGalleryItems(grid, items) {
-  grid.innerHTML = items.map((item, idx) => `
+  const card = (item, idx) => `
     <div class="gallery-item reveal" data-idx="${idx}">
       <img
         src="${sanitize(item.src)}"
@@ -892,7 +899,19 @@ function renderGalleryItems(grid, items) {
         ${item.caption ? `<div class="gallery-item__caption">${sanitize(item.caption)}</div>` : ''}
       </div>
     </div>
-  `).join('');
+  `;
+  const n = galleryColumnCount();
+  const cols = Array.from({ length: n }, () => []);
+  items.forEach((item, idx) => cols[idx % n].push(card(item, idx)));
+  grid.innerHTML = cols.map(c => `<div class="gallery-col">${c.join('')}</div>`).join('');
+  grid._galleryItems = items;
+  grid._galleryCols = n;
+  if (!grid._galleryResize) {
+    grid._galleryResize = true;
+    window.addEventListener('resize', () => {
+      if (galleryColumnCount() !== grid._galleryCols) renderGalleryItems(grid, grid._galleryItems);
+    });
+  }
   setTimeout(initReveal, 60);
 }
 

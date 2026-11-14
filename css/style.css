@@ -2950,3 +2950,8 @@ body { background: #F8F7F4; }
 .gallery-item__overlay { opacity: 0; }
 @media (max-width: 600px) { .gallery-grid { columns: 2; column-gap: 10px; } .gallery-item { margin-bottom: 10px; } }
 .gallery-item__date { color: rgba(255,255,255,0.85); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+/* Row-wise masonry: newest photos across the top */
+.gallery-grid { columns: auto; display: flex; align-items: flex-start; gap: 16px; }
+.gallery-col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+.gallery-col .gallery-item { margin-bottom: 0; }
+@media (max-width: 600px) { .gallery-grid, .gallery-col { gap: 10px; } }
