@@ -1845,7 +1845,7 @@ document.addEventListener('DOMContentLoaded', initAboutNav);
 function renderAboutStory() {
   const root = el('#ab-story');
   if (!root) return;
-  const D = DATA, P = D.PROFILE, s = sanitize;
+  const D = DATA, P = D.PROFILE, s = sanitize, L = D.LINKS || {};
   const job = (D.EXPERIENCE || [])[0];
   const bio = P.longBio.split(/\n\s*\n/).map(t => t.trim()).filter(t => !/^Languages:/i.test(t));
   const CV = P.cvFile || 'assets/docs/Mihir_Koladiya_CV.pdf';
@@ -1881,11 +1881,22 @@ function renderAboutStory() {
             <a href="${s(CV)}" download class="btn pf-btn pf-btn--solid">${I.cv} Download CV</a>
             <a href="contact.html" class="btn pf-btn pf-btn--line">Contact</a>
           </div></div>
+          <div class="pf-row">
           <ul class="pf-meta">
             <li>${I.pin}${s(P.location)}</li>
             ${job ? `<li>${I.work}${s(job.role.split('–')[0].trim())} at ${s(short(job.org))}</li>` : ''}
             ${edu0.degree ? `<li>${I.cap}${s(edu0.degree.split('–')[0].trim())}, MSU Baroda</li>` : ''}
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>Gujarati &middot; Hindi &middot; English</li>
           </ul>
+          <div class="pf-links">${[
+            ['Google Scholar', L.googleScholar, '<path d="M12 3 1 9.5l4 2.4V16c0 2.2 3.1 4 7 4s7-1.8 7-4v-4.1l4-2.4zm0 2.3 7.4 4.2L12 13.8 4.6 9.5z" fill="currentColor"/>'],
+            ['ORCID', L.orcid, '<text x="12" y="17" text-anchor="middle" font-family="Arial" font-size="15" font-weight="700" fill="currentColor">iD</text>'],
+            ['Scopus', L.scopus, '<text x="12" y="17" text-anchor="middle" font-family="Arial" font-size="13.5" font-weight="700" fill="currentColor">Sc</text>'],
+            ['ResearchGate', L.researchgate, '<text x="12" y="17" text-anchor="middle" font-family="Arial" font-size="12.5" font-weight="700" fill="currentColor">RG</text>'],
+            ['LinkedIn', L.linkedin, '<path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/>'],
+            ['GitHub', L.github, '<path fill="currentColor" d="M12 .5a11.5 11.5 0 0 0-3.6 22.4c.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 12 .5z"/>'],
+          ].filter(x => x[1]).map(([n, u, svg]) => `<a href="${s(u)}" target="_blank" rel="noopener" aria-label="${n}" title="${n}"><svg viewBox="0 0 24 24" aria-hidden="true">${svg}</svg></a>`).join('')}</div>
+          </div>
           <dl class="pf-stats">${(D.HIGHLIGHTS || []).map(x => `<div><dd>${x.value}<i>${s(x.suffix || '')}</i></dd><dt>${s(x.label)}</dt></div>`).join('')}</dl>
         </div>
       </section>
