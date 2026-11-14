@@ -46,10 +46,14 @@ $items = Get-ChildItem (Join-Path $root 'assets\images\gallery') -File |
       if ($m.Value -match 'desc: "([^"]*)"') { $desc = $matches[1] }
     }
     $line = if ($m.Success) { $m.Value.TrimEnd() } else { $null }
-    [pscustomobject]@{ Src = $src; Date = (Get-PhotoDate $_); Caption = $caption; Desc = $desc; Cat = $cat; Line = $line }
+    $ar = '0.75'
+    try { $im = [System.Drawing.Image]::FromFile($_.FullName); $w = $im.Width; $h = $im.Height
+      if ($im.PropertyIdList -contains 0x0112) { if ($im.GetPropertyItem(0x0112).Value[0] -in 5,6,7,8) { $w = $im.Height; $h = $im.Width } }
+      $im.Dispose(); $ar = ([math]::Round($h / $w, 3)).ToString([Globalization.CultureInfo]::InvariantCulture) } catch {}
+    [pscustomobject]@{ Ar = $ar; Src = $src; Date = (Get-PhotoDate $_); Caption = $caption; Desc = $desc; Cat = $cat; Line = $line }
   } | Sort-Object Date, Src -Descending
 
-$lines = foreach ($i in $items) { if ($i.Line) { $i.Line; continue }; "    { src: `"$($i.Src)`", date: `"$($i.Date)`", caption: `"$($i.Caption)`", desc: `"$($i.Desc)`", category: `"$($i.Cat)`" }," }
+$lines = foreach ($i in $items) { if ($i.Line) { $i.Line; continue }; "    { src: `"$($i.Src)`", ar: $($i.Ar), date: `"$($i.Date)`", caption: `"$($i.Caption)`", desc: `"$($i.Desc)`", category: `"$($i.Cat)`" }," }
 $block = "  GALLERY: [`n" + ($lines -join "`n") + "`n  ],"
 $data = [regex]::Replace($data, '(?s)  GALLERY: \[.*?\n  \],', { param($x) $block })
 [IO.File]::WriteAllText($dataPath, $data, (New-Object Text.UTF8Encoding $false))

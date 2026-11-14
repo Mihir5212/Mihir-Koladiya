@@ -406,7 +406,111 @@ function renderHome() {
   renderPubsPreview();
   renderInsightsPreview();
   renderHomeProfile();
+  try { renderHomeGallery(); } catch (e) { console.error(e); }
   initCounters();
+}
+
+/* ═══════════════════════════════════════════
+   HOME — GALLERY CAROUSEL (coverflow)
+   ═══════════════════════════════════════════ */
+function renderHomeGallery() {
+  const stage = el('#hg-stage');
+  if (!stage || !DATA.GALLERY || !DATA.GALLERY.length) return;
+  const dots = el('#hg-dots'), cap = el('#hg-cap');
+  const all = DATA.GALLERY.slice().sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  const MAX = 12;
+  let list = [], cur = 0;
+
+  function build() {
+    list = all.slice(0, MAX);
+    cur = 0;
+    stage.innerHTML = list.map((g, i) => `
+      <button class="hg__card" data-i="${i}" tabindex="-1" aria-label="${sanitize(g.caption || 'Photo ' + (i + 1))}">
+        <img src="${sanitize(g.src)}" alt="" loading="eager" onload="this.parentNode.dataset.r = this.naturalWidth / this.naturalHeight; window.__hgLayout && window.__hgLayout();" />
+        <span class="hg__over"><strong>${sanitize(g.caption || '')}</strong>${g.date ? `<em>${formatGalleryDate(g.date)}</em>` : ''}</span>
+      </button>`).join('');
+    dots.innerHTML = list.map((_, i) => `<button class="hg__dot" data-i="${i}" aria-label="Photo ${i + 1}"></button>`).join('');
+    layout();
+  }
+  let lt; window.__hgLayout = () => { clearTimeout(lt); lt = setTimeout(layout, 30); };
+
+  // Each card keeps its photo's own shape (portrait photos are not cropped).
+  // All cards share one height; positions are computed in px from real widths.
+  function layout() {
+    const n = list.length, narrow = window.innerWidth <= 700;
+    const H = stage.clientHeight * (narrow ? 0.86 : 0.9);
+    const cards = [...stage.querySelectorAll('.hg__card')];
+    const SCALE = [1, 0.8, 0.62], OVERLAP = 0.28;
+    const widths = cards.map(c => {
+      const r = Math.min(1.6, Math.max(0.62, parseFloat(c.dataset.r) || 4 / 3));
+      const w = Math.min(H * r, window.innerWidth * (narrow ? 0.78 : 0.62));
+      c.style.width = w + 'px'; c.style.height = (w / r) + 'px';
+      return w;
+    });
+    const off = i => { let d = i - cur; if (d > n / 2) d -= n; if (d < -n / 2) d += n; return d; };
+    const idxAt = d => ((cur + d) % n + n) % n;
+    const pos = { 0: 0 };
+    [1, -1].forEach(dir => {
+      let x = 0;
+      for (let k = 1; k <= 3 && k < n; k++) {
+        const prevW = widths[idxAt(dir * (k - 1))] * SCALE[Math.min(k - 1, 2)];
+        const w = widths[idxAt(dir * k)] * SCALE[Math.min(k, 2)];
+        x += (prevW / 2 + w / 2 - w * OVERLAP) * dir;
+        pos[dir * k] = x;
+      }
+    });
+    cards.forEach((c, i) => {
+      const d = off(i), a = Math.abs(d);
+      const x = a <= 3 ? pos[d] : 900 * Math.sign(d);
+      c.style.transform = `translate(-50%, -50%) translateX(${x}px) scale(${SCALE[Math.min(a, 2)]})`;
+      c.style.zIndex = 10 - a;
+      c.style.opacity = a > 2 ? 0 : a === 2 ? 0.28 : a === 1 ? 0.6 : 1;
+      c.style.filter = a === 0 ? 'none' : a === 1 ? 'blur(2.5px) brightness(0.75) saturate(0.85)' : 'blur(5px) brightness(0.6) saturate(0.7)';
+      c.style.pointerEvents = a > 2 ? 'none' : '';
+      c.classList.toggle('is-active', a === 0);
+      c.setAttribute('aria-current', a === 0 ? 'true' : 'false');
+    });
+    dots.querySelectorAll('.hg__dot').forEach((d, i) => d.classList.toggle('active', i === cur));
+    const it = list[cur];
+    cap.innerHTML = it ? `<strong>${sanitize(it.caption || '')}</strong>${it.date ? `<span>${formatGalleryDate(it.date)}</span>` : ''}` : '';
+  }
+
+  const go = i => { cur = (i + list.length) % list.length; layout(); };
+  el('#hg-prev').addEventListener('click', () => go(cur - 1));
+  el('#hg-next').addEventListener('click', () => go(cur + 1));
+  dots.addEventListener('click', e => { const d = e.target.closest('.hg__dot'); if (d) go(+d.dataset.i); });
+  stage.addEventListener('click', e => {
+    const c = e.target.closest('.hg__card'); if (!c) return;
+    const i = +c.dataset.i;
+    if (i === cur) window.location.href = 'gallery.html'; else go(i);
+  });
+  let tx = null;
+  stage.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+  stage.addEventListener('touchend', e => {
+    if (tx === null) return; const dx = e.changedTouches[0].clientX - tx; tx = null;
+    if (Math.abs(dx) > 40) go(cur + (dx < 0 ? 1 : -1));
+  });
+  stage.setAttribute('tabindex', '0');
+  stage.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') go(cur - 1);
+    if (e.key === 'ArrowRight') go(cur + 1);
+  });
+  let rt; window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(layout, 120); });
+  // Auto-play every 4s; pause on hover/touch/focus, hidden tab, or reduced motion
+  const section = stage.closest('.hg') || stage;
+  let paused = false, timer = null;
+  const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const tick = () => { if (!paused && !document.hidden && list.length > 1) go(cur + 1); };
+  const restart = () => { clearInterval(timer); if (!reduce) timer = setInterval(tick, 4000); };
+  section.addEventListener('mouseenter', () => { paused = true; });
+  section.addEventListener('mouseleave', () => { paused = false; restart(); });
+  section.addEventListener('focusin', () => { paused = true; });
+  section.addEventListener('focusout', () => { paused = false; });
+  stage.addEventListener('touchstart', () => { paused = true; clearTimeout(section._tp); }, { passive: true });
+  stage.addEventListener('touchend', () => { section._tp = setTimeout(() => { paused = false; restart(); }, 5000); });
+  [el('#hg-prev'), el('#hg-next'), dots].forEach(b => b.addEventListener('click', restart));
+  restart();
+  build();
 }
 
 function renderHomeProfile() {
@@ -912,8 +1016,16 @@ function renderGalleryItems(grid, items) {
     </div>
   `;
   const n = galleryColumnCount();
+  // Balanced masonry: each photo goes to the currently shortest column
+  // (uses the stored aspect ratio `ar` = height/width; newest still start at the top)
   const cols = Array.from({ length: n }, () => []);
-  items.forEach((item, idx) => cols[idx % n].push(card(item, idx)));
+  const heights = new Array(n).fill(0);
+  items.forEach((item, idx) => {
+    let c = 0;
+    for (let k = 1; k < n; k++) if (heights[k] < heights[c] - 0.01) c = k;
+    cols[c].push(card(item, idx));
+    heights[c] += (parseFloat(item.ar) || 0.75) + 0.06;   // + gap
+  });
   grid.innerHTML = cols.map(c => `<div class="gallery-col">${c.join('')}</div>`).join('');
   grid._galleryItems = items;
   grid._galleryCols = n;
