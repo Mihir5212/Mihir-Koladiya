@@ -3702,3 +3702,34 @@ a.cx-item:hover { background: rgba(255,255,255,0.75); }
 .yt__avatar { position: relative; overflow: hidden; } .yt__avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .yt__play { padding-left: 0; } .yt__play svg { width: 20px; height: 20px; }
 .yt__date { position: absolute; left: 8px; bottom: 8px; padding: 2px 8px; border-radius: 5px; background: rgba(0,0,0,.78); color: #fff; font-size: .72rem; font-weight: 600; }
+.cta-section__inner::after { display: none !important; }
+
+/* CTA card — optimised (tighter, cleaner) */
+.cta-section { padding: 24px 24px 72px; }
+.cta-section__inner { padding: 40px 44px !important; gap: 0 40px; }
+.cta-section__title { font-size: clamp(1.6rem, 2.8vw, 2.3rem) !important; margin-bottom: 10px !important; }
+.cta-section__desc { font-size: .98rem; line-height: 1.65; }
+.cta-section__actions .btn { min-width: 200px; }
+@media (max-width: 760px) { .cta-section__inner { padding: 30px 24px !important; } .cta-section__actions { grid-column: 1; grid-row: auto; margin-top: 22px !important; } }
+/* CTA — full-width heading on one line (normal size), buttons below the text */
+.cta-section__inner { grid-template-columns: 1fr !important; }
+.cta-section__title { max-width: none !important; font-size: clamp(1.6rem, 2.8vw, 2.3rem) !important; }
+@media (min-width: 1000px) { .cta-section__title { white-space: nowrap; } }
+.cta-section__desc { max-width: 720px !important; }
+.cta-section__actions { grid-column: 1 !important; grid-row: auto !important; flex-direction: row !important; flex-wrap: wrap; margin-top: 24px !important; }
+/* CTA — heading full width on top; description left, buttons on the right side */
+@media (min-width: 761px) {
+  .cta-section__inner { grid-template-columns: minmax(0, 1fr) auto !important; column-gap: 40px; align-items: center; }
+  .cta-section__label, .cta-section__title { grid-column: 1 / -1 !important; }
+  .cta-section__desc { grid-column: 1 !important; }
+  .cta-section__actions { grid-column: 2 !important; grid-row: 3 !important; margin-top: 0 !important; flex-direction: row !important; flex-wrap: nowrap; }
+}
+/* CTA — buttons stacked (one above the other) on the right side */
+@media (min-width: 761px) {
+  .cta-section__actions { flex-direction: column !important; align-items: stretch; gap: 10px; grid-row: 3 !important; align-self: center; }
+}
+/* CTA — stacked buttons centred vertically on the right of the whole card */
+@media (min-width: 761px) {
+  .cta-section__label, .cta-section__title, .cta-section__desc { grid-column: 1 !important; }
+  .cta-section__actions { grid-column: 2 !important; grid-row: 1 / span 3 !important; align-self: center; }
+}
