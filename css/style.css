@@ -3737,8 +3737,7 @@ a.cx-item:hover { background: rgba(255,255,255,0.75); }
 
 /* ═══ Under construction (Insights & Showcase hidden from visitors) ═══ */
 /* Keep Insights & Showcase in the navigation bar and footer; hide other links to them */
-html.mk-wip a:is([href^="insights.html"], [href^="showcase.html"], [href^="insight-detail.html"]):not(.navbar a):not(footer a) { display: none !important; }
-html.mk-wip section[aria-labelledby="h5-ins-title"] { display: none !important; }
+html.mk-wip a:is([href^="insights.html"], [href^="showcase.html"], [href^="insight-detail.html"]):not(.navbar a):not(footer a):not(section[aria-labelledby="h5-ins-title"] a) { display: none !important; }
 html.mk-wip-page body > *:not(.navbar):not(footer):not(.mk-wip-panel):not(script):not(.dock):not(.toast-stack) { display: none !important; }
 .mk-wip-panel { min-height: 70vh; display: grid; place-items: center; padding: 140px 16px 72px; background: #F7F5F0; }
 .mk-wip-card { position: relative; width: 100%; max-width: 760px; overflow: hidden; padding: 56px 48px 48px; border-radius: 28px; background: #14182B; color: #fff; box-shadow: 0 30px 60px -36px rgba(20,24,43,.7); }

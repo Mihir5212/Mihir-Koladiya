@@ -544,13 +544,11 @@ function renderHomeGallery() {
   // Auto-play every 4s; pause on hover/touch/focus, hidden tab, or reduced motion
   const section = stage.closest('.hg') || stage;
   let paused = false, timer = null;
-  const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   const tick = () => { if (!paused && !document.hidden && list.length > 1) go(cur + 1); };
-  const restart = () => { clearInterval(timer); if (!reduce) timer = setInterval(tick, 4000); };
+  // Always auto-advance every 3s (with reduced motion the slide just changes without long animation)
+  const restart = () => { clearInterval(timer); timer = setInterval(tick, 3000); };
   section.addEventListener('mouseenter', () => { paused = true; });
   section.addEventListener('mouseleave', () => { paused = false; restart(); });
-  section.addEventListener('focusin', () => { paused = true; });
-  section.addEventListener('focusout', () => { paused = false; });
   stage.addEventListener('touchstart', () => { paused = true; clearTimeout(section._tp); }, { passive: true });
   stage.addEventListener('touchend', () => { section._tp = setTimeout(() => { paused = false; restart(); }, 5000); });
   [el('#hg-prev'), el('#hg-next'), dots].forEach(b => b.addEventListener('click', restart));
