@@ -1295,11 +1295,80 @@ ${v('email')}`;
 }
 
 /* ═══════════════════════════════════════════
+   UNDER CONSTRUCTION — Insights & Showcase
+   Visitors see a "being built" page and no links to these pages.
+   Owner preview: open any page with ?preview=mihir (remembered in this browser).
+   Turn preview off with ?preview=off. To launch a page, remove it from WIP_PAGES.
+   ═══════════════════════════════════════════ */
+const WIP_PAGES = ['insights.html', 'showcase.html', 'insight-detail.html'];
+const WIP_KEY = 'mihir';
+const WIP_PREVIEW = (() => {
+  try {
+    const q = new URLSearchParams(location.search).get('preview');
+    if (q === WIP_KEY) localStorage.setItem('mk-preview', '1');
+    if (q === 'off') localStorage.removeItem('mk-preview');
+    return localStorage.getItem('mk-preview') === '1';
+  } catch (e) { return false; }
+})();
+const WIP_ACTIVE = WIP_PAGES.length > 0 && !WIP_PREVIEW;
+if (WIP_ACTIVE) {
+  document.documentElement.classList.add('mk-wip');
+  if (WIP_PAGES.includes(currentPage())) document.documentElement.classList.add('mk-wip-page');
+}
+
+function renderWip() {
+  const panel = document.createElement('main');
+  panel.className = 'mk-wip-panel';
+  panel.innerHTML = `
+    <section class="mk-wip-card" aria-labelledby="wip-title">
+      <span class="mk-wip-big" aria-hidden="true">Soon</span>
+      <svg class="mk-wip-site" viewBox="0 0 220 120" aria-hidden="true">
+        <!-- crane -->
+        <rect x="150" y="14" width="5" height="78" fill="#C9A227"/>
+        <path d="M150 14h-64v4h64z M155 14h28v4h-28z" fill="#C9A227"/>
+        <path d="M152 18l-60 0M152 18l30 0" stroke="#C9A227" stroke-width="1"/>
+        <path d="M150 18l-12 12M155 18l10 10" stroke="#C9A227" stroke-width="1.2"/>
+        <line class="mk-wip-hook" x1="100" y1="18" x2="100" y2="52" stroke="#9AA3B2" stroke-width="1.2"/>
+        <rect class="mk-wip-load" x="91" y="52" width="18" height="10" rx="1.5" fill="#E9C95A"/>
+        <rect x="176" y="18" width="10" height="9" fill="#9AA3B2"/>
+        <rect x="140" y="92" width="25" height="5" fill="#C9A227"/>
+        <!-- barrier -->
+        <rect x="18" y="74" width="54" height="12" rx="2" fill="#E3C04A"/>
+        <path d="M22 74h8l-6 12h-8zM38 74h8l-6 12h-8zM54 74h8l-6 12h-8z" fill="#14182B"/>
+        <rect x="24" y="86" width="4" height="12" fill="#9AA3B2"/><rect x="62" y="86" width="4" height="12" fill="#9AA3B2"/>
+        <!-- cone -->
+        <path d="M100 98l7-24h6l7 24z" fill="#E86A2C"/><path d="M103.5 86h13l1.5 5h-16z" fill="#fff"/><rect x="96" y="97" width="28" height="3" rx="1" fill="#E86A2C"/>
+      </svg>
+      <span class="mk-wip-label">Work zone &middot; Under construction</span>
+      <h1 id="wip-title">This section is under construction</h1>
+      <p>Like any good road project, this page is being planned, surveyed and built with care. Articles, reports, posters and presentations will open here soon &mdash; until then, explore my projects and publications.</p>
+      <div class="mk-wip-actions">
+        <a class="mk-wip-btn mk-wip-btn--gold" href="projects.html">View projects</a>
+        <a class="mk-wip-btn mk-wip-btn--line" href="publications.html">View publications</a>
+      </div>
+      <div class="mk-wip-road" aria-hidden="true"><span></span></div>
+    </section>`;
+  const nav = document.querySelector('.navbar');
+  (nav && nav.parentNode === document.body) ? nav.after(panel) : document.body.prepend(panel);
+}
+
+function renderPreviewBadge() {
+  const b = document.createElement('a');
+  b.className = 'mk-preview-badge';
+  b.href = '?preview=off';
+  b.title = 'You are seeing hidden pages. Click to switch preview off.';
+  b.textContent = 'Preview mode · Insights & Showcase visible only to you';
+  document.body.appendChild(b);
+}
+
+/* ═══════════════════════════════════════════
    PAGE ROUTER
    ═══════════════════════════════════════════ */
 
 function route() {
   const page = currentPage();
+  if (WIP_ACTIVE && WIP_PAGES.includes(page)) { renderWip(); return; }
+  if (!WIP_ACTIVE && WIP_PREVIEW && WIP_PAGES.length) renderPreviewBadge();
   if (page === 'index.html' || page === '')        renderHome();
   else if (page === 'about.html')                  renderAbout();
   else if (page === 'projects.html')               renderProjects();

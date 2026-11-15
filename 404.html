@@ -35,15 +35,44 @@
     .nf__links a { font-size: .86rem; color: rgba(255,255,255,.7); text-decoration: none; }
     .nf__links a:hover { color: #E3C04A; }
     @media (max-width: 560px) { .nf__card { padding: 40px 24px 32px; border-radius: 22px; } }
+    .nf__card { padding-bottom: 88px; }
+    .nf__site { position: absolute; right: 28px; top: 26px; width: 200px; height: auto; }
+    .nf__lamp { animation: nfBlink 1.2s steps(2, start) infinite; }
+    @keyframes nfBlink { to { opacity: .15; } }
+    .nf__road { position: absolute; left: 0; right: 0; bottom: 0; height: 46px; background: #2A3044; border-top: 3px solid #3A4160; overflow: hidden; }
+    .nf__road span { position: absolute; left: 0; top: 50%; width: 200%; height: 4px; margin-top: -2px; background: repeating-linear-gradient(90deg, #E9C95A 0 34px, transparent 34px 64px); animation: nfRoad 2.4s linear infinite; }
+    @keyframes nfRoad { from { transform: translateX(0); } to { transform: translateX(-64px); } }
+    .nf__label, .nf h1, .nf p { max-width: calc(100% - 220px); }
+    @media (max-width: 700px) {
+      .nf__site { position: relative; right: auto; top: auto; display: block; width: 170px; margin: 0 0 18px; }
+      .nf__label, .nf h1, .nf p { max-width: none; }
+    }
+    @media (prefers-reduced-motion: reduce) { .nf__lamp, .nf__road span { animation: none; } }
   </style>
 </head>
 <body>
   <main class="nf">
     <section class="nf__card" aria-labelledby="nf-title">
       <span class="nf__big" aria-hidden="true">404</span>
-      <span class="nf__label">Error 404</span>
-      <h1 id="nf-title">This page took a wrong turn</h1>
-      <p>The page you are looking for does not exist or may have moved. Head back home, or pick a section below.</p>
+      <svg class="nf__site" viewBox="0 0 220 120" aria-hidden="true">
+        <!-- road closed sign -->
+        <rect x="118" y="10" width="84" height="44" rx="5" fill="#fff"/>
+        <rect x="121" y="13" width="78" height="38" rx="3" fill="none" stroke="#D93B2B" stroke-width="3"/>
+        <text x="160" y="29" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="700" fill="#14182B">ROAD</text>
+        <text x="160" y="43" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="700" fill="#14182B">CLOSED</text>
+        <rect x="157" y="54" width="6" height="44" fill="#9AA3B2"/>
+        <!-- barrier -->
+        <rect x="18" y="74" width="54" height="12" rx="2" fill="#E3C04A"/>
+        <path d="M22 74h8l-6 12h-8zM38 74h8l-6 12h-8zM54 74h8l-6 12h-8z" fill="#14182B"/>
+        <rect x="24" y="86" width="4" height="12" fill="#9AA3B2"/><rect x="62" y="86" width="4" height="12" fill="#9AA3B2"/>
+        <circle class="nf__lamp" cx="26" cy="70" r="4" fill="#F5A524"/>
+        <!-- cones -->
+        <path d="M92 98l7-24h6l7 24z" fill="#E86A2C"/><path d="M95.5 86h13l1.5 5h-16z" fill="#fff"/><rect x="88" y="97" width="28" height="3" rx="1" fill="#E86A2C"/>
+        <path d="M186 98l6-20h5l6 20z" fill="#E86A2C"/><path d="M189 88h11l1.2 4h-13.4z" fill="#fff"/><rect x="183" y="97" width="23" height="3" rx="1" fill="#E86A2C"/>
+      </svg>
+      <span class="nf__label">Error 404 &middot; Road closed</span>
+      <h1 id="nf-title">Looks like you took a wrong exit</h1>
+      <p>This road does not lead anywhere &mdash; the page you are looking for does not exist or has been moved. Take the detour below to get back on track.</p>
       <div class="nf__actions">
         <a class="nf__btn nf__btn--gold" href="index.html">&larr; Back to home</a>
         <a class="nf__btn nf__btn--line" href="contact.html">Contact me</a>
@@ -56,6 +85,7 @@
         <a href="showcase.html">Showcase</a>
         <a href="gallery.html">Gallery</a>
       </nav>
+      <div class="nf__road" aria-hidden="true"><span></span></div>
     </section>
   </main>
 </body>

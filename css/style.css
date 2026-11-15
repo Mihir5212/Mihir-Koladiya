@@ -3733,3 +3733,41 @@ a.cx-item:hover { background: rgba(255,255,255,0.75); }
   .cta-section__label, .cta-section__title, .cta-section__desc { grid-column: 1 !important; }
   .cta-section__actions { grid-column: 2 !important; grid-row: 1 / span 3 !important; align-self: center; }
 }
+
+
+/* ═══ Under construction (Insights & Showcase hidden from visitors) ═══ */
+/* Keep Insights & Showcase in the navigation bar and footer; hide other links to them */
+html.mk-wip a:is([href^="insights.html"], [href^="showcase.html"], [href^="insight-detail.html"]):not(.navbar a):not(footer a) { display: none !important; }
+html.mk-wip section[aria-labelledby="h5-ins-title"] { display: none !important; }
+html.mk-wip-page body > *:not(.navbar):not(footer):not(.mk-wip-panel):not(script):not(.dock):not(.toast-stack) { display: none !important; }
+.mk-wip-panel { min-height: 70vh; display: grid; place-items: center; padding: 140px 16px 72px; background: #F7F5F0; }
+.mk-wip-card { position: relative; width: 100%; max-width: 760px; overflow: hidden; padding: 56px 48px 48px; border-radius: 28px; background: #14182B; color: #fff; box-shadow: 0 30px 60px -36px rgba(20,24,43,.7); }
+.mk-wip-big { position: absolute; right: -6px; bottom: -34px; font-family: var(--font-display); font-size: clamp(7rem, 20vw, 12rem); line-height: 1; color: rgba(255,255,255,.05); pointer-events: none; user-select: none; }
+.mk-wip-label { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: .7rem; letter-spacing: .18em; text-transform: uppercase; color: #E9C95A; }
+.mk-wip-label::before { content: ""; width: 28px; height: 2px; background: #C9A227; }
+.mk-wip-card h1 { position: relative; margin: 16px 0 12px; font-family: var(--font-display); font-weight: 400; font-size: clamp(2rem, 4.6vw, 2.9rem); line-height: 1.15; color: #fff; }
+.mk-wip-card p { position: relative; max-width: 500px; margin: 0 0 30px; font-size: 1rem; line-height: 1.7; color: rgba(255,255,255,.72); }
+.mk-wip-actions { position: relative; display: flex; flex-wrap: wrap; gap: 12px; }
+.mk-wip-btn { display: inline-flex; align-items: center; padding: 12px 24px; border-radius: 999px; font-weight: 600; font-size: .92rem; text-decoration: none; transition: transform .2s, background .2s, color .2s, border-color .2s; }
+.mk-wip-btn--gold { background: #E3C04A; color: #14182B; }
+.mk-wip-btn--gold:hover { background: #F0D06A; color: #14182B; transform: translateY(-2px); }
+.mk-wip-btn--line { border: 1px solid rgba(255,255,255,.28); color: #fff; }
+.mk-wip-btn--line:hover { border-color: #E3C04A; color: #E3C04A; }
+.mk-preview-badge { position: fixed; left: 16px; bottom: 16px; z-index: 2000; padding: 8px 14px; border-radius: 999px; background: #E3C04A; color: #14182B; font-size: .76rem; font-weight: 700; text-decoration: none; box-shadow: 0 10px 24px -12px rgba(20,24,43,.6); }
+@media (max-width: 560px) { .mk-wip-card { padding: 40px 24px 32px; border-radius: 22px; } .mk-wip-panel { padding-top: 110px; } }
+
+/* Under construction — civil engineering touches */
+.mk-wip-card { padding-bottom: 88px; }
+.mk-wip-site { position: absolute; right: 28px; top: 26px; width: 200px; height: auto; opacity: .95; }
+.mk-wip-hook, .mk-wip-load { animation: mkCrane 3.6s ease-in-out infinite; transform-box: fill-box; }
+@keyframes mkCrane { 0%,100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+.mk-wip-road { position: absolute; left: 0; right: 0; bottom: 0; height: 46px; background: #2A3044; border-top: 3px solid #3A4160; overflow: hidden; }
+.mk-wip-road span { position: absolute; left: 0; top: 50%; width: 200%; height: 4px; margin-top: -2px; background: repeating-linear-gradient(90deg, #E9C95A 0 34px, transparent 34px 64px); animation: mkRoad 2.4s linear infinite; }
+@keyframes mkRoad { from { transform: translateX(0); } to { transform: translateX(-64px); } }
+.mk-wip-card h1, .mk-wip-card p, .mk-wip-label { max-width: calc(100% - 220px); }
+.mk-wip-card p { max-width: min(500px, calc(100% - 210px)); }
+@media (max-width: 700px) {
+  .mk-wip-site { position: relative; right: auto; top: auto; display: block; width: 170px; margin: 0 0 18px; }
+  .mk-wip-card h1, .mk-wip-card p, .mk-wip-label { max-width: none; }
+}
+@media (prefers-reduced-motion: reduce) { .mk-wip-hook, .mk-wip-load, .mk-wip-road span { animation: none; } }
