@@ -267,7 +267,7 @@ function pubCardHTML(p, accentClass = '', kindOverride = '') {
 /* Cite: copy the citation and show a toast (same behaviour as the earlier site) */
 document.addEventListener('click', e => {
   const btn = e.target.closest && e.target.closest('.pub-card__cite');
-  if (!btn) return;
+  if (!btn || btn.classList.contains('sc-open')) return;
   e.preventDefault();
   copyText(btn.getAttribute('data-cite'), 'Citation');
 });
@@ -1549,28 +1549,22 @@ const SC_TYPES = [
 ];
 const scSvg = (k, cls = '') => `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${SC_ICON[k] || SC_ICON.report}</svg>`;
 
-function scCardHTML(item, i) {
+function scCardHTML(item) {
   const meta = getContentTypeMeta(item.contentType);
+  const type = meta.label.replace(/s$/, '');
   const units = item.slideCount ? `${item.slideCount} slides` : item.pageCount ? `${item.pageCount} pages` : '';
-  const hl = (item.highlights || []).slice(0, 2);
   return `
-    <article class="sc-card sc-card--${sanitize(item.contentType)} reveal" style="--i:${i}">
-      <div class="sc-card__cover">
-        <span class="sc-card__type">${scSvg(item.contentType)}${sanitize(meta.label)}</span>
-        ${units ? `<span class="sc-card__units">${sanitize(units)}</span>` : ''}
-        <div class="sc-card__sheet" aria-hidden="true">
-          <span></span><span></span><span></span><span></span><span></span>
-          ${scSvg(item.contentType, 'sc-card__glyph')}
-        </div>
-      </div>
-      <div class="sc-card__body">
-        <div class="sc-card__meta"><span>${sanitize(item.category)}</span><span>${sanitize(item.date || '')}</span></div>
-        <h3 class="sc-card__title">${sanitize(item.title)}</h3>
-        <p class="sc-card__excerpt">${sanitize(item.excerpt)}</p>
-        ${hl.length ? `<ul class="sc-card__hl">${hl.map(h => `<li>${sanitize(h)}</li>`).join('')}</ul>` : ''}
-        <div class="sc-card__actions">
-          ${item.pdfSrc ? `<button type="button" class="btn btn-primary sc-open" data-id="${item.id}">View ${sanitize(meta.label.replace(/s$/, ''))}</button>` : ''}
-          <a class="btn-ghost" href="insight-detail.html?id=${item.id}">Details</a>
+    <article class="yt yt--${sanitize(item.contentType)} reveal">
+      <button type="button" class="yt__thumb sc-open" data-id="${item.id}" aria-label="Open ${sanitize(type)}: ${sanitize(item.title)}">
+        ${item.thumb ? `<img src="${sanitize(item.thumb)}" alt="" loading="lazy">` : `<span class="yt__cover"><b>${sanitize(type)}</b><span>${sanitize(item.category)}</span></span>`}
+        ${units ? `<span class="yt__badge">${sanitize(units)}</span>` : ''}
+        ${item.date ? `<span class="yt__date">${sanitize(item.date)}</span>` : ''}
+        <span class="yt__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg></span>
+      </button>
+      <div class="yt__info">
+        <span class="yt__avatar" aria-hidden="true"><img src="assets/images/profile.jpg" alt="" loading="lazy" onerror="this.remove()">MK</span>
+        <div>
+          <h3 class="yt__title">${sanitize(item.title)}</h3>
         </div>
       </div>
     </article>`;
@@ -1587,16 +1581,10 @@ function renderShowcase() {
   const state = { type: 'all', cat: 'All', q: '' };
 
   // classification buttons (with counts + sliding highlight)
-  typesEl.innerHTML = '<span class="sc-types__pill" aria-hidden="true"></span>' + SC_TYPES.map(t => {
-    const n = t.key === 'all' ? items.length : items.filter(i => i.contentType === t.key).length;
-    return `<button type="button" role="tab" class="sc-type${t.key === 'all' ? ' is-active' : ''}" data-type="${t.key}" aria-selected="${t.key === 'all'}"${n ? '' : ' disabled'}>
-      <span class="sc-type__icon">${scSvg(t.key)}</span>
-      <span class="sc-type__label">${t.label}</span>
-      <span class="sc-type__count">${n}</span>
-    </button>`;
-  }).join('');
-  const pill = el('.sc-types__pill', typesEl);
-  const movePill = (instant) => {
+  typesEl.innerHTML = SC_TYPES.filter(t => t.key === 'all' || items.some(i => i.contentType === t.key)).map(t =>
+    `<button type="button" class="filter-btn sc-tbtn${t.key === 'all' ? ' active is-active' : ''}" data-type="${t.key}">${t.key === 'all' ? 'All' : t.label}</button>`).join('');
+  const pill = null;
+  const movePill = (instant) => { if (!pill) return;
     const b = el('.sc-type.is-active', typesEl);
     if (!b) return;
     if (instant) pill.style.transition = 'none';
@@ -1627,9 +1615,9 @@ function renderShowcase() {
   };
 
   typesEl.addEventListener('click', e => {
-    const b = e.target.closest('.sc-type');
+    const b = e.target.closest('.sc-tbtn');
     if (!b || b.disabled) return;
-    els('.sc-type', typesEl).forEach(x => { x.classList.toggle('is-active', x === b); x.setAttribute('aria-selected', String(x === b)); });
+    els('.sc-tbtn', typesEl).forEach(x => { x.classList.toggle('is-active', x === b); x.classList.toggle('active', x === b); });
     state.type = b.dataset.type;
     movePill();
     renderCats(); renderGrid();
@@ -1645,7 +1633,7 @@ function renderShowcase() {
   grid.addEventListener('click', e => {
     if (e.target.closest('.sc-reset')) {
       state.cat = 'All'; state.q = ''; search.value = '';
-      el('.sc-type[data-type="all"]', typesEl).click();
+      el('.sc-tbtn[data-type="all"]', typesEl).click();
       return;
     }
     const o = e.target.closest('.sc-open');

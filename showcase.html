@@ -50,19 +50,10 @@
   <section class="section sc" aria-label="Showcase listing">
     <div class="container">
 
-      <!-- Classification: content type -->
-      <div class="sc-types-wrap">
-        <div class="sc-types" id="sc-types" role="tablist" aria-label="Filter by content type"></div>
-      </div>
+      <!-- One simple filter (same style as Projects page) -->
+      <div class="filter-bar" id="sc-types" role="group" aria-label="Filter by type"></div>
+      <div hidden><div id="sc-cats"></div><input type="search" id="sc-search" /></div>
 
-      <!-- Secondary: category + search -->
-      <div class="sc-tools">
-        <div class="sc-cats" id="sc-cats" role="group" aria-label="Filter by category"></div>
-        <label class="sc-search">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-          <input type="search" id="sc-search" placeholder="Search titles…" aria-label="Search showcase" />
-        </label>
-      </div>
       <p class="sc-count" id="sc-count" aria-live="polite"></p>
 
       <div class="sc-grid" id="sc-grid"></div>
