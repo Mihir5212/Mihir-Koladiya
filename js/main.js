@@ -232,7 +232,7 @@ function pubCardHTML(p, accentClass = '', kindOverride = '') {
         ${p.authors ? pubAuthors(p.authors) : ''}
         ${p.note ? `<p class="pub-card__note">${sanitize(p.note)}</p>` : ''}
         <div class="pub-card__footer">
-          ${p.status ? `<span class="status-badge ${getStatusClass(p.status)}">${sanitize(p.status)}${p.presented && !/presented/i.test(p.status) ? ' &amp; Presented' : ''}${p.presentedBy ? ' by ' + sanitize(p.presentedBy) : ''}</span>` : ''}
+          ${p.status ? `<span class="status-badge ${getStatusClass(p.status)}${/^published$/i.test(p.status || '') ? ' is-published' : ''}">${sanitize(p.status)}${p.presented && !/presented/i.test(p.status) ? ' &amp; Presented' : ''}${p.presentedBy ? ' by ' + sanitize(p.presentedBy) : ''}</span>` : ''}
           ${doi}
           ${link}
           ${p.note ? '' : `<button type="button" class="pub-card__cite" data-cite="${sanitize(cite)}">${QUOTE_SVG} Cite</button>`}
@@ -845,7 +845,15 @@ function renderPublications() {
       [[...all, ...pub.inProgress].filter(p => /under/i.test(p.status || '')).length, 'Under publication'],
       [pub.peerReview.length, 'Peer reviews'],
     ];
-    statsEl.innerHTML = tiles.map(([n, label]) => `<div class="pub-stat"><div class="pub-stat__value">${n}</div><div class="pub-stat__label">${label}</div></div>`).join('');
+    const total = tiles.reduce((t, [n]) => t + n, 0) || 1;
+    statsEl.innerHTML = `<div class="ps">
+      <div class="ps__head"><span class="ps__kicker">Research output</span><span class="ps__note">At a glance</span></div>
+      <div class="ps__bar" aria-hidden="true">${tiles.map(([n], i) => `<span class="ps__seg ps--${i + 1}" style="flex:${n}" data-i="${i + 1}"></span>`).join('')}</div>
+      <ul class="ps__list">${tiles.map(([n, label], i) => `<li class="ps--${i + 1}" data-i="${i + 1}"><b>${n}</b><span>${label.replace(/ /, '<br>')}</span></li>`).join('')}</ul>
+    </div>`;
+    const ps = statsEl.querySelector('.ps');
+    ps.addEventListener('mouseover', e => { const t = e.target.closest('[data-i]'); ps.dataset.on = t ? t.dataset.i : ''; });
+    ps.addEventListener('mouseleave', () => { ps.dataset.on = ''; });
   }
 
   // Group by status: Published → Accepted → Presented → Under Publication
