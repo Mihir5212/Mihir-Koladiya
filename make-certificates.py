@@ -1,6 +1,6 @@
-"""Turns certificate PDFs into watermarked preview images for the website.
+"""Turns certificate PDFs or images (JPG/PNG/WEBP) into watermarked preview images for the website.
 
-Put the real PDFs in  ..\certificate-originals\  (outside the website, never uploaded),
+Put the real PDFs in  assets/images/certificate-originals/  (git-ignored, never uploaded),
 using the file names listed in js/data.js (e.g. tipce-2025.pdf), then run:
     python make-certificates.py
 Images are written to assets/images/certificates/<name>.jpg (first page only,
@@ -12,7 +12,7 @@ from PIL import Image, ImageDraw, ImageFont
 import pymupdf
 
 HERE = Path(__file__).resolve().parent
-SRC = HERE.parent / "certificate-originals"
+SRC = HERE / "assets" / "images" / "certificate-originals"
 OUT = HERE / "assets" / "images" / "certificates"
 MARK = "Mihir Koladiya · Portfolio copy"
 WIDTH = 1400
@@ -37,13 +37,17 @@ def watermark(im):
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    pdfs = sorted(SRC.glob("*.pdf"))
-    if not pdfs: print(f"No PDFs in {SRC}"); return
-    for p in pdfs:
-        doc = pymupdf.open(p); page = doc[0]
-        zoom = WIDTH / page.rect.width
-        pix = page.get_pixmap(matrix=pymupdf.Matrix(zoom, zoom), alpha=False)
-        im = Image.frombytes("RGB", (pix.width, pix.height), pix.samples)
+    files = sorted(f for f in SRC.iterdir() if f.suffix.lower() in (".pdf", ".jpg", ".jpeg", ".png", ".webp"))
+    if not files: print(f"No certificates in {SRC}"); return
+    for p in files:
+        if p.suffix.lower() == ".pdf":
+            doc = pymupdf.open(p); page = doc[0]
+            zoom = WIDTH / page.rect.width
+            pix = page.get_pixmap(matrix=pymupdf.Matrix(zoom, zoom), alpha=False)
+            im = Image.frombytes("RGB", (pix.width, pix.height), pix.samples)
+        else:
+            im = Image.open(p).convert("RGB")
+            if im.width > WIDTH: im = im.resize((WIDTH, round(im.height * WIDTH / im.width)), Image.LANCZOS)
         im = watermark(im)
         dst = OUT / (p.stem + ".jpg")
         im.save(dst, "JPEG", quality=78, optimize=True, progressive=True)

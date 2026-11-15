@@ -164,8 +164,8 @@ Languages: Gujarati (native), Hindi and English (full professional proficiency).
     ],
     "Software & Programming": [
       "Python", "R", "SPSS", "Jamovi", "SmartPLS",
-      "AutoCAD", "IITPave", "MS Excel", "MS Word / PowerPoint",
-      "Power BI", "Tableau", "MATLAB", "VISSIM", "SUMO"
+      "AutoCAD", "Civil 3D", "IITPave", "MS Excel", "MS Word", "MS PowerPoint",
+      "Power BI", "MATLAB"
     ],
     "Research & Reporting": [
       "Research Paper Writing", "Technical Reports", "Mode Choice Analysis",
@@ -179,8 +179,10 @@ Languages: Gujarati (native), Hindi and English (full professional proficiency).
   CERTIFICATIONS: [
     { title: "Paper Presentation Certificate – TIPCE 2025", org: "IIT Roorkee", year: "18–21 Sep 2025", photo: "", file: "assets/images/certificates/tipce-2025.jpg" },
     { title: "Paper Presentation Certificate – CTSEM 2025", org: "MANIT Bhopal & CSIR-CRRI", year: "04–05 Jul 2025", photo: "", file: "assets/images/certificates/ctsem-2025.jpg" },
-    { title: "Certificate of Reviewing – Journal of Engineering Research & Reviews", org: "eJManager", year: "12 Apr 2025", photo: "", file: "assets/images/certificates/reviewing-jerr-2025.jpg" },
+    { title: "Certificate of Reviewing – Journal of Engineering Research & Reviews", org: "eJManager", year: "12 Apr 2025", photo: "", file: "assets/images/certificates/reviewing-jerr-2025-1.jpg|assets/images/certificates/reviewing-jerr-2025-2.jpg" },
     { title: "Paper Presentation Certificate – TPMDC 2024", org: "IIT Bombay", year: "18–20 Dec 2024", photo: "", file: "assets/images/certificates/tpmdc-2024.jpg" },
+    { title: "Design Engineering Project Fair – 3rd Rank", org: "Shree Swami Atmanand Saraswati Institute of Technology (SSASIT), Surat", year: "24 Apr 2021", photo: "", file: "assets/images/certificates/ssasit-design-fair-2021.jpg" },
+    { title: "Project/Model Presentation – 2nd Rank", org: "Tapi Diploma Engineering College, Surat", year: "07–08 Mar 2019", photo: "", file: "assets/images/certificates/tapi-project-model-2019.jpg" },
   ],
 
   // ─────────────────────────────────────────
@@ -199,12 +201,10 @@ Languages: Gujarati (native), Hindi and English (full professional proficiency).
   // AWARDS & ACHIEVEMENTS
   // ─────────────────────────────────────────
   AWARDS: [
-    { title: "Outstanding Academic Guide Award",         org: "Wonder Cement Ltd. / Concrete Catalyst",  date: "2026",           outcome: "Award" },
-    { title: "Mentor Appreciation Certificate",          org: "Concrete Catalyst",                       date: "2026",           outcome: "Appreciation" },
-    { title: "Appreciation Letter – Road Safety Study",  org: "Gujarat Road Safety Authority",           date: "27 Jun 2025",    outcome: "Appreciation" },
-    { title: "Appreciation Certificate – T&P Cell",      org: "The M.S. University of Baroda",           date: "01 May 2025",    outcome: "Appreciation" },
-    { title: "Design Engineering Project Fair",          org: "Shree Swami Atmanand Saraswati Institute of Technology (SSASIT), Surat",date: "24 Apr 2021",    outcome: "3rd Rank" },
-    { title: "Project/Model Presentation",               org: "Tapi Diploma Engineering College, Surat", date: "07–08 Mar 2019", outcome: "2nd Rank" },
+    { logoOrg: "Wonder Cement", title: "Outstanding Academic Guide Award",         org: "Concrete Catalyst / Neha Consultant / Wonder Cement", date: "2026",           outcome: "Award", file: "assets/images/gallery/SAM_0482.jpg" },
+    { logoOrg: "Neha Consultant", title: "Mentor Appreciation",                     org: "Concrete Catalyst / Neha Consultant / Wonder Cement", date: "2026",           outcome: "Appreciation", file: "assets/images/certificates/concrete-catalyst-mentor-2026.jpg" },
+    { title: "Appreciation Letter – Road Safety Study",  org: "Gujarat Road Safety Authority",           date: "27 Jun 2025",    outcome: "Appreciation", file: "assets/images/certificates/grsa-appreciation-2025.jpg" },
+    { title: "Appreciation – T&P Cell",                  org: "The M.S. University of Baroda",           date: "01 May 2025",    outcome: "Appreciation", file: "assets/images/certificates/msu-tp-appreciation-2025.jpg" },,,
   ],
 
   // ─────────────────────────────────────────
