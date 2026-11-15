@@ -5,26 +5,58 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex" />
   <title>Page not found — Mihir Koladiya</title>
-  <link rel="stylesheet" href="/css/style.css" />
+  <script>
+    // Work out the site root so links work on Vercel ("/") and in a local preview ("/Mihir's Portfolio/")
+    (function () {
+      var path = decodeURIComponent(location.pathname);
+      var i = path.indexOf("/Mihir's Portfolio/");
+      var root = i >= 0 ? path.slice(0, i) + "/Mihir's Portfolio/" : "/";
+      document.write('<base href="' + encodeURI(root) + '">');
+    })();
+  </script>
+  <link rel="stylesheet" href="css/style.css" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2314182B'/><text x='16' y='22' text-anchor='middle' font-family='serif' font-size='18' font-weight='bold' fill='%23C9A227'>M</text></svg>" />
   <style>
-    .nf { min-height: 100vh; display: grid; place-items: center; padding: 40px 20px; background: #F7F5F0; text-align: center; }
-    .nf__code { font-family: var(--font-mono, monospace); font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; color: #9A7B14; }
-    .nf h1 { margin: 12px 0 10px; font-family: var(--font-display, serif); font-weight: 400; font-size: clamp(2rem, 5vw, 3.2rem); color: #14182B; }
-    .nf p { margin: 0 0 26px; color: #5B6474; }
-    .nf a { display: inline-block; padding: 12px 24px; border-radius: 999px; background: #1C2A5A; color: #fff; font-weight: 600; text-decoration: none; }
-    .nf a + a { margin-left: 10px; background: #fff; color: #1C2A5A; border: 1px solid #D9DCE3; }
+    body { margin: 0; background: #F7F5F0; }
+    .nf { min-height: 100vh; display: grid; place-items: center; padding: 32px 16px; }
+    .nf__card { position: relative; width: 100%; max-width: 760px; overflow: hidden; padding: 56px 48px 48px; border-radius: 28px; background: #14182B; color: #fff; box-shadow: 0 30px 60px -36px rgba(20,24,43,.7); }
+    .nf__big { position: absolute; right: -10px; bottom: -40px; font-family: var(--font-display, serif); font-size: clamp(9rem, 26vw, 15rem); line-height: 1; color: rgba(255,255,255,.05); pointer-events: none; user-select: none; }
+    .nf__label { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-mono, monospace); font-size: .7rem; letter-spacing: .18em; text-transform: uppercase; color: #E9C95A; }
+    .nf__label::before { content: ""; width: 28px; height: 2px; background: #C9A227; }
+    .nf h1 { position: relative; margin: 16px 0 12px; font-family: var(--font-display, serif); font-weight: 400; font-size: clamp(2rem, 4.6vw, 2.9rem); line-height: 1.15; color: #fff; }
+    .nf p { position: relative; max-width: 480px; margin: 0 0 30px; font-size: 1rem; line-height: 1.7; color: rgba(255,255,255,.72); }
+    .nf__actions { position: relative; display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 36px; }
+    .nf__btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 999px; font-weight: 600; font-size: .92rem; text-decoration: none; transition: transform .2s, background .2s; }
+    .nf__btn--gold { background: #E3C04A; color: #14182B; }
+    .nf__btn--gold:hover { background: #F0D06A; transform: translateY(-2px); }
+    .nf__btn--line { border: 1px solid rgba(255,255,255,.28); color: #fff; }
+    .nf__btn--line:hover { border-color: #E3C04A; color: #E3C04A; }
+    .nf__links { position: relative; display: flex; flex-wrap: wrap; gap: 8px 22px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.12); }
+    .nf__links a { font-size: .86rem; color: rgba(255,255,255,.7); text-decoration: none; }
+    .nf__links a:hover { color: #E3C04A; }
+    @media (max-width: 560px) { .nf__card { padding: 40px 24px 32px; border-radius: 22px; } }
   </style>
 </head>
 <body>
   <main class="nf">
-    <div>
-      <span class="nf__code">Error 404</span>
-      <h1>This page could not be found</h1>
-      <p>The link may be old or mistyped. Use one of the pages below instead.</p>
-      <a href="/">Go to home</a>
-      <a href="/projects.html">View projects</a>
-    </div>
+    <section class="nf__card" aria-labelledby="nf-title">
+      <span class="nf__big" aria-hidden="true">404</span>
+      <span class="nf__label">Error 404</span>
+      <h1 id="nf-title">This page took a wrong turn</h1>
+      <p>The page you are looking for does not exist or may have moved. Head back home, or pick a section below.</p>
+      <div class="nf__actions">
+        <a class="nf__btn nf__btn--gold" href="index.html">&larr; Back to home</a>
+        <a class="nf__btn nf__btn--line" href="contact.html">Contact me</a>
+      </div>
+      <nav class="nf__links" aria-label="Site sections">
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="publications.html">Publications</a>
+        <a href="insights.html">Insights</a>
+        <a href="showcase.html">Showcase</a>
+        <a href="gallery.html">Gallery</a>
+      </nav>
+    </section>
   </main>
 </body>
 </html>
