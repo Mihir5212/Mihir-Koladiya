@@ -144,10 +144,32 @@ function initCounters() {
    SHARED HTML BUILDERS
    ═══════════════════════════════════════════ */
 
+function projectCaseHTML(p, i = 0) {
+  const all = p.tools || [];
+  const tools = all.slice(0, 4).map(t => `<span class="pc__tool">${sanitize(t)}</span>`).join('') + (all.length > 4 ? `<span class="pc__tool pc__tool--more">+${all.length - 4}</span>` : '');
+  return `
+    <a href="projects.html" class="pc reveal" aria-label="View project: ${sanitize(p.title)}">
+      <div class="pc__side">
+        <span class="pc__idx">${String(i + 1).padStart(2, '0')}</span>
+        <span class="pc__cat">${sanitize(p.category)}</span>
+        <span class="pc__status">${sanitize(p.status)}</span>
+      </div>
+      <div class="pc__main">
+        <h3 class="pc__title">${sanitize(p.title)}</h3>
+        <p class="pc__desc">${sanitize(p.description)}</p>
+        ${(p.outcomes || []).length ? `<ul class="pc__outs">${p.outcomes.slice(0, 1).map(x => `<li>${sanitize(x)}</li>`).join('')}</ul>` : ''}
+        <div class="pc__foot">
+          <div class="pc__tools">${tools}</div>
+          <span class="pc__go">View case study <span aria-hidden="true">&rarr;</span></span>
+        </div>
+      </div>
+    </a>`;
+}
+
 function projectCardHTML(p) {
   const tools = (p.tools || []).slice(0, 4).map(t => `<span class="project-card__tool">${sanitize(t)}</span>`).join('');
   return `
-    <a href="project-detail.html?id=${p.id}" class="project-card reveal" style="text-decoration:none;display:flex;flex-direction:column" aria-label="View project: ${sanitize(p.title)}">
+    <a href="projects.html" class="project-card reveal" style="text-decoration:none;display:flex;flex-direction:column" aria-label="View project: ${sanitize(p.title)}">
       <div class="project-card__bar"></div>
       <div class="project-card__body">
         <div class="project-card__header">
@@ -624,7 +646,7 @@ function renderPubsPreview() {
   const container = el('#pubs-preview');
   if (!container) return;
   const pubs = newestFirst([...(DATA.PUBLICATIONS.journal || []), ...(DATA.PUBLICATIONS.conference || [])].filter(p => /^published$/i.test(p.status || '')), x => x.year).slice(0, 4);
-  container.innerHTML = `<div class="pub-cards">${pubs.map(p => pubCardHTML(p)).join('')}</div>`;
+  container.innerHTML = pubTimelineHTML(pubs);
 }
 
 function renderInsightsPreview() {
@@ -823,8 +845,42 @@ function renderProjectCards(grid, cat) {
   const filtered = cat === 'All'
     ? DATA.PROJECTS
     : DATA.PROJECTS.filter(p => p.category === cat);
-  grid.innerHTML = filtered.length
-    ? filtered.map(p => projectCardHTML(p)).join('')
+  const sorted = [...filtered].sort((a, b) => (+b.year || 0) - (+a.year || 0));
+  let lastY = '';
+  const ini = t => sanitize(String(t || '').replace(/[^A-Za-z ]/g, ' ').split(/\s+/).filter(w => w.length > 2).map(w => w[0]).slice(0, 2).join('').toUpperCase());
+  grid.innerHTML = sorted.length
+    ? `<ol class="tls pj-xp">${sorted.map(p => {
+        const y = String(p.year || ''); const showY = y !== lastY; lastY = y;
+        const logo = p.logo ? `<img class="pf-orglogo" src="assets/images/logos/${sanitize(p.logo)}.png" alt="" loading="lazy" data-k="${sanitize(p.logo)}" onerror="pfLogoFallback(this)"><span class="pf-orglogo-fb" hidden>${ini(p.category)}</span>` : ini(p.category);
+        return `<li class="tl">
+          <div class="tl__year">${showY ? sanitize(y) : ''}</div>
+          <div class="tl__rail"><span class="tl__dot"></span></div>
+          <details class="pjx pjx--${sanitize(String(p.category || '').toLowerCase().replace(/[^a-z]+/g, '-'))}">
+            <summary class="pjx__head">
+              <div class="pjx__info">
+                <span class="pjx__eyebrow">${sanitize(p.category)}</span>
+                <h3 class="pjx__title" title="${sanitize(p.title)}">${sanitize(p.title)}</h3>
+                <p class="pjx__line">${sanitize(p.description)}</p>
+                <p class="pjx__meta">
+                  ${p.org ? `<span class="pjx__org"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V8l7-4 7 4v13"/><path d="M9 21v-5h6v5M9 11h.01M15 11h.01"/></svg>${sanitize(p.org)}</span>` : ''}
+                  ${p.status ? `<span class="pjx__status">${sanitize(p.status)}</span>` : ''}
+                </p>
+              </div>
+              <div class="pjx__aside">
+                <div class="pjx__chips">${(p.tools || []).slice(0, 3).map(t => `<span>${sanitize(t)}</span>`).join('')}${(p.tools || []).length > 3 ? `<span class="is-more">+${p.tools.length - 3}</span>` : ''}</div>
+                <span class="pjx__chev" aria-hidden="true"></span>
+              </div>
+            </summary>
+            <div class="pjx__body">
+              ${p.fullDescription ? `<div class="pjx__sec"><h4 class="pjx__h">Overview</h4>${String(p.fullDescription).split(/\n\s*\n/).filter(Boolean).slice(0, 2).map(t => `<p class="pjx__summary">${sanitize(t.replace(/\*\*/g, '').trim())}</p>`).join('')}</div>` : ''}
+              <div class="pjx__cols">
+                ${(p.objectives || []).length ? `<div class="pjx__sec"><h4 class="pjx__h">Objectives</h4><ol class="pjx__objs">${p.objectives.map(o => `<li>${sanitize(o)}</li>`).join('')}</ol></div>` : ''}
+                ${(p.outcomes || []).length ? `<div class="pjx__sec"><h4 class="pjx__h">Key outcomes</h4><ul class="pjx__outs">${p.outcomes.map(o => `<li>${sanitize(o)}</li>`).join('')}</ul></div>` : ''}
+              </div>
+              ${(p.tools || []).length ? `<div class="pjx__sec pjx__sec--tools"><h4 class="pjx__h">Tools &amp; methods</h4><div class="pjx__chips pjx__chips--all">${p.tools.map(t => `<span>${sanitize(t)}</span>`).join('')}</div></div>` : ''}
+            </div>
+          </details>
+        </li>`; }).join('')}</ol>`
     : '<p style="color:var(--gray);grid-column:1/-1;text-align:center;padding:48px 0">No projects in this category.</p>';
   setTimeout(initReveal, 60);
 }
@@ -908,8 +964,17 @@ function renderInsights() {
 
   function renderGrid() {
     const items = articleItems.filter(i => activeCat === 'All' || i.category === activeCat);
+    grid.className = 'h8-ins';
     grid.innerHTML = items.length
-      ? items.map(i => insightCardHTML(i)).join('')
+      ? items.map((i, n) => `
+    <a class="h8-card${n === 0 ? ' h8-card--lead' : ''} reveal" href="insight-detail.html?id=${i.id}">
+      <span class="h8-card__num" aria-hidden="true">${String(n + 1).padStart(2, '0')}</span>
+      <span class="h8-card__top"><b class="h8-card__tag">${sanitize(i.category)}</b>${n === 0 ? '<span class="h8-card__flag">Featured</span>' : ''}</span>
+      <span class="h8-card__meta">${sanitize(i.date)}${i.readTime ? ' &middot; ' + sanitize(i.readTime) : ''}</span>
+      <h3 class="h8-card__title">${sanitize(i.title)}</h3>
+      ${n === 0 ? `<p class="h8-card__excerpt">${sanitize(i.excerpt)}</p>` : ''}
+      <span class="h8-card__more">Read article <i aria-hidden="true">&rarr;</i></span>
+    </a>`).join('')
       : `<p style="color:var(--gray);grid-column:1/-1;text-align:center;padding:32px 0">No articles in this selection.</p>`;
     setTimeout(initReveal, 60);
   }
@@ -1789,7 +1854,7 @@ function renderHomeV3() {
   if (work) {
     const list = (DATA.PROJECTS || []).filter(p => p.featured);
     work.innerHTML = (list.length ? list : DATA.PROJECTS || []).slice(0, 3).map((p, i) => `
-      <a class="hp-case reveal" href="project-detail.html?id=${p.id}">
+      <div class="hp-case reveal">
         <span class="hp-case__num" aria-hidden="true">${pad(i + 1)}</span>
         <div>
           <div class="hp-case__meta"><span>${sanitize(p.category)}</span><span>${sanitize(p.year)}</span><span>${sanitize(p.status || '')}</span></div>
@@ -1799,9 +1864,8 @@ function renderHomeV3() {
         </div>
         <div class="hp-case__side">
           <ul class="hp-case__out">${(p.outcomes || []).slice(0, 3).map(o => `<li>${sanitize(o)}</li>`).join('')}</ul>
-          <span class="hp-case__more">View case study <i>→</i></span>
         </div>
-      </a>`).join('');
+      </div>`).join('');
   }
 
   const P = DATA.PUBLICATIONS || {};

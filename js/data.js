@@ -233,6 +233,9 @@ Languages: Gujarati (native), Hindi and English (full professional proficiency).
   PROJECTS: [
     {
       id: 1,
+      org: "The Maharaja Sayajirao University of Baroda",
+      orgRole: "Institution",
+      logo: "msu",
       title: "Exploring the Root Causes of Traffic Crashes Using AI/ML and Geospatial Approaches",
       category: "Research",
       year: "2025",
@@ -260,6 +263,9 @@ Spatial crash clusters and safety determinants were identified through GIS-based
     },
     {
       id: 2,
+      org: "Gujarat Road Safety Authority",
+      orgRole: "Client",
+      logo: "grsa",
       title: "Detailed Investigation, Analysis, and Mitigation Measures for Blackspot Improvement",
       category: "Road Safety",
       year: "2024",
