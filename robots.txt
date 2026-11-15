@@ -1,3 +1,5 @@
 User-agent: *
 Allow: /
 Disallow: /assets/docs/
+
+Sitemap: https://mihirkoladiya-portfolio.vercel.app/sitemap.xml
