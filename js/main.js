@@ -43,7 +43,7 @@ function getStatusClass(status) {
   const s = (status || '').toLowerCase();
   if (s === 'completed')                               return 'status--completed';
   if (s.includes('progress') || s.includes('ongoing')) return 'status--progress';
-  if (s === 'published' || s === 'presented')          return 'status--published';
+  if (s === 'published' || s === 'presented' || s === 'accepted') return 'status--published';
   if (s.includes('review') || s.includes('revision'))  return 'status--review';
   return 'status--progress';
 }
@@ -195,23 +195,44 @@ function pubAuthors(authors) {
   return `<div class="pub-card__authors"><span class="pub-avs" aria-hidden="true">${avatars}</span><span class="pub-card__names">${names}</span></div>`;
 }
 
+// Publication logos: assets/images/logos/<key>.(png|jpg|webp|svg). Set p.logo to force a key.
+const PUB_LOGO = { trb: /TRB|Transportation Research Board/i, iitb: /IIT Bombay/i, iitr: /IIT Roorkee/i, manit: /NIT Bhopal|MANIT/i, svnit: /SVNIT/i, springer: /^10\.1007\//, ejmanager: /Journal of Engineering Research and Reviews/i };
+function pubLogoHTML(p) {
+  const venue = p.journal || p.conference || p.title || '';
+  const k = p.logo || Object.keys(PUB_LOGO).find(x => PUB_LOGO[x].test(venue + ' ' + (p.title || '')) || PUB_LOGO[x].test(p.doi || ''));
+  const ini = sanitize((venue.match(/[A-Z]{2,}/) || [venue.slice(0, 2)])[0].slice(0, 4));
+  return `<span class="pub-logo">${k ? `<img class="pf-orglogo" src="assets/images/logos/${k}.png" alt="" loading="lazy" data-k="${k}" onerror="pfLogoFallback(this)"><span class="pf-orglogo-fb" hidden>${ini}</span>` : ini}</span>`;
+}
+function pubTimelineHTML(items, accentClass = '', kind = '') {
+  const rank = p => /published/i.test(p.status || '') ? 0 : /accepted/i.test(p.status || '') ? 1 : /presented/i.test(p.status || '') ? 2 : 3;
+  const sorted = [...items].sort((a, b) => (rank(a) - rank(b)) || ((+b.year || 0) - (+a.year || 0)));
+  let last = '';
+  return `<ol class="pub-tl">${sorted.map(p => {
+    const y = String(p.year || ''); const show = y !== last; last = y;
+    return `<li class="pub-tl__item${show ? ' is-first' : ''}"><div class="pub-tl__year">${show ? sanitize(y) : ''}</div><div class="pub-tl__rail"><span class="pub-tl__dot"></span></div>${pubCardHTML(p, accentClass, kind)}</li>`;
+  }).join('')}</ol>`;
+}
+
 function pubCardHTML(p, accentClass = '', kindOverride = '') {
   const venue = p.journal || p.conference || '';
   const kind  = kindOverride || (p.journal ? 'Journal' : 'Conference');
   const doi   = p.doi ? `<span class="pub-card__doi">DOI ${sanitize(p.doi)}</span>` : '';
   const link  = p.link ? `<a href="${sanitize(p.link)}" target="_blank" rel="noopener" class="pub-card__link">Read paper ${EXT_SVG}</a>` : '';
-  const cite  = `${p.authors || ''} (${p.year || ''}). ${p.title || ''}. ${venue}.${p.doi ? ' https://doi.org/' + p.doi : ''}`;
+  // Springer-style author list: "Mihir Koladiya, Pankaj S. Prajapati" -> "Koladiya, M., Prajapati, P.S."
+  const citeAuthors = String(p.authors || '').split(/\s*,\s*|\s+and\s+/).filter(Boolean).map(n => {
+    const w = n.replace(/^(Prof\.|Dr\.)\s+/i, '').split(/\s+/); const last = w.pop();
+    return `${last}, ${w.map(x => x[0].toUpperCase() + '.').join('')}`;
+  }).join(', ');
+  const cite  = p.citation || `${citeAuthors} (${p.year || ''}). ${p.title || ''}. ${venue}.${p.doi ? ' https://doi.org/' + p.doi : ''}`;
   return `
     <article class="pub-card reveal ${accentClass ? 'pub-card--gold' : ''}">
-      <div class="pub-card__year">${sanitize(p.year)}<small>${sanitize(kind)}</small></div>
       <div class="pub-card__body">
-        ${venue ? `<div class="pub-card__venue">${sanitize(venue)}</div>` : ''}
+        <div class="pub-card__venue">${sanitize(kind)}${venue ? ` · ${sanitize(venue)}` : ''}</div>
         <h3 class="pub-card__title">${sanitize(p.title)}</h3>
         ${p.authors ? pubAuthors(p.authors) : ''}
         ${p.note ? `<p class="pub-card__note">${sanitize(p.note)}</p>` : ''}
         <div class="pub-card__footer">
-          ${p.status ? `<span class="status-badge ${getStatusClass(p.status)}">${sanitize(p.status)}</span>` : ''}
-          
+          ${p.status ? `<span class="status-badge ${getStatusClass(p.status)}">${sanitize(p.status)}${p.presented && !/presented/i.test(p.status) ? ' &amp; Presented' : ''}${p.presentedBy ? ' by ' + sanitize(p.presentedBy) : ''}</span>` : ''}
           ${doi}
           ${link}
           ${p.note ? '' : `<button type="button" class="pub-card__cite" data-cite="${sanitize(cite)}">${QUOTE_SVG} Cite</button>`}
@@ -820,27 +841,26 @@ function renderPublications() {
     const all = [...pub.journal, ...pub.conference];
     const tiles = [
       [all.filter(p => /published/i.test(p.status)).length, 'Papers published'],
-      [all.filter(p => /presented/i.test(p.status)).length, 'Papers presented'],
-      [pub.inProgress.length, 'Under publication'],
+      [[...all, ...pub.inProgress].filter(p => p.presented || /presented/i.test(p.status)).length, 'Papers presented'],
+      [[...all, ...pub.inProgress].filter(p => /under/i.test(p.status || '')).length, 'Under publication'],
       [pub.peerReview.length, 'Peer reviews'],
     ];
     statsEl.innerHTML = tiles.map(([n, label]) => `<div class="pub-stat"><div class="pub-stat__value">${n}</div><div class="pub-stat__label">${label}</div></div>`).join('');
   }
 
-  const journal = el('#pub-journal');
-  if (journal && pub.journal.length) {
-    journal.innerHTML = pubSectionHTML('Journal Papers', pub.journal, '');
-  }
-
-  const conf = el('#pub-conference');
-  if (conf && pub.conference.length) {
-    conf.innerHTML = pubSectionHTML('Conference Papers', pub.conference, '');
-  }
-
-  const inprog = el('#pub-inprogress');
-  if (inprog && pub.inProgress.length) {
-    inprog.innerHTML = pubSectionHTML('Under Publication Process', pub.inProgress, '');
-  }
+  // Group by status: Published → Accepted → Presented → Under Publication
+  const allPapers = [...pub.journal, ...pub.conference, ...pub.inProgress];
+  const groups = [
+    ['Published Papers', p => /published/i.test(p.status || '') && !/under/i.test(p.status || '')],
+    ['Accepted & Presented Papers', p => /^(accepted|presented)$/i.test((p.status || '').trim())],
+    ['Under Publication Process', p => !/^(published|accepted|presented)$/i.test((p.status || '').trim())],
+  ];
+  const confBox = el('#pub-conference');
+  if (confBox) confBox.innerHTML = groups.map(([label, test]) => {
+    const items = allPapers.filter(test);
+    return items.length ? `<div class="pub-group">${pubSectionHTML(label, items, '')}</div>` : '';
+  }).join('');
+  ['#pub-journal', '#pub-inprogress'].forEach(sel => { const b = el(sel); if (b) { b.innerHTML = ''; b.hidden = true; } });
 
   const pr = el('#pub-peerreview');
   if (pr && pub.peerReview.length) {
@@ -850,9 +870,7 @@ function renderPublications() {
         Peer Review Contributions
         <span class="pub-section__count">${pub.peerReview.length}</span>
       </div>
-      <div class="pub-cards">
-        ${pub.peerReview.map(r => pubCardHTML({ title: r.journal, journal: r.title, year: r.year, note: r.note }, 'gold', 'Review')).join('')}
-      </div>
+      ${pubTimelineHTML(pub.peerReview.map(r => ({ title: r.journal, journal: r.title, year: r.year, note: r.note, logo: r.logo })), 'gold', 'Review')}
     `;
   }
 }
@@ -864,9 +882,7 @@ function pubSectionHTML(label, items, accentClass) {
       ${sanitize(label)}
       <span class="pub-section__count">${items.length}</span>
     </div>
-    <div class="pub-cards">
-      ${items.map(p => pubCardHTML(p, accentClass)).join('')}
-    </div>
+    ${pubTimelineHTML(items, accentClass)}
   `;
 }
 
@@ -1786,8 +1802,8 @@ function renderHomeV3() {
   if (ps) {
     const rows = [
       [all.filter(p => /published/i.test(p.status)).length, 'Papers published'],
-      [all.filter(p => /presented/i.test(p.status)).length, 'Paper presented'],
-      [(P.inProgress || []).length, 'Under publication'],
+      [[...all, ...(P.inProgress || [])].filter(p => p.presented || /presented/i.test(p.status)).length, 'Papers presented'],
+      [[...all, ...(P.inProgress || [])].filter(p => /under/i.test(p.status || '')).length, 'Under publication'],
       [(P.peerReview || []).length, 'Peer review'],
     ];
     ps.innerHTML = rows.map(([n, l]) => `<div><dd>${n}</dd><dt>${l}</dt></div>`).join('');

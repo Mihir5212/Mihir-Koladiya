@@ -3348,3 +3348,34 @@ a.cx-item:hover { background: rgba(255,255,255,0.75); }
   .navbar__links a { padding: 9px 14px; font-size: .92rem; }
   .navbar__links a.nav-cta { margin: 6px 0 0; padding: 10px 14px; }
 }
+/* Footer — 3 columns after removing Expertise */
+.footer--v2 .fx-main { grid-template-columns: 1.6fr 0.8fr 1.3fr; }
+@media (max-width: 1000px) { .footer--v2 .fx-main { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 640px) { .footer--v2 .fx-main { grid-template-columns: 1fr; } }
+
+/* ═══ Publications — timeline + venue logos ═══ */
+.pub-tl { list-style: none; margin: 0; padding: 0; }
+.pub-tl__item { display: grid; grid-template-columns: 64px 28px 1fr; align-items: stretch; }
+.pub-tl__year { padding-top: 26px; font-family: var(--font-display); font-size: 1.35rem; line-height: 1; color: var(--accent); text-align: right; }
+.pub-tl__rail { position: relative; display: flex; justify-content: center; }
+.pub-tl__rail::before { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; transform: translateX(-50%); background: #E4E0D6; }
+.pub-tl__item:first-child .pub-tl__rail::before { top: 30px; }
+.pub-tl__item:last-child .pub-tl__rail::before { bottom: calc(100% - 30px); }
+.pub-tl__dot { position: relative; z-index: 1; margin-top: 26px; width: 12px; height: 12px; border-radius: 50%; background: #fff; border: 3px solid var(--accent); }
+.pub-tl__item.is-first .pub-tl__dot { background: #C9A227; border-color: #C9A227; }
+.pub-tl .pub-card { margin: 0 0 16px; }
+.pub-logo { flex-shrink: 0; width: 60px; height: 60px; border-radius: 14px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #ECE8DE; font-family: var(--font-mono); font-size: .72rem; color: var(--accent); }
+.pub-logo .pf-orglogo { width: 100%; height: 100%; object-fit: contain; padding: 5px; }
+.pub-card__venue { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; }
+@media (max-width: 700px) {
+  .pub-tl__item { grid-template-columns: 18px 1fr; }
+  .pub-tl__year { grid-column: 1 / -1; text-align: left; padding: 14px 0 8px; font-size: 1.2rem; }
+  .pub-tl__item:not(.is-first) .pub-tl__year { display: none; }
+  .pub-tl__dot { margin-top: 22px; }
+  .pub-tl__rail::before, .pub-tl__item:first-child .pub-tl__rail::before { top: 0; }
+}
+/* Publications timeline — card without year circle uses full width */
+.pub-tl .pub-card { display: block; padding: 22px 26px; border-radius: 22px; }
+.pub-tl .pub-card__body { width: 100%; }
+.pub-group + .pub-group { margin-top: 40px; }
+

@@ -34,8 +34,8 @@ Languages: Gujarati (native), Hindi and English (full professional proficiency).
   HIGHLIGHTS: [
     { value: 3,  suffix: "+", label: "Years Experience",     icon: "⚙" },
     { value: 3,  suffix: "",  label: "Published Papers",     icon: "📄" },
-    { value: 4,  suffix: "",  label: "Papers Under Process", icon: "✍" },
-    { value: 4,  suffix: "",  label: "Conferences",          icon: "🎤" },
+    { value: 3,  suffix: "",  label: "Papers Under Process", icon: "✍" },
+    { value: 3,  suffix: "",  label: "Conferences",          icon: "🎤" },
   ],
 
   // ─────────────────────────────────────────
@@ -293,7 +293,21 @@ The study received an Appreciation Letter from the Gujarat Road Safety Authority
     journal: [],
     conference: [
       {
-        title: "Impact of Mobile Use and Travel Behavior on Perceived Crash Risk Among Two-Wheeler Riders",
+        title: "Comparative Evaluation of Blackspot Identification Philosophies Across Road Classes in India",
+        authors: "Mihir Koladiya, Pankaj S. Prajapati, Shriniwas S. Arkatkar",
+        conference: "16th TPMDC 2026, IIT Bombay",
+        year: "2026",
+        status: "Accepted",
+      },
+      {
+        title: "A Sequential Framework for Highway Crash Frequency Analysis Using Facility Frontage Length and Roadside Development Context",
+        authors: "Mihir Koladiya, Pankaj S. Prajapati, Shriniwas S. Arkatkar",
+        conference: "TRB Annual Meeting 2027, Washington, D.C.",
+        year: "2027",
+        status: "Accepted",
+      },
+      {
+        title: "Impact of Mobile Use and Travel Behavior on Perceived Crash Risk Among Two-Wheeler Riders", presented: true,
         authors: "Mihir Koladiya, Khushi Mahajan, Pankaj S. Prajapati",
         conference: "15th TPMDC, IIT Bombay",
         year: "2024",
@@ -311,13 +325,14 @@ The study received an Appreciation Letter from the Gujarat Road Safety Authority
         link: "https://doi.org/10.1007/978-981-95-1442-7_26",
       },
       {
-        title: "Parking Adequacy and Commuter Behavior at Ahmedabad Metro Stations: An Observational Analysis",
+        title: "Parking Adequacy and Commuter Behavior at Ahmedabad Metro Stations: An Observational Analysis", presented: true,
         authors: "Mihir Koladiya, Pankaj S. Prajapati, Rajankumar J. Patel",
         conference: "11th CTSEM, NIT Bhopal",
         year: "2025",
         status: "Published",
         doi: "10.1007/978-981-95-9063-6_19",
         link: "https://doi.org/10.1007/978-981-95-9063-6_19",
+        citation: "Koladiya, M., Prajapati, P., Patel, R.J. (2026). Parking Adequacy and Commuter Behavior at Ahmedabad Metro Stations: An Observational Analysis. In: Bivina, G.R., Das, P., Krishnamurthy, K., Mathew, S. (eds) Advances in Transportation Systems and Pavement Engineering: Challenges and Solutions - Vol 3. CTSEM 2025. Lecture Notes in Civil Engineering, vol 850. Springer, Singapore. https://doi.org/10.1007/978-981-95-9063-6_19",
       },
       {
         title: "Factors Influencing Traffic Crashes in Vadodara: A Comparative Study of City Roads and National Highways Using Artificial Neural Networks",
@@ -340,7 +355,7 @@ The study received an Appreciation Letter from the Gujarat Road Safety Authority
         link: "",
       },
       {
-        title: "Evaluating Road Traffic Noise Pollution and Its Health Impacts on Residents Near Highways",
+        title: "Evaluating Road Traffic Noise Pollution and Its Health Impacts on Residents Near Highways", presented: true,
         authors: "Mihir Koladiya, Pankaj S. Prajapati",
         conference: "3rd TIPCE, IIT Roorkee",
         year: "2025",
@@ -353,12 +368,12 @@ The study received an Appreciation Letter from the Gujarat Road Safety Authority
         authors: "Khushi Mahajan, Pankaj S. Prajapati, Mihir Koladiya",
         conference: "3rd TIPCE, IIT Roorkee",
         year: "2025",
-        status: "Under Publication",
+        status: "Presented", presentedBy: "co-author",
         doi: "",
         link: "",
       },
       {
-        title: "Modeling Private Transportation Mode Selection in Developing Cities Using Multinomial Logistic Regression",
+        title: "Modeling Private Transportation Mode Selection in Developing Cities Using Multinomial Logistic Regression", presented: true,
         authors: "Krunal Kanzariya, Mihir Koladiya, Khushi Mahajan, Pankaj S. Prajapati",
         conference: "11th CTSEM, NIT Bhopal",
         year: "2025",
