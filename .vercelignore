@@ -1,0 +1,7 @@
+# Local tooling and private originals — never deployed
+*.py
+*.ps1
+__pycache__/
+assets/images/certificate-originals/
+.gitignore
+README.md

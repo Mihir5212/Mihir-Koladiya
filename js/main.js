@@ -36,8 +36,10 @@ function els(selector, parent = document) {
   return [...parent.querySelectorAll(selector)];
 }
 function currentPage() {
-  const path = window.location.pathname.split('/').pop() || 'index.html';
-  return path || 'index.html';
+  // Works on GitHub Pages (/repo/about.html), Vercel clean URLs (/about) and the root (/)
+  let path = decodeURIComponent(window.location.pathname).replace(/\/+$/, '').split('/').pop() || 'index.html';
+  if (!/\.html?$/i.test(path)) path += '.html';
+  return path;
 }
 function getStatusClass(status) {
   const s = (status || '').toLowerCase();

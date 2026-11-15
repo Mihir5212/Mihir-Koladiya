@@ -409,12 +409,12 @@ The study received an Appreciation Letter from the Gujarat Road Safety Authority
       date: "November 2023",
       readTime: "6 min read",
       excerpt: "Standard KDE treats space as homogeneous — but roads are networks, not surfaces. This piece explores how NKDE constrains density estimation to the road network, producing more accurate and actionable crash hotspot maps.",
-      heroImage: "assets/images/gallery-gis-1.jpg",
+      heroImage: "assets/images/gallery/1000182514.jpg",
       heroImageAlt: "ArcGIS-based crash hotspot analysis workspace",
       heroImageCaption: "Crash hotspot analysis workflow in a GIS environment.",
       fullContent: [
         { type: "p", text: "When we apply Kernel Density Estimation to road crash data, we are asking a fundamentally spatial question: where does crash risk concentrate? Standard KDE answers this by spreading density across a planar surface — treating every square metre of space equally. But road crashes don't happen in fields. They happen on a network." },
-        { type: "image", src: "assets/images/gallery-gis-1.jpg", alt: "GIS road crash analysis", caption: "Spatial crash analysis becomes more reliable when density is constrained to the road network." },
+        { type: "image", src: "assets/images/gallery/1000182514.jpg", alt: "GIS road crash analysis", caption: "Spatial crash analysis becomes more reliable when density is constrained to the road network." },
         { type: "graphicGrid", items: [
           { label: "Method", value: "NKDE", note: "Network-constrained density" },
           { label: "Bias Reduced", value: "23%", note: "Fewer false positives than planar KDE" },
@@ -442,12 +442,12 @@ The study received an Appreciation Letter from the Gujarat Road Safety Authority
       date: "October 2023",
       readTime: "5 min read",
       excerpt: "Road safety audits are only as good as the data that informs them. This article examines the structural gaps in traditional audit approaches and how integrating crash records, field observations, and GIS data produces more effective interventions.",
-      heroImage: "assets/images/gallery-fieldwork-1.jpg",
+      heroImage: "assets/images/gallery/20220215_172459.jpg",
       heroImageAlt: "Highway field survey for road safety audit",
       heroImageCaption: "Field safety audits become stronger when linked with crash and GIS evidence.",
       fullContent: [
         { type: "p", text: "A road safety audit is, in principle, a systematic examination of a road or traffic scheme to identify safety problems and recommend corrective measures. In practice, audit quality varies enormously — and the gap frequently comes down to how much data the auditor actually uses." },
-        { type: "image", src: "assets/images/gallery-fieldwork-1.jpg", alt: "Road safety audit field visit", caption: "On-site audits should be supported by prior crash records and mapped risk evidence." },
+        { type: "image", src: "assets/images/gallery/20220215_172459.jpg", alt: "Road safety audit field visit", caption: "On-site audits should be supported by prior crash records and mapped risk evidence." },
         { type: "graphicGrid", items: [
           { label: "Audit Base", value: "Site + Data", note: "Field observation plus crash evidence" },
           { label: "Recommended History", value: "5 Years", note: "Police-reported crashes for context" },
@@ -472,12 +472,12 @@ The study received an Appreciation Letter from the Gujarat Road Safety Authority
       date: "September 2023",
       readTime: "8 min read",
       excerpt: "The Pavement Condition Index (PCI) is one of the most widely applied tools in pavement management. This guide covers methodology, common distress types, and how to build a maintenance prioritization framework from raw field data.",
-      heroImage: "assets/images/gallery-fieldwork-2.jpg",
+      heroImage: "assets/images/gallery/IMG-20240522-WA0002(1).jpg",
       heroImageAlt: "Pavement distress documentation in the field",
       heroImageCaption: "Field distress documentation is the foundation of a reliable PCI workflow.",
       fullContent: [
         { type: "p", text: "The Pavement Condition Index (PCI) is a numerical rating system standardised under ASTM D6433. It provides a single index — ranging from 0 (failed) to 100 (excellent) — that characterises pavement condition from field observation data alone. No structural testing equipment is required." },
-        { type: "image", src: "assets/images/gallery-fieldwork-2.jpg", alt: "Pavement distress recording", caption: "Distress type, severity, and extent should be captured consistently during PCI surveys." },
+        { type: "image", src: "assets/images/gallery/IMG-20240522-WA0002(1).jpg", alt: "Pavement distress recording", caption: "Distress type, severity, and extent should be captured consistently during PCI surveys." },
         { type: "graphicGrid", items: [
           { label: "PCI Range", value: "0–100", note: "Failed to excellent condition" },
           { label: "Standard", value: "ASTM D6433", note: "Widely used PCI method" },
@@ -502,7 +502,7 @@ The study received an Appreciation Letter from the Gujarat Road Safety Authority
       date: "August 2023",
       readTime: "7 min read",
       excerpt: "Two-wheelers account for the majority of road fatalities in India, yet crash risk is non-randomly distributed. This piece draws from original spatial analysis to identify infrastructure and behavioural factors driving fatal two-wheeler crashes.",
-      heroImage: "assets/images/gallery-conference-1.jpg",
+      heroImage: "assets/images/gallery/20250918_130807.jpg",
       heroImageAlt: "Transportation safety presentation session",
       heroImageCaption: "Crash risk communication improves when spatial patterns are shown visually.",
       fullContent: [
@@ -529,7 +529,7 @@ The study received an Appreciation Letter from the Gujarat Road Safety Authority
       date: "July 2023",
       readTime: "6 min read",
       excerpt: "Level of Service analysis is foundational to traffic engineering, but the steps from raw count data to a defensible LOS recommendation are frequently compressed or oversimplified. This article documents a rigorous, reproducible methodology.",
-      heroImage: "assets/images/gallery-workshop-1.jpg",
+      heroImage: "assets/images/gallery/20250205_073933(2).jpg",
       heroImageAlt: "Transportation analysis workshop setting",
       heroImageCaption: "LOS interpretation becomes more meaningful when engineers visualize movement, delay, and queue patterns together.",
       fullContent: [
@@ -558,7 +558,7 @@ The study received an Appreciation Letter from the Gujarat Road Safety Authority
       date: "June 2023",
       readTime: "9 min read",
       excerpt: "European Sustainable Urban Mobility Plans (SUMP) have been widely studied but rarely adapted with rigor to the Indian urban context. This piece identifies transferable principles and the critical adaptations required for Indian cities.",
-      heroImage: "assets/images/gallery-conference-2.jpg",
+      heroImage: "assets/images/gallery/IMG_20250704_142541.jpg",
       heroImageAlt: "Urban mobility conference discussion",
       heroImageCaption: "Mobility frameworks are easier to understand when policy principles are paired with clear visual summaries.",
       fullContent: [
